@@ -110,12 +110,15 @@ Return ONLY the blog post content starting with META: on line 1, then the full p
     const content = fullContent.replace(/^META:.+$/m, '').trim()
 
     // STEP 2: Generate URL-safe slug (needed before image upload path)
+    // For non-Latin scripts (ar/hi/pa), the title chars are stripped — use idea ID instead
     const slugBase = idea.title
       .toLowerCase()
       .replace(/[^\w\s-]/g, '')
       .replace(/\s+/g, '-')
+      .replace(/^-+|-+$/g, '')
       .slice(0, 60)
-    const slug = `${slugBase}-${idea.locale}-${Date.now()}`
+    const slugPrefix = slugBase.length > 4 ? slugBase : `post-${resolvedIdeaId.slice(0, 8)}`
+    const slug = `${slugPrefix}-${idea.locale}-${Date.now()}`
 
     // STEP 3: Generate featured image via OpenAI image model (gpt-image-1 or dall-e-3)
     const imagePrompt = `Professional marketing blog featured image for an article titled "${idea.title}".
