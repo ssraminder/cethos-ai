@@ -139,6 +139,7 @@ export interface BlogPost {
   slug: string
   excerpt: string | null
   content: string | null
+  locale: string | null
   category_id: string | null
   category?: BlogCategory
   tags: string[] | null
