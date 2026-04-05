@@ -21,7 +21,10 @@
       "Bash(git push:*)",
       "Bash(node -e \"const p = require\\(''./node_modules/next-intl/package.json''\\); console.log\\(p.version\\)\")",
       "Bash(ls D:/cethos-app/cethos-ai/app/[locale]/blog)",
-      "Bash(npx next:*)"
+      "Bash(npx next:*)",
+      "Bash(curl -s -X POST \"https://scnmdbkpjlkitxdoeiaa.supabase.co/functions/v1/agp-cmo-agent\" -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjbm1kYmtwamxraXR4ZG9laWFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwODAyMTgsImV4cCI6MjA4MjY1NjIxOH0.ok6SD93oKP8Kd7TtU1TPVV9tEX3QdWI3e37dXmi8HWs\" -H \"Content-Type: application/json\" -d '{}' --max-time 120)",
+      "Bash(curl -s \"https://scnmdbkpjlkitxdoeiaa.supabase.co/rest/v1/agp_blog_posts?select=locale,title,slug,featured_image_url&published=eq.true&order=published_at.desc&limit=5\" -H \"apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjbm1kYmtwamxraXR4ZG9laWFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwODAyMTgsImV4cCI6MjA4MjY1NjIxOH0.ok6SD93oKP8Kd7TtU1TPVV9tEX3QdWI3e37dXmi8HWs\" -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjbm1kYmtwamxraXR4ZG9laWFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwODAyMTgsImV4cCI6MjA4MjY1NjIxOH0.ok6SD93oKP8Kd7TtU1TPVV9tEX3QdWI3e37dXmi8HWs\")",
+      "Bash(npx netlify:*)"
     ]
   }
 }
