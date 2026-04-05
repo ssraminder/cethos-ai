@@ -24,7 +24,7 @@ export async function SeoHead({ pagePath, locale, fallbackPath }: Props) {
     // agp_seo_config may not exist yet — render nothing
   }
 
-  if (schemas.length === 0 && Object.keys(hreflang).length === 0) {
+  if (schemas.length === 0) {
     return null
   }
 
@@ -36,9 +36,6 @@ export async function SeoHead({ pagePath, locale, fallbackPath }: Props) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
-      ))}
-      {Object.entries(hreflang).map(([lang, url]) => (
-        <link key={lang} rel="alternate" hrefLang={lang} href={url} />
       ))}
     </>
   )
