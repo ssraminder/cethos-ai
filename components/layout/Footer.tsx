@@ -112,7 +112,7 @@ export function Footer() {
               {[
                 { label: 'About', href: '/about' },
                 { label: 'Case Studies', href: '/case-studies' },
-                { label: 'Political Campaigns', href: '/political-campaigns' },
+                { label: 'Political Campaigns', href: '/services/political-campaign-marketing' },
                 { label: 'Blog', href: '/blog' },
                 { label: 'Contact', href: '/contact' },
               ].map((link) => (
