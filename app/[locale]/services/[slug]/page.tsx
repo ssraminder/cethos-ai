@@ -2,7 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@supabase/supabase-js'
 import { PageHero } from '@/components/shared/PageHero'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
@@ -21,7 +21,10 @@ interface Props {
 
 async function getService(slug: string): Promise<{ service: Service; deliverables: ServiceDeliverable[] } | null> {
   try {
-    const supabase = createClient()
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    if (!url || !key) throw new Error('Missing Supabase env vars')
+    const supabase = createClient(url, key)
     const { data: service } = await supabase
       .from('agp_services')
       .select('*')

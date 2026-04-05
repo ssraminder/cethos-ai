@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic'
 
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@supabase/supabase-js'
 import type { BlogPost } from '@/lib/types'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
@@ -15,7 +15,8 @@ export async function generateMetadata({
   const locale = params.locale
   return {
     title: 'Blog | Cethos Media',
-    description: 'Marketing insights, strategy, and AI-powered growth ideas from the Cethos Media team — for businesses in India, UAE, and Canada.',
+    description:
+      'Marketing insights, strategy, and AI-powered growth ideas from the Cethos Media team — for businesses in India, UAE, and Canada.',
     openGraph: {
       title: 'Blog | Cethos Media',
       description: 'Marketing insights for India, UAE, and Canada.',
@@ -32,22 +33,18 @@ export default async function BlogPage({
   const locale = params.locale ?? 'en'
 
   let posts: BlogPost[] = []
-  let debugInfo = ''
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !supabaseKey) {
-    console.error('[Blog] Missing Supabase env vars:', {
-      hasUrl: !!supabaseUrl,
-      hasKey: !!supabaseKey,
-    })
-    debugInfo = 'env-missing'
+    console.error('[Blog] Missing env vars — NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY not set on this host')
   } else {
     try {
-      const supabase = createClient()
+      // Use direct supabase-js client — no cookies needed for reading public posts
+      const supabase = createClient(supabaseUrl, supabaseKey)
 
-      // First try locale-specific posts
+      // Try locale-specific posts first
       const { data: localePosts, error: localeError } = await supabase
         .from('agp_blog_posts')
         .select('*')
@@ -56,14 +53,14 @@ export default async function BlogPage({
         .order('published_at', { ascending: false })
 
       if (localeError) {
-        console.error('[Blog] Locale query error:', localeError)
+        console.error('[Blog] Locale query error:', localeError.message)
       }
 
       if (localePosts && localePosts.length > 0) {
-        posts = localePosts
+        posts = localePosts as BlogPost[]
         console.log(`[Blog] Loaded ${posts.length} posts for locale=${locale}`)
       } else {
-        // Fallback: fetch all published posts (no locale filter)
+        // Fallback: all English posts (or all posts if English has none)
         const { data: allPosts, error: allError } = await supabase
           .from('agp_blog_posts')
           .select('*')
@@ -71,10 +68,12 @@ export default async function BlogPage({
           .order('published_at', { ascending: false })
 
         if (allError) {
-          console.error('[Blog] All posts query error:', allError)
+          console.error('[Blog] Fallback query error:', allError.message)
         } else {
-          posts = allPosts ?? []
-          console.log(`[Blog] No posts for locale=${locale}, loaded ${posts.length} total posts`)
+          posts = (allPosts ?? []) as BlogPost[]
+          console.log(
+            `[Blog] No posts for locale=${locale}, loaded ${posts.length} total`
+          )
         }
       }
     } catch (err) {
@@ -93,10 +92,9 @@ export default async function BlogPage({
         />
         {posts.length === 0 ? (
           <div className="text-center py-24">
-            <p className="font-body text-[#0A0F1E]/40 text-lg">No posts yet — check back soon.</p>
-            {process.env.NODE_ENV === 'development' && debugInfo && (
-              <p className="font-mono text-red-500 text-sm mt-4">Debug: {debugInfo}</p>
-            )}
+            <p className="font-body text-[#0A0F1E]/40 text-lg">
+              No posts yet — check back soon.
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">

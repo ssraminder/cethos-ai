@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic'
 
 import type { Metadata } from 'next'
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@supabase/supabase-js'
 import { PageHero } from '@/components/shared/PageHero'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
@@ -29,13 +29,17 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
 export default async function ServicesPage({ params: { locale } }: Props) {
   let serviceList: Service[] = []
   try {
-    const supabase = createClient()
-    const { data } = await supabase
-      .from('agp_services')
-      .select('*')
-      .eq('active', true)
-      .order('sort_order', { ascending: true })
-    serviceList = (data as Service[]) ?? []
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    if (url && key) {
+      const supabase = createClient(url, key)
+      const { data } = await supabase
+        .from('agp_services')
+        .select('*')
+        .eq('active', true)
+        .order('sort_order', { ascending: true })
+      serviceList = (data as Service[]) ?? []
+    }
   } catch {
     serviceList = []
   }
