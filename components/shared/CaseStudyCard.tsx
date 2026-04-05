@@ -7,14 +7,16 @@ import type { CaseStudy } from '@/lib/types'
 
 interface CaseStudyCardProps {
   caseStudy: CaseStudy | (Omit<CaseStudy, 'id'> & { metrics?: Array<{ label: string; value: string; prefix: string; suffix: string; sort_order: number }> })
+  locale?: string
 }
 
-export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
+export function CaseStudyCard({ caseStudy, locale = 'en' }: CaseStudyCardProps) {
+  const prefix = locale === 'en' ? '' : `/${locale}`
   const displayMetrics = caseStudy.metrics?.slice(0, 2) ?? []
 
   return (
     <Link
-      href={`/case-studies/${caseStudy.slug}`}
+      href={`${prefix}/case-studies/${caseStudy.slug}`}
       className={cn(
         'group block rounded-2xl overflow-hidden border border-[#EC4899]/10 bg-white transition-all duration-300 cursor-pointer',
         'hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(236,72,153,0.15)]',

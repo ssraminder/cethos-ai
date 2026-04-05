@@ -29,15 +29,17 @@ const iconMap: Record<string, LucideIcon> = {
 interface ServiceCardProps {
   service: Service | Omit<Service, 'id'>
   variant?: 'compact' | 'full'
+  locale?: string
 }
 
-export function ServiceCard({ service, variant = 'compact' }: ServiceCardProps) {
+export function ServiceCard({ service, variant = 'compact', locale = 'en' }: ServiceCardProps) {
   const IconComponent = service.icon_name ? iconMap[service.icon_name] : null
   const slug = 'slug' in service ? service.slug : (service as Service).slug
+  const prefix = locale === 'en' ? '' : `/${locale}`
 
   return (
     <Link
-      href={`/services/${slug}`}
+      href={`${prefix}/services/${slug}`}
       className={cn(
         'group block rounded-2xl border border-[#EC4899]/10 bg-white p-6 transition-all duration-300 cursor-pointer',
         'hover:-translate-y-1 hover:border-[#EC4899]/40 hover:shadow-[0_8px_30px_rgba(236,72,153,0.15)]',

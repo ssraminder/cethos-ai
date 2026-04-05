@@ -51,7 +51,13 @@ export function MobileMenu({ isOpen, onClose, company, locale = 'en' }: MobileMe
   }
 
   const switchLocale = (newLocale: string) => {
-    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`
+    if (newLocale === 'en') {
+      // Clear saved preference so system language detection takes over
+      document.cookie = 'NEXT_LOCALE=; path=/; max-age=0; SameSite=Lax'
+    } else {
+      // Session-only cookie — no max-age, clears when browser closes
+      document.cookie = `NEXT_LOCALE=${newLocale}; path=/; SameSite=Lax`
+    }
     onClose()
     router.push(switchLocalePath(newLocale))
   }

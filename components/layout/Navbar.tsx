@@ -7,6 +7,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { Menu, ChevronDown, Globe } from 'lucide-react'
 import { useCompanyInfo } from '@/lib/context/CompanyInfoContext'
 import { MobileMenu } from '@/components/layout/MobileMenu'
+import { LanguageConfirmBanner } from '@/components/layout/LanguageConfirmBanner'
 import { cn } from '@/lib/utils'
 
 const LANGUAGES = [
@@ -29,6 +30,7 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
   const router = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [langOpen, setLangOpen] = useState(false)
+  const [pendingLocale, setPendingLocale] = useState<string | null>(null)
   const langRef = useRef<HTMLDivElement>(null)
 
   const prefix = locale === 'en' ? '' : `/${locale}`
@@ -55,12 +57,32 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
     return `/${newLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`
   }
 
-  // Set NEXT_LOCALE cookie so middleware respects explicit user choice
-  // over Accept-Language auto-detection, then navigate
+  // Switch locale: for English, clear saved preference cookie.
+  // For other locales, set a session-only cookie and show a "save preference?" banner.
   const switchLocale = (newLocale: string) => {
-    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`
     setLangOpen(false)
-    router.push(switchLocalePath(newLocale))
+    if (newLocale === 'en') {
+      // Clear any saved locale preference → system detection takes over
+      document.cookie = 'NEXT_LOCALE=; path=/; max-age=0; SameSite=Lax'
+      setPendingLocale(null)
+      router.push(switchLocalePath(newLocale))
+    } else {
+      // Session-only cookie (no max-age) — clears when browser closes
+      document.cookie = `NEXT_LOCALE=${newLocale}; path=/; SameSite=Lax`
+      setPendingLocale(newLocale)
+      router.push(switchLocalePath(newLocale))
+    }
+  }
+
+  const saveLocalePreference = () => {
+    if (!pendingLocale) return
+    // Upgrade to persistent 1-year cookie
+    document.cookie = `NEXT_LOCALE=${pendingLocale}; path=/; max-age=31536000; SameSite=Lax`
+    setPendingLocale(null)
+  }
+
+  const dismissLocaleBanner = () => {
+    setPendingLocale(null)
   }
 
   // Close dropdown on outside click
@@ -190,6 +212,14 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
         company={company}
         locale={locale}
       />
+
+      {pendingLocale && pendingLocale !== 'en' && (
+        <LanguageConfirmBanner
+          locale={pendingLocale}
+          onSave={saveLocalePreference}
+          onDismiss={dismissLocaleBanner}
+        />
+      )}
     </>
   )
 }
