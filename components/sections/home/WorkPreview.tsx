@@ -32,9 +32,9 @@ export function WorkPreview() {
   return (
     <SectionWrapper dark>
       <SectionHeader
-        eyebrow="Our Work"
-        heading="Real Campaigns. Real Results."
-        subheading="Every case study shows the before, the strategy, and the numbers that followed."
+        eyebrow="Proven Results"
+        heading="Numbers Our Clients Actually Care About"
+        subheading="Case studies from real campaigns across India, UAE and Canada."
         centered
         light
       />

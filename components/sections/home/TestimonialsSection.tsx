@@ -36,8 +36,8 @@ export function TestimonialsSection() {
     <SectionWrapper light>
       <SectionHeader
         eyebrow="Client Stories"
-        heading="What Our Clients Say"
-        subheading="From Punjab to Dubai to Toronto — results speak for themselves."
+        heading="Results Our Clients Are Proud Of"
+        subheading="From Chandigarh to Dubai to Toronto — every number is real."
         centered
       />
 

@@ -31,9 +31,9 @@ export function ServicesPreview() {
   return (
     <SectionWrapper light>
       <SectionHeader
-        eyebrow="What We Do"
-        heading="Services Built for Results"
-        subheading="From Punjab election campaigns to Dubai real estate leads — we deliver measurable outcomes across every channel."
+        eyebrow="Full-Service Agency"
+        heading="Everything Your Brand Needs to Grow"
+        subheading="From performance campaigns to brand strategy — we cover every channel, in every market we serve."
         centered
       />
 

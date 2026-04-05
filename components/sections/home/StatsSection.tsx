@@ -1,8 +1,17 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import type { Transition } from 'framer-motion'
 import { AnimatedCounter } from '@/components/shared/AnimatedCounter'
+import { SectionHeader } from '@/components/shared/SectionHeader'
 import { stats } from '@/lib/data/stats'
+
+const fadeUp = (delay: number) => ({
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true } as const,
+  transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1], delay } as Transition,
+})
 
 const containerVariants = {
   hidden: {},
@@ -26,6 +35,15 @@ export function StatsSection() {
   return (
     <section className="bg-[#0A0F1E] w-full py-20 md:py-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div {...fadeUp(0)} className="mb-12 md:mb-16">
+          <SectionHeader
+            eyebrow="By the Numbers"
+            heading="Results That Speak for Themselves"
+            centered
+            light
+          />
+        </motion.div>
+
         <motion.div
           variants={containerVariants}
           initial="hidden"

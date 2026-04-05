@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import type { Transition } from 'framer-motion'
-import { Phone, Zap } from 'lucide-react'
+import { Zap } from 'lucide-react'
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 24 },
@@ -31,7 +31,7 @@ export function CtaBanner() {
           {...fadeUp(0.1)}
           className="font-display text-5xl md:text-6xl lg:text-7xl text-white leading-none tracking-wide"
         >
-          READY TO DOMINATE YOUR MARKET?
+          READY TO GROW YOUR BUSINESS?
         </motion.h2>
 
         {/* Subtext */}
@@ -39,27 +39,20 @@ export function CtaBanner() {
           {...fadeUp(0.2)}
           className="font-body text-lg text-[#F8FAFC]/70 mt-4 max-w-xl mx-auto"
         >
-          Talk to our team today. Free strategy audit included. No commitment required.
+          Get a free strategy audit from our team. We&apos;ll map out exactly how to reach your audience in India, UAE or Canada — and what results to expect.
         </motion.p>
 
-        {/* CTAs */}
+        {/* CTA */}
         <motion.div
           {...fadeUp(0.3)}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10"
+          className="flex items-center justify-center mt-10"
         >
           <Link
             href="/contact"
             className="bg-[#06B6D4] hover:bg-[#06B6D4]/90 text-white font-heading font-semibold px-8 py-4 rounded-xl text-lg transition-all duration-300 cursor-pointer shadow-lg shadow-[#06B6D4]/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
           >
-            Get a Free Audit
+            Get a Free Strategy Audit
           </Link>
-          <a
-            href="tel:+919876543210"
-            className="inline-flex items-center gap-2 border border-white/30 hover:border-white text-white font-heading font-semibold px-8 py-4 rounded-xl text-lg transition-all duration-300 cursor-pointer hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
-          >
-            <Phone className="w-5 h-5" />
-            Call Us Directly
-          </a>
         </motion.div>
 
         {/* Urgency note */}
@@ -68,7 +61,7 @@ export function CtaBanner() {
           className="inline-flex items-center gap-1.5 mt-8 text-[#EC4899] text-sm font-heading"
         >
           <Zap className="w-4 h-4" />
-          Limited spots available this month
+          Limited onboarding spots available this month
         </motion.p>
       </div>
     </section>

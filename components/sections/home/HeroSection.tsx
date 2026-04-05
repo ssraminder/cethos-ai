@@ -3,80 +3,70 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import type { Transition } from 'framer-motion'
-import { Award, CheckCircle, ChevronDown } from 'lucide-react'
+import { CheckCircle2, ChevronDown } from 'lucide-react'
 
 const fadeUp = (delay: number) => ({
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1], delay } as Transition,
+  transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay } as Transition,
 })
+
+const markets = ['India', 'UAE', 'Canada']
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen bg-[#0A0F1E] overflow-hidden flex items-center justify-center pt-24">
-      {/* Background orbs */}
-      <motion.div
-        className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-[#EC4899]/10 blur-[120px] pointer-events-none"
-        animate={{ y: [0, -20, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-        aria-hidden="true"
-      />
-      <motion.div
-        className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-[#06B6D4]/10 blur-[120px] pointer-events-none"
-        animate={{ y: [0, -20, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-        aria-hidden="true"
-      />
+    <section className="relative min-h-screen bg-gradient-to-br from-[#0A0F1E] via-[#0d0d1a] to-[#0A0F1E] flex flex-col items-center justify-center text-center px-4 pt-24">
 
       {/* Main content */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-16">
-        {/* Eyebrow badge */}
-        <motion.div {...fadeUp(0.1)} className="inline-flex items-center gap-2 text-[#EC4899] border border-[#EC4899]/30 bg-[#EC4899]/10 px-4 py-1.5 rounded-full text-sm font-heading mb-8">
-          <Award className="w-4 h-4" />
-          <span>Punjab&apos;s #1 Political Marketing Agency</span>
+      <div className="relative z-10 w-full max-w-4xl mx-auto">
+        {/* Market badges */}
+        <motion.div {...fadeUp(0.1)} className="flex gap-3 justify-center flex-wrap mb-8">
+          {markets.map((market) => (
+            <span
+              key={market}
+              className="text-xs font-heading uppercase tracking-widest text-[#F8FAFC]/50 border border-[#F8FAFC]/10 px-3 py-1 rounded-full"
+            >
+              {market}
+            </span>
+          ))}
         </motion.div>
 
         {/* Headline */}
         <div className="mb-6">
           <motion.div {...fadeUp(0.2)}>
-            <span className="block font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-none tracking-wide text-white">
-              WIN VOTES.
+            <span className="block font-display text-6xl md:text-7xl lg:text-8xl leading-none tracking-wide text-white">
+              GROW YOUR BUSINESS
             </span>
           </motion.div>
           <motion.div {...fadeUp(0.3)}>
-            <span className="block font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-none tracking-wide bg-gradient-to-r from-[#EC4899] to-[#06B6D4] bg-clip-text text-transparent">
-              WIN MARKETS.
-            </span>
-          </motion.div>
-          <motion.div {...fadeUp(0.4)}>
-            <span className="block font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-none tracking-wide text-white/70">
-              WIN ONLINE.
+            <span className="block font-display text-6xl md:text-7xl lg:text-8xl leading-none tracking-wide bg-gradient-to-r from-[#EC4899] to-[#06B6D4] bg-clip-text text-transparent">
+              ACROSS BORDERS.
             </span>
           </motion.div>
         </div>
 
-        {/* Subheadline */}
+        {/* Sub-headline */}
         <motion.p
-          {...fadeUp(0.5)}
-          className="font-body text-lg md:text-xl text-[#F8FAFC]/70 max-w-2xl mx-auto mt-6"
+          {...fadeUp(0.4)}
+          className="font-body text-lg md:text-xl text-[#F8FAFC]/60 max-w-2xl mx-auto mt-6 leading-relaxed"
         >
-          AI-Powered campaigns for political candidates, brands, and businesses across India, UAE and Canada. Human strategy. Machine speed. Real results.
+          Full-service digital marketing for ambitious brands and businesses in India, UAE and Canada. Powered by AI. Driven by human strategy. Measured by results.
         </motion.p>
 
         {/* CTA row */}
         <motion.div
-          {...fadeUp(0.6)}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10"
+          {...fadeUp(0.5)}
+          className="flex gap-4 justify-center flex-wrap mt-10"
         >
           <Link
             href="/contact"
-            className="bg-[#06B6D4] hover:bg-[#06B6D4]/90 text-white font-heading font-semibold px-8 py-4 rounded-xl text-lg transition-all duration-300 cursor-pointer shadow-lg shadow-[#06B6D4]/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
+            className="bg-[#06B6D4] hover:bg-[#06B6D4]/90 text-white font-heading font-semibold px-8 py-4 rounded-xl text-base md:text-lg transition-all duration-300 cursor-pointer shadow-lg shadow-[#06B6D4]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
           >
-            Get a Free Audit
+            Get a Free Strategy Audit
           </Link>
           <Link
             href="/case-studies"
-            className="border border-white/30 hover:border-white text-white font-heading font-semibold px-8 py-4 rounded-xl text-lg transition-all duration-300 cursor-pointer hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
+            className="border border-white/20 hover:border-white/50 text-[#F8FAFC] font-heading font-semibold px-8 py-4 rounded-xl text-base md:text-lg transition-all duration-300 cursor-pointer hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
           >
             See Our Work
           </Link>
@@ -84,27 +74,23 @@ export function HeroSection() {
 
         {/* Trust strip */}
         <motion.div
-          {...fadeUp(0.7)}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-0 mt-8 text-[#F8FAFC]/50 text-sm"
+          {...fadeUp(0.6)}
+          className="flex gap-6 justify-center flex-wrap mt-8"
         >
-          <span className="flex items-center gap-1.5">
-            <CheckCircle className="w-4 h-4" />
-            No contracts
-          </span>
-          <span className="hidden sm:block mx-3 opacity-30">·</span>
-          <span className="flex items-center gap-1.5">
-            <CheckCircle className="w-4 h-4" />
-            Free strategy audit
-          </span>
-          <span className="hidden sm:block mx-3 opacity-30">·</span>
-          <span className="flex items-center gap-1.5">
-            <CheckCircle className="w-4 h-4" />
-            Results in 30 days
-          </span>
+          {[
+            'No long-term contracts',
+            'Free strategy audit included',
+            'Results tracked from day one',
+          ].map((item) => (
+            <span key={item} className="flex items-center gap-1.5 text-[#F8FAFC]/50 text-sm font-body">
+              <CheckCircle2 className="w-4 h-4 text-[#06B6D4]" />
+              {item}
+            </span>
+          ))}
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll chevron */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/30">
         <motion.div
           animate={{ y: [0, 8, 0] }}
