@@ -26,6 +26,7 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     )
     const openaiKey = Deno.env.get('OPENAI_API_KEY')!
+    const imageModel = Deno.env.get('OPENAI_IMAGE_MODEL') ?? 'gpt-image-1'
     const brevoKey = Deno.env.get('BREVO_API_KEY')!
     const ceoEmail = Deno.env.get('CEO_EMAIL')!
     const siteUrl = Deno.env.get('SITE_URL') ?? 'https://cethosmedia.com'
@@ -108,26 +109,60 @@ Return ONLY the blog post content starting with META: on line 1, then the full p
     const excerpt = metaMatch ? metaMatch[1].trim() : idea.angle
     const content = fullContent.replace(/^META:.+$/m, '').trim()
 
-    // STEP 2: Generate featured image with DALL-E 3
+    // STEP 2: Generate featured image via OpenAI image model (gpt-image-1 or dall-e-3)
     const imagePrompt = `Professional marketing blog featured image for an article titled "${idea.title}".
 Style: Modern, clean, professional digital marketing agency aesthetic.
 Colors: Deep navy (#0A0F1E) background with pink (#EC4899) and cyan (#06B6D4) accents.
 No text in the image. Abstract data visualization, global connectivity, or business growth theme.
 High quality, suitable for a professional B2B marketing blog.`
 
+    const isGptImage1 = imageModel === 'gpt-image-1'
+
+    const imageRequestBody: Record<string, unknown> = {
+      model: imageModel,
+      prompt: imagePrompt,
+      n: 1,
+      size: isGptImage1 ? '1536x1024' : '1792x1024',
+    }
+    if (isGptImage1) {
+      imageRequestBody.quality = 'medium'
+      imageRequestBody.output_format = 'png'
+    } else {
+      imageRequestBody.quality = 'standard'
+    }
+
     const imageResponse = await fetch('https://api.openai.com/v1/images/generations', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${openaiKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'dall-e-3',
-        prompt: imagePrompt,
-        n: 1,
-        size: '1792x1024',
-        quality: 'standard',
-      }),
+      body: JSON.stringify(imageRequestBody),
     })
     const imageData = await imageResponse.json()
-    const imageUrl = imageData.data?.[0]?.url ?? null
+
+    let imageUrl: string | null = null
+
+    if (isGptImage1) {
+      // gpt-image-1 returns base64 — upload to Supabase Storage
+      const b64 = imageData.data?.[0]?.b64_json
+      if (b64) {
+        const imageBytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0))
+        const storagePath = `blog-images/${slug}.png`
+        const { error: uploadError } = await supabase.storage
+          .from('agp-public')
+          .upload(storagePath, imageBytes, {
+            contentType: 'image/png',
+            upsert: true,
+          })
+        if (!uploadError) {
+          const { data: publicData } = supabase.storage
+            .from('agp-public')
+            .getPublicUrl(storagePath)
+          imageUrl = publicData?.publicUrl ?? null
+        }
+      }
+    } else {
+      // dall-e-3 returns a direct URL
+      imageUrl = imageData.data?.[0]?.url ?? null
+    }
 
     // STEP 3: Generate URL-safe slug
     const slugBase = idea.title

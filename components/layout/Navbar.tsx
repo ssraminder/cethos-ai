@@ -1,21 +1,23 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu } from 'lucide-react'
+import { Menu, ChevronDown, Globe } from 'lucide-react'
 import { useCompanyInfo } from '@/lib/context/CompanyInfoContext'
 import { MobileMenu } from '@/components/layout/MobileMenu'
 import { cn } from '@/lib/utils'
 
 const LANGUAGES = [
-  { code: 'en', label: 'EN' },
-  { code: 'ar', label: 'ع' },
-  { code: 'fr', label: 'FR' },
-  { code: 'hi', label: 'हि' },
-  { code: 'pa', label: 'ਪੰ' },
+  { code: 'en', label: 'English', short: 'EN' },
+  { code: 'ar', label: 'العربية', short: 'AR' },
+  { code: 'fr', label: 'Français', short: 'FR' },
+  { code: 'hi', label: 'हिंदी', short: 'HI' },
+  { code: 'pa', label: 'ਪੰਜਾਬੀ', short: 'PA' },
 ]
+
+const NON_DEFAULT_LOCALES = ['ar', 'fr', 'hi', 'pa']
 
 interface NavbarProps {
   locale?: string
@@ -25,24 +27,52 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
   const company = useCompanyInfo()
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [langOpen, setLangOpen] = useState(false)
+  const langRef = useRef<HTMLDivElement>(null)
 
-  // Build nav links prefixed with locale (for non-en locales)
   const prefix = locale === 'en' ? '' : `/${locale}`
 
   const navLinks = [
-    { labelKey: 'home', label: 'Home', href: `${prefix}/` },
-    { labelKey: 'services', label: 'Services', href: `${prefix}/services` },
-    { labelKey: 'caseStudies', label: 'Case Studies', href: `${prefix}/case-studies` },
-    { labelKey: 'about', label: 'About', href: `${prefix}/about` },
-    { labelKey: 'blog', label: 'Blog', href: `${prefix}/blog` },
-    { labelKey: 'contact', label: 'Contact', href: `${prefix}/contact` },
+    { label: 'Home', href: `${prefix}/` },
+    { label: 'Services', href: `${prefix}/services` },
+    { label: 'Case Studies', href: `${prefix}/case-studies` },
+    { label: 'About', href: `${prefix}/about` },
+    { label: 'Blog', href: `${prefix}/blog` },
+    { label: 'Contact', href: `${prefix}/contact` },
   ]
+
+  // Switch locale while preserving the current path segment
+  const switchLocalePath = (newLocale: string) => {
+    let pathWithoutLocale = pathname
+    for (const loc of NON_DEFAULT_LOCALES) {
+      if (pathname.startsWith(`/${loc}`)) {
+        pathWithoutLocale = pathname.slice(`/${loc}`.length) || '/'
+        break
+      }
+    }
+    if (newLocale === 'en') return pathWithoutLocale || '/'
+    return `/${newLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`
+  }
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleOutside(e: MouseEvent) {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setLangOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleOutside)
+    return () => document.removeEventListener('mousedown', handleOutside)
+  }, [])
+
+  const currentLang = LANGUAGES.find(l => l.code === locale) ?? LANGUAGES[0]
 
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#0A0F1E] backdrop-blur-md shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
+
             {/* Logo */}
             <Link
               href={`${prefix}/`}
@@ -81,26 +111,48 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
               ))}
             </nav>
 
-            {/* Language Switcher + CTA + Hamburger */}
+            {/* Language Dropdown + CTA + Hamburger */}
             <div className="flex items-center gap-3">
-              {/* Language switcher — desktop */}
-              <div className="hidden md:flex items-center gap-0 text-sm font-heading">
-                {LANGUAGES.map((lang, i) => (
-                  <span key={lang.code} className="flex items-center">
-                    {i > 0 && <span className="text-[#F8FAFC]/20 mx-1 select-none">|</span>}
-                    <Link
-                      href={lang.code === 'en' ? '/' : `/${lang.code}`}
-                      className={cn(
-                        'px-1 py-0.5 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4] rounded',
-                        locale === lang.code
-                          ? 'text-[#EC4899] font-bold'
-                          : 'text-[#F8FAFC]/50 hover:text-[#F8FAFC]'
-                      )}
-                    >
-                      {lang.label}
-                    </Link>
-                  </span>
-                ))}
+
+              {/* Language dropdown — desktop */}
+              <div ref={langRef} className="relative hidden md:block">
+                <button
+                  onClick={() => setLangOpen(prev => !prev)}
+                  aria-label="Select language"
+                  aria-expanded={langOpen}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-heading font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
+                >
+                  <Globe className="w-4 h-4 text-[#06B6D4]" />
+                  <span className="text-white font-semibold">{currentLang.short}</span>
+                  <ChevronDown
+                    className={cn(
+                      'w-3.5 h-3.5 transition-transform duration-200',
+                      langOpen ? 'rotate-180' : 'rotate-0'
+                    )}
+                  />
+                </button>
+
+                {/* Dropdown panel */}
+                {langOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-44 bg-[#111827] border border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
+                    {LANGUAGES.map((lang) => (
+                      <Link
+                        key={lang.code}
+                        href={switchLocalePath(lang.code)}
+                        onClick={() => setLangOpen(false)}
+                        className={cn(
+                          'flex items-center justify-between px-4 py-2.5 text-sm font-heading transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#06B6D4]',
+                          locale === lang.code
+                            ? 'bg-[#EC4899]/10 text-[#EC4899] font-semibold'
+                            : 'text-white/70 hover:bg-white/5 hover:text-white'
+                        )}
+                      >
+                        <span>{lang.label}</span>
+                        <span className="text-xs text-white/30">{lang.short}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <Link
@@ -119,6 +171,7 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
                 <Menu className="w-6 h-6" />
               </button>
             </div>
+
           </div>
         </div>
       </header>
