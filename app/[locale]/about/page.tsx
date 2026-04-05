@@ -84,7 +84,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
               Make World-Class Marketing Accessible
             </h2>
             <p className="font-body text-[#0A0F1E]/60 text-lg leading-relaxed mt-6 max-w-2xl mx-auto">
-              Great marketing shouldn't require a Fortune 500 budget. We use AI to give SMEs, political candidates, and growing businesses the same firepower as enterprise agencies — at a fraction of the cost.
+              Great marketing shouldn&apos;t require a Fortune 500 budget. We use AI to give SMEs, political candidates, and growing businesses the same firepower as enterprise agencies — at a fraction of the cost.
             </p>
           </div>
 
@@ -98,7 +98,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
             <div className="bg-[#FDF2F8] rounded-2xl p-8">
               <h3 className="font-heading font-bold text-xl text-[#0A0F1E] mb-3">Global Reach</h3>
               <p className="font-body text-[#0A0F1E]/70 text-sm leading-relaxed">
-                From our India base, we serve the UAE's ambitious business community and Canada's thriving diaspora markets. One agency, three continents, consistent results.
+                From our India base, we serve the UAE&apos;s ambitious business community and Canada&apos;s thriving diaspora markets. One agency, three continents, consistent results.
               </p>
             </div>
           </div>

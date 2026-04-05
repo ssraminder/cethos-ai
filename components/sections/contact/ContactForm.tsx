@@ -82,7 +82,7 @@ export function ContactForm({ locale = 'en' }: ContactFormProps) {
           Message Sent!
         </h3>
         <p className="font-body text-[#0A0F1E]/60 text-base leading-relaxed max-w-sm">
-          Thank you, {form.name}. We'll review your message and get back to you within 24 hours with your free strategy audit.
+          Thank you, {form.name}. We&apos;ll review your message and get back to you within 24 hours with your free strategy audit.
         </p>
       </div>
     )
@@ -137,7 +137,7 @@ export function ContactForm({ locale = 'en' }: ContactFormProps) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
-          <label htmlFor="service_interest" className={labelClass}>Service You're Interested In</label>
+          <label htmlFor="service_interest" className={labelClass}>Service You&apos;re Interested In</label>
           <select
             id="service_interest"
             name="service_interest"
