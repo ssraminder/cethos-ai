@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@14 . --typescript --tailwind --eslint --app --src-dir=no --import-alias=\"@/*\" --use-npm --yes)",
+      "Bash(npm install:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(ls \"D:\\\\cethos-app\\\\cethos-ai\\\\next.config\"*)",
+      "Bash(ls \"D:\\\\cethos-app\\\\cethos-ai\"/next.config*)",
+      "Bash(npm run:*)",
+      "Bash(node -e \"const pkg = require\\(''./node_modules/eslint/package.json''\\); console.log\\(pkg.version\\)\")",
+      "Bash(node -e \"const pkg = require\\(''./node_modules/typescript/package.json''\\); console.log\\(pkg.version\\)\")",
+      "Bash(node -e \"const pkg = require\\(''./node_modules/lucide-react/package.json''\\); console.log\\(pkg.version\\)\")",
+      "Bash(node -e \"const lr = require\\(''./node_modules/lucide-react''\\); const icons = [''Linkedin'', ''Twitter'', ''Instagram'', ''Facebook'', ''Vote'', ''Printer'', ''Share2'', ''TrendingUp'', ''Sparkles'', ''Search'', ''MessageCircle'', ''Palette'', ''Compass'', ''Zap'', ''BarChart2'', ''Menu'', ''X'', ''Star'']; icons.forEach\\(i => console.log\\(i, !!lr[i]\\)\\)\")",
+      "Bash(node -e \"const lr = require\\(''./node_modules/lucide-react''\\); const icons = [''Linkedin'', ''Twitter'', ''Instagram'', ''Facebook'', ''Vote'']; icons.forEach\\(function\\(i\\) { console.log\\(i, Boolean\\(lr[i]\\)\\); }\\)\")",
+      "Bash(node -e \"const lr = require\\(''./node_modules/lucide-react''\\); const keys = Object.keys\\(lr\\).filter\\(function\\(k\\) { return k.match\\(/[Ll]inked|[Tt]witter|[Ii]nstagram|[Ff]ace|[Ss]ocial/\\); }\\); console.log\\(keys.join\\(''\\\\n''\\)\\)\")",
+      "Bash(node -e \"const lr = require\\(''./node_modules/lucide-react''\\); const keys = Object.keys\\(lr\\).filter\\(function\\(k\\) { return typeof lr[k] === ''function'' && !k.startsWith\\(''create''\\) && !k.startsWith\\(''Lucide''\\); }\\); console.log\\(keys.slice\\(0, 50\\).join\\(''\\\\n''\\)\\)\")",
+      "Bash(node -e \"const lr = require\\(''D:/cethos-app/cethos-ai/node_modules/lucide-react/dist/cjs/lucide-react.js''\\); const checks = [''Link'', ''Link2'', ''Globe'', ''Share'', ''AtSign'', ''BarChart2'', ''BarChart'', ''TrendingUp'', ''Compass'', ''Zap'', ''Star'', ''Menu'', ''X'', ''Vote'', ''Printer'', ''Share2'', ''Sparkles'', ''Search'', ''MessageCircle'', ''Palette'', ''ChevronRight'']; checks.forEach\\(function\\(k\\) { console.log\\(k, Boolean\\(lr[k]\\)\\); }\\)\")",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}
