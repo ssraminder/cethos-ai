@@ -2,6 +2,8 @@ export const dynamic = 'force-dynamic'
 
 import { createClient } from '@supabase/supabase-js'
 import type { BlogPost } from '@/lib/types'
+import { SeoHead } from '@/components/SeoHead'
+import { generateSeoMetadata } from '@/lib/seo'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { BlogCard } from '@/components/shared/BlogCard'
@@ -12,17 +14,10 @@ export async function generateMetadata({
 }: {
   params: { locale: string }
 }): Promise<Metadata> {
-  const locale = params.locale
-  return {
+  return generateSeoMetadata('/blog', params.locale, {
     title: 'Blog | Cethos Media',
-    description:
-      'Marketing insights, strategy, and AI-powered growth ideas from the Cethos Media team — for businesses in India, UAE, and Canada.',
-    openGraph: {
-      title: 'Blog | Cethos Media',
-      description: 'Marketing insights for India, UAE, and Canada.',
-      locale,
-    },
-  }
+    description: 'Marketing insights, strategy, and AI-powered growth ideas from the Cethos Media team — for businesses in India, UAE, and Canada.',
+  })
 }
 
 export default async function BlogPage({
@@ -83,6 +78,7 @@ export default async function BlogPage({
 
   return (
     <main className="pt-20 md:pt-24 bg-[#FDF2F8] min-h-screen">
+      <SeoHead pagePath="/blog" locale={locale} />
       <SectionWrapper>
         <SectionHeader
           eyebrow="Blog"

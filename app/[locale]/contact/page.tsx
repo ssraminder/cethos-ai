@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { SeoHead } from '@/components/SeoHead'
+import { generateSeoMetadata } from '@/lib/seo'
 import { PageHero } from '@/components/shared/PageHero'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { ContactForm } from '@/components/sections/contact/ContactForm'
@@ -9,15 +11,10 @@ interface Props {
 }
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
-  return {
+  return generateSeoMetadata('/contact', locale, {
     title: 'Contact Us | Cethos Media',
     description: 'Ready to grow? Get a free strategy audit from Cethos Media. Serving businesses in India, UAE and Canada.',
-    openGraph: {
-      title: 'Contact Cethos Media',
-      description: 'Get a free strategy audit from our team.',
-      locale,
-    },
-  }
+  })
 }
 
 export default function ContactPage({ params: { locale } }: Props) {
@@ -29,6 +26,7 @@ export default function ContactPage({ params: { locale } }: Props) {
 
   return (
     <main className="pt-20 md:pt-24 bg-white min-h-screen">
+      <SeoHead pagePath="/contact" locale={locale} />
       <PageHero
         eyebrow="Let's Talk Results"
         heading="Contact Us"

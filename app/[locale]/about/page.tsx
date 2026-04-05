@@ -2,6 +2,8 @@ export const dynamic = 'force-dynamic'
 
 import type { Metadata } from 'next'
 import { createClient } from '@supabase/supabase-js'
+import { SeoHead } from '@/components/SeoHead'
+import { generateSeoMetadata } from '@/lib/seo'
 import { PageHero } from '@/components/shared/PageHero'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
@@ -15,15 +17,10 @@ interface Props {
 }
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
-  return {
+  return generateSeoMetadata('/about', locale, {
     title: 'About Us | Cethos Media',
     description: 'AI-Powered. Human-Managed. Cethos Media is a global digital marketing agency serving India, UAE and Canada with results-guaranteed campaigns.',
-    openGraph: {
-      title: 'About Cethos Media',
-      description: 'AI-powered. Human-managed. Results guaranteed.',
-      locale,
-    },
-  }
+  })
 }
 
 export default async function AboutPage({ params: { locale } }: Props) {
@@ -75,6 +72,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
 
   return (
     <main className="pt-20 md:pt-24 bg-white min-h-screen">
+      <SeoHead pagePath="/about" locale={locale} />
       <PageHero
         eyebrow="Our Story"
         heading="About Cethos Media"

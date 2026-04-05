@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic'
 
+import type { Metadata } from 'next'
 import { createClient } from '@supabase/supabase-js'
 import { HeroSection } from '@/components/sections/home/HeroSection'
 import { ClientLogos } from '@/components/sections/home/ClientLogos'
@@ -9,16 +10,27 @@ import { ProcessSection } from '@/components/sections/home/ProcessSection'
 import { WorkPreview } from '@/components/sections/home/WorkPreview'
 import { TestimonialsSection } from '@/components/sections/home/TestimonialsSection'
 import { CtaBanner } from '@/components/sections/home/CtaBanner'
+import { SeoHead } from '@/components/SeoHead'
+import { generateSeoMetadata } from '@/lib/seo'
 import { services as fallbackServices } from '@/lib/data/services'
 import type { Service } from '@/lib/types'
 
-export const metadata = {
-  title: 'Ascelo AI — AI-Native Operations for Growing Businesses',
-  description:
-    'AI-Native Operations for Growing Businesses. We run your entire digital operation — lead gen, voice AI, websites, SEO, content, and automation. Canada, US, UAE, India.',
+interface Props {
+  params: { locale: string }
 }
 
-export default async function HomePage() {
+export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
+  const pagePath = locale === 'en' ? '/' : `/${locale}`
+  const fallbackPath = locale !== 'en' ? '/' : undefined
+  return generateSeoMetadata(pagePath, locale, {
+    title: 'Cethos Media — AI-Powered. Human-Managed. Results Guaranteed.',
+    description: 'AI-powered digital marketing for businesses in India, UAE and Canada. Performance marketing, SEO, social media, AI content and political campaigns.',
+  }, fallbackPath)
+}
+
+export default async function HomePage({ params: { locale } }: Props) {
+  const pagePath = locale === 'en' ? '/' : `/${locale}`
+  const fallbackPath = locale !== 'en' ? '/' : undefined
   let serviceList: Service[] = []
   try {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -42,6 +54,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <SeoHead pagePath={pagePath} locale={locale} fallbackPath={fallbackPath} />
       <HeroSection />
       <ClientLogos />
       <StatsSection />
