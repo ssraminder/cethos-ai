@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { ServiceCard } from '@/components/shared/ServiceCard'
-import { services } from '@/lib/data/services'
+import type { Service } from '@/lib/types'
 
 const containerVariants = {
   hidden: {},
@@ -26,7 +26,7 @@ const itemVariants = {
   },
 }
 
-export function ServicesPreview() {
+export function ServicesPreview({ services }: { services: Service[] }) {
   const t = useTranslations('sections')
   const preview = services.slice(0, 6)
 
