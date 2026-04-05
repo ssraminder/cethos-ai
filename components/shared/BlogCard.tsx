@@ -21,7 +21,7 @@ export function BlogCard({ post, locale }: BlogCardProps) {
 
   return (
     <Link
-      href={`/${locale}/blog/${post.slug}`}
+      href={locale === 'en' ? `/blog/${post.slug}` : `/${locale}/blog/${post.slug}`}
       className={cn(
         'group block rounded-2xl overflow-hidden border border-[#EC4899]/10 bg-white transition-all duration-300 cursor-pointer',
         'hover:scale-[1.02] hover:shadow-[0_20px_60px_rgba(236,72,153,0.15)]',
