@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { Menu, ChevronDown, Globe } from 'lucide-react'
 import { useCompanyInfo } from '@/lib/context/CompanyInfoContext'
 import { MobileMenu } from '@/components/layout/MobileMenu'
@@ -26,6 +26,7 @@ interface NavbarProps {
 export function Navbar({ locale = 'en' }: NavbarProps) {
   const company = useCompanyInfo()
   const pathname = usePathname()
+  const router = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [langOpen, setLangOpen] = useState(false)
   const langRef = useRef<HTMLDivElement>(null)
@@ -41,7 +42,7 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
     { label: 'Contact', href: `${prefix}/contact` },
   ]
 
-  // Switch locale while preserving the current path segment
+  // Strip current locale prefix from pathname to get the bare path
   const switchLocalePath = (newLocale: string) => {
     let pathWithoutLocale = pathname
     for (const loc of NON_DEFAULT_LOCALES) {
@@ -52,6 +53,14 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
     }
     if (newLocale === 'en') return pathWithoutLocale || '/'
     return `/${newLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`
+  }
+
+  // Set NEXT_LOCALE cookie so middleware respects explicit user choice
+  // over Accept-Language auto-detection, then navigate
+  const switchLocale = (newLocale: string) => {
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`
+    setLangOpen(false)
+    router.push(switchLocalePath(newLocale))
   }
 
   // Close dropdown on outside click
@@ -136,12 +145,11 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
                 {langOpen && (
                   <div className="absolute right-0 top-full mt-2 w-44 bg-[#111827] border border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
                     {LANGUAGES.map((lang) => (
-                      <Link
+                      <button
                         key={lang.code}
-                        href={switchLocalePath(lang.code)}
-                        onClick={() => setLangOpen(false)}
+                        onClick={() => switchLocale(lang.code)}
                         className={cn(
-                          'flex items-center justify-between px-4 py-2.5 text-sm font-heading transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#06B6D4]',
+                          'w-full flex items-center justify-between px-4 py-2.5 text-sm font-heading transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#06B6D4]',
                           locale === lang.code
                             ? 'bg-[#EC4899]/10 text-[#EC4899] font-semibold'
                             : 'text-white/70 hover:bg-white/5 hover:text-white'
@@ -149,7 +157,7 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
                       >
                         <span>{lang.label}</span>
                         <span className="text-xs text-white/30">{lang.short}</span>
-                      </Link>
+                      </button>
                     ))}
                   </div>
                 )}

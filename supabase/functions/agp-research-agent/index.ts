@@ -109,7 +109,15 @@ Return ONLY the blog post content starting with META: on line 1, then the full p
     const excerpt = metaMatch ? metaMatch[1].trim() : idea.angle
     const content = fullContent.replace(/^META:.+$/m, '').trim()
 
-    // STEP 2: Generate featured image via OpenAI image model (gpt-image-1 or dall-e-3)
+    // STEP 2: Generate URL-safe slug (needed before image upload path)
+    const slugBase = idea.title
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .slice(0, 60)
+    const slug = `${slugBase}-${idea.locale}-${Date.now()}`
+
+    // STEP 3: Generate featured image via OpenAI image model (gpt-image-1 or dall-e-3)
     const imagePrompt = `Professional marketing blog featured image for an article titled "${idea.title}".
 Style: Modern, clean, professional digital marketing agency aesthetic.
 Colors: Deep navy (#0A0F1E) background with pink (#EC4899) and cyan (#06B6D4) accents.
@@ -163,14 +171,6 @@ High quality, suitable for a professional B2B marketing blog.`
       // dall-e-3 returns a direct URL
       imageUrl = imageData.data?.[0]?.url ?? null
     }
-
-    // STEP 3: Generate URL-safe slug
-    const slugBase = idea.title
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .slice(0, 60)
-    const slug = `${slugBase}-${idea.locale}-${Date.now()}`
 
     // STEP 4: Store in agp_blog_posts
     const { data: post, error: postError } = await supabase

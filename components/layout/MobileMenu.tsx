@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { X, Globe, Check } from 'lucide-react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import type { CompanyInfo } from '@/lib/types'
 import { cn } from '@/lib/utils'
 
@@ -26,6 +26,7 @@ interface MobileMenuProps {
 
 export function MobileMenu({ isOpen, onClose, company, locale = 'en' }: MobileMenuProps) {
   const pathname = usePathname()
+  const router = useRouter()
   const prefix = locale === 'en' ? '' : `/${locale}`
 
   const navLinks = [
@@ -47,6 +48,12 @@ export function MobileMenu({ isOpen, onClose, company, locale = 'en' }: MobileMe
     }
     if (newLocale === 'en') return pathWithoutLocale || '/'
     return `/${newLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`
+  }
+
+  const switchLocale = (newLocale: string) => {
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`
+    onClose()
+    router.push(switchLocalePath(newLocale))
   }
 
   return (
@@ -113,12 +120,11 @@ export function MobileMenu({ isOpen, onClose, company, locale = 'en' }: MobileMe
             </div>
             <div className="grid grid-cols-1 gap-1 bg-[#111827] rounded-xl border border-white/10 overflow-hidden">
               {LANGUAGES.map((lang) => (
-                <Link
+                <button
                   key={lang.code}
-                  href={switchLocalePath(lang.code)}
-                  onClick={onClose}
+                  onClick={() => switchLocale(lang.code)}
                   className={cn(
-                    'flex items-center justify-between px-4 py-3 text-sm font-heading transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#06B6D4]',
+                    'w-full flex items-center justify-between px-4 py-3 text-sm font-heading transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#06B6D4]',
                     locale === lang.code
                       ? 'bg-[#EC4899]/10 text-[#EC4899] font-semibold'
                       : 'text-white/70 hover:bg-white/5 hover:text-white'
@@ -131,7 +137,7 @@ export function MobileMenu({ isOpen, onClose, company, locale = 'en' }: MobileMe
                       <Check className="w-3.5 h-3.5 text-[#EC4899]" />
                     )}
                   </div>
-                </Link>
+                </button>
               ))}
             </div>
           </motion.div>
