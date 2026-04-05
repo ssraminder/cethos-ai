@@ -127,7 +127,7 @@ If NOT approved, put the complete revised post in "revised_content" (${MIN_WORDS
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'claude-opus-4-5',
+      model: 'claude-sonnet-4-5',
       max_tokens: 8000,
       messages: [{ role: 'user', content: prompt }],
     }),
