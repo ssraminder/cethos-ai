@@ -1,0 +1,55 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "caseStudies": "Case Studies",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact",
+    "cta": "Get a Free Audit"
+  },
+  "hero": {
+    "badge_india": "India",
+    "badge_uae": "UAE",
+    "badge_canada": "Canada",
+    "headline1": "GROW YOUR BUSINESS",
+    "headline2": "ACROSS BORDERS.",
+    "subheadline": "Full-service digital marketing for ambitious brands and businesses in India, UAE and Canada. Powered by AI. Driven by human strategy. Measured by results.",
+    "cta_primary": "Get a Free Strategy Audit",
+    "cta_secondary": "See Our Work",
+    "trust1": "No long-term contracts",
+    "trust2": "Free strategy audit included",
+    "trust3": "Results tracked from day one"
+  },
+  "sections": {
+    "clients_label": "Growing businesses across India, UAE and Canada",
+    "stats_eyebrow": "By the Numbers",
+    "stats_heading": "Results That Speak for Themselves",
+    "services_eyebrow": "Full-Service Agency",
+    "services_heading": "Everything Your Brand Needs to Grow",
+    "services_sub": "From performance campaigns to brand strategy — we cover every channel, in every market we serve.",
+    "services_viewall": "View all services",
+    "process_eyebrow": "How We Work",
+    "process_heading": "From Brief to Results in Record Time",
+    "process_sub": "Our AI-accelerated process delivers in days what traditional agencies take weeks to produce.",
+    "work_eyebrow": "Proven Results",
+    "work_heading": "Numbers Our Clients Actually Care About",
+    "work_sub": "Case studies from real campaigns across India, UAE and Canada.",
+    "work_viewall": "View all case studies",
+    "testimonials_eyebrow": "Client Stories",
+    "testimonials_heading": "Results Our Clients Are Proud Of",
+    "testimonials_sub": "From Chandigarh to Dubai to Toronto — every number is real.",
+    "cta_heading": "READY TO GROW YOUR BUSINESS?",
+    "cta_sub": "Get a free strategy audit from our team. We'll map out exactly how to reach your audience in India, UAE or Canada — and what results to expect.",
+    "cta_button": "Get a Free Strategy Audit",
+    "cta_urgency": "Limited onboarding spots available this month"
+  },
+  "footer": {
+    "services_heading": "Services",
+    "company_heading": "Company",
+    "contact_heading": "Contact",
+    "copyright": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms"
+  }
+}

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { TestimonialCard } from '@/components/shared/TestimonialCard'
@@ -27,6 +28,7 @@ const itemVariants = {
 }
 
 export function TestimonialsSection() {
+  const t = useTranslations('sections')
   const [activeIndex, setActiveIndex] = useState(0)
 
   const prev = () => setActiveIndex((i) => (i - 1 + testimonials.length) % testimonials.length)
@@ -35,9 +37,9 @@ export function TestimonialsSection() {
   return (
     <SectionWrapper light>
       <SectionHeader
-        eyebrow="Client Stories"
-        heading="Results Our Clients Are Proud Of"
-        subheading="From Chandigarh to Dubai to Toronto — every number is real."
+        eyebrow={t('testimonials_eyebrow')}
+        heading={t('testimonials_heading')}
+        subheading={t('testimonials_sub')}
         centered
       />
 

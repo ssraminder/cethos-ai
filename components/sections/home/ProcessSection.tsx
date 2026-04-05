@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Compass, Sparkles, Zap, BarChart2, type LucideIcon } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { processSteps } from '@/lib/data/process-steps'
@@ -32,12 +33,14 @@ const itemVariants = {
 }
 
 export function ProcessSection() {
+  const t = useTranslations('sections')
+
   return (
     <SectionWrapper>
       <SectionHeader
-        eyebrow="How We Work"
-        heading="From Brief to Results in Record Time"
-        subheading="Our AI-accelerated process delivers in days what traditional agencies take weeks to produce."
+        eyebrow={t('process_eyebrow')}
+        heading={t('process_heading')}
+        subheading={t('process_sub')}
         centered
       />
 

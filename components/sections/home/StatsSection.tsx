@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import type { Transition } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import { AnimatedCounter } from '@/components/shared/AnimatedCounter'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { stats } from '@/lib/data/stats'
@@ -32,13 +33,15 @@ const itemVariants = {
 }
 
 export function StatsSection() {
+  const t = useTranslations('sections')
+
   return (
     <section className="bg-[#0A0F1E] w-full py-20 md:py-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div {...fadeUp(0)} className="mb-12 md:mb-16">
           <SectionHeader
-            eyebrow="By the Numbers"
-            heading="Results That Speak for Themselves"
+            eyebrow={t('stats_eyebrow')}
+            heading={t('stats_heading')}
             centered
             light
           />

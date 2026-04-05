@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import type { Transition } from 'framer-motion'
 import { CheckCircle2, ChevronDown } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 16 },
@@ -11,9 +12,12 @@ const fadeUp = (delay: number) => ({
   transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay } as Transition,
 })
 
-const markets = ['India', 'UAE', 'Canada']
-
 export function HeroSection() {
+  const t = useTranslations('hero')
+
+  const markets = [t('badge_india'), t('badge_uae'), t('badge_canada')]
+  const trustItems = [t('trust1'), t('trust2'), t('trust3')]
+
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-[#0A0F1E] via-[#0d0d1a] to-[#0A0F1E] flex flex-col items-center justify-center text-center px-4 pt-24">
 
@@ -35,12 +39,12 @@ export function HeroSection() {
         <div className="mb-6">
           <motion.div {...fadeUp(0.2)}>
             <span className="block font-display text-6xl md:text-7xl lg:text-8xl leading-none tracking-wide text-white">
-              GROW YOUR BUSINESS
+              {t('headline1')}
             </span>
           </motion.div>
           <motion.div {...fadeUp(0.3)}>
             <span className="block font-display text-6xl md:text-7xl lg:text-8xl leading-none tracking-wide bg-gradient-to-r from-[#EC4899] to-[#06B6D4] bg-clip-text text-transparent">
-              ACROSS BORDERS.
+              {t('headline2')}
             </span>
           </motion.div>
         </div>
@@ -50,7 +54,7 @@ export function HeroSection() {
           {...fadeUp(0.4)}
           className="font-body text-lg md:text-xl text-[#F8FAFC]/60 max-w-2xl mx-auto mt-6 leading-relaxed"
         >
-          Full-service digital marketing for ambitious brands and businesses in India, UAE and Canada. Powered by AI. Driven by human strategy. Measured by results.
+          {t('subheadline')}
         </motion.p>
 
         {/* CTA row */}
@@ -62,13 +66,13 @@ export function HeroSection() {
             href="/contact"
             className="bg-[#06B6D4] hover:bg-[#06B6D4]/90 text-white font-heading font-semibold px-8 py-4 rounded-xl text-base md:text-lg transition-all duration-300 cursor-pointer shadow-lg shadow-[#06B6D4]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
           >
-            Get a Free Strategy Audit
+            {t('cta_primary')}
           </Link>
           <Link
             href="/case-studies"
             className="border border-white/20 hover:border-white/50 text-[#F8FAFC] font-heading font-semibold px-8 py-4 rounded-xl text-base md:text-lg transition-all duration-300 cursor-pointer hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
           >
-            See Our Work
+            {t('cta_secondary')}
           </Link>
         </motion.div>
 
@@ -77,11 +81,7 @@ export function HeroSection() {
           {...fadeUp(0.6)}
           className="flex gap-6 justify-center flex-wrap mt-8"
         >
-          {[
-            'No long-term contracts',
-            'Free strategy audit included',
-            'Results tracked from day one',
-          ].map((item) => (
+          {trustItems.map((item) => (
             <span key={item} className="flex items-center gap-1.5 text-[#F8FAFC]/50 text-sm font-body">
               <CheckCircle2 className="w-4 h-4 text-[#06B6D4]" />
               {item}

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import type { Transition } from 'framer-motion'
 import { Zap } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 24 },
@@ -13,6 +14,8 @@ const fadeUp = (delay: number) => ({
 })
 
 export function CtaBanner() {
+  const t = useTranslations('sections')
+
   return (
     <section className="relative w-full py-24 md:py-32 bg-gradient-to-br from-[#0A0F1E] via-[#1a0a2e] to-[#0A0F1E] overflow-hidden">
       {/* Pink glow overlay */}
@@ -31,7 +34,7 @@ export function CtaBanner() {
           {...fadeUp(0.1)}
           className="font-display text-5xl md:text-6xl lg:text-7xl text-white leading-none tracking-wide"
         >
-          READY TO GROW YOUR BUSINESS?
+          {t('cta_heading')}
         </motion.h2>
 
         {/* Subtext */}
@@ -39,7 +42,7 @@ export function CtaBanner() {
           {...fadeUp(0.2)}
           className="font-body text-lg text-[#F8FAFC]/70 mt-4 max-w-xl mx-auto"
         >
-          Get a free strategy audit from our team. We&apos;ll map out exactly how to reach your audience in India, UAE or Canada — and what results to expect.
+          {t('cta_sub')}
         </motion.p>
 
         {/* CTA */}
@@ -51,7 +54,7 @@ export function CtaBanner() {
             href="/contact"
             className="bg-[#06B6D4] hover:bg-[#06B6D4]/90 text-white font-heading font-semibold px-8 py-4 rounded-xl text-lg transition-all duration-300 cursor-pointer shadow-lg shadow-[#06B6D4]/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
           >
-            Get a Free Strategy Audit
+            {t('cta_button')}
           </Link>
         </motion.div>
 
@@ -61,7 +64,7 @@ export function CtaBanner() {
           className="inline-flex items-center gap-1.5 mt-8 text-[#EC4899] text-sm font-heading"
         >
           <Zap className="w-4 h-4" />
-          Limited onboarding spots available this month
+          {t('cta_urgency')}
         </motion.p>
       </div>
     </section>

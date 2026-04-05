@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Gurmukhi:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -48,6 +49,26 @@ body {
   color: var(--color-text-dark);
   background: #ffffff;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Arabic locale — Cairo font */
+[lang="ar"] {
+  font-family: 'Cairo', sans-serif;
+}
+
+/* Hindi locale — Noto Sans Devanagari */
+[lang="hi"] {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+
+/* Punjabi locale — Noto Sans Gurmukhi */
+[lang="pa"] {
+  font-family: 'Noto Sans Gurmukhi', sans-serif;
+}
+
+/* RTL support */
+[dir="rtl"] {
+  text-align: right;
 }
 
 @media (prefers-reduced-motion: reduce) {

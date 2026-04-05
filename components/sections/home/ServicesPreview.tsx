@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { ServiceCard } from '@/components/shared/ServiceCard'
@@ -26,14 +27,15 @@ const itemVariants = {
 }
 
 export function ServicesPreview() {
+  const t = useTranslations('sections')
   const preview = services.slice(0, 6)
 
   return (
     <SectionWrapper light>
       <SectionHeader
-        eyebrow="Full-Service Agency"
-        heading="Everything Your Brand Needs to Grow"
-        subheading="From performance campaigns to brand strategy — we cover every channel, in every market we serve."
+        eyebrow={t('services_eyebrow')}
+        heading={t('services_heading')}
+        subheading={t('services_sub')}
         centered
       />
 
@@ -56,7 +58,7 @@ export function ServicesPreview() {
           href="/services"
           className="font-heading font-semibold text-[#EC4899] hover:text-[#EC4899]/80 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4] rounded"
         >
-          View all services &rarr;
+          {t('services_viewall')} &rarr;
         </Link>
       </div>
     </SectionWrapper>

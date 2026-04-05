@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { CaseStudyCard } from '@/components/shared/CaseStudyCard'
@@ -27,14 +28,15 @@ const itemVariants = {
 }
 
 export function WorkPreview() {
+  const t = useTranslations('sections')
   const preview = caseStudies.slice(0, 3) as unknown as CaseStudy[]
 
   return (
     <SectionWrapper dark>
       <SectionHeader
-        eyebrow="Proven Results"
-        heading="Numbers Our Clients Actually Care About"
-        subheading="Case studies from real campaigns across India, UAE and Canada."
+        eyebrow={t('work_eyebrow')}
+        heading={t('work_heading')}
+        subheading={t('work_sub')}
         centered
         light
       />
@@ -58,7 +60,7 @@ export function WorkPreview() {
           href="/case-studies"
           className="font-heading font-semibold text-[#06B6D4] hover:text-[#06B6D4]/80 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4] rounded"
         >
-          View all case studies &rarr;
+          {t('work_viewall')} &rarr;
         </Link>
       </div>
     </SectionWrapper>

@@ -15,7 +15,13 @@
       "Bash(node -e \"const lr = require\\(''./node_modules/lucide-react''\\); const keys = Object.keys\\(lr\\).filter\\(function\\(k\\) { return k.match\\(/[Ll]inked|[Tt]witter|[Ii]nstagram|[Ff]ace|[Ss]ocial/\\); }\\); console.log\\(keys.join\\(''\\\\n''\\)\\)\")",
       "Bash(node -e \"const lr = require\\(''./node_modules/lucide-react''\\); const keys = Object.keys\\(lr\\).filter\\(function\\(k\\) { return typeof lr[k] === ''function'' && !k.startsWith\\(''create''\\) && !k.startsWith\\(''Lucide''\\); }\\); console.log\\(keys.slice\\(0, 50\\).join\\(''\\\\n''\\)\\)\")",
       "Bash(node -e \"const lr = require\\(''D:/cethos-app/cethos-ai/node_modules/lucide-react/dist/cjs/lucide-react.js''\\); const checks = [''Link'', ''Link2'', ''Globe'', ''Share'', ''AtSign'', ''BarChart2'', ''BarChart'', ''TrendingUp'', ''Compass'', ''Zap'', ''Star'', ''Menu'', ''X'', ''Vote'', ''Printer'', ''Share2'', ''Sparkles'', ''Search'', ''MessageCircle'', ''Palette'', ''ChevronRight'']; checks.forEach\\(function\\(k\\) { console.log\\(k, Boolean\\(lr[k]\\)\\); }\\)\")",
-      "mcp__Claude_Preview__preview_start"
+      "mcp__Claude_Preview__preview_start",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(node -e \"const p = require\\(''./node_modules/next-intl/package.json''\\); console.log\\(p.version\\)\")",
+      "Bash(ls D:/cethos-app/cethos-ai/app/[locale]/blog)",
+      "Bash(npx next:*)"
     ]
   }
 }

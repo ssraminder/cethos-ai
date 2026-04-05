@@ -7,23 +7,33 @@ import { usePathname } from 'next/navigation'
 import type { CompanyInfo } from '@/lib/types'
 import { cn } from '@/lib/utils'
 
-const navLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Services', href: '/services' },
-  { label: 'Case Studies', href: '/case-studies' },
-  { label: 'Political Campaigns', href: '/political-campaigns' },
-  { label: 'About', href: '/about' },
-  { label: 'Blog', href: '/blog' },
+const LANGUAGES = [
+  { code: 'en', label: 'EN' },
+  { code: 'ar', label: 'ع' },
+  { code: 'fr', label: 'FR' },
+  { code: 'hi', label: 'हि' },
+  { code: 'pa', label: 'ਪੰ' },
 ]
 
 interface MobileMenuProps {
   isOpen: boolean
   onClose: () => void
   company: CompanyInfo
+  locale?: string
 }
 
-export function MobileMenu({ isOpen, onClose, company }: MobileMenuProps) {
+export function MobileMenu({ isOpen, onClose, company, locale = 'en' }: MobileMenuProps) {
   const pathname = usePathname()
+  const prefix = locale === 'en' ? '' : `/${locale}`
+
+  const navLinks = [
+    { label: 'Home', href: `${prefix}/` },
+    { label: 'Services', href: `${prefix}/services` },
+    { label: 'Case Studies', href: `${prefix}/case-studies` },
+    { label: 'Political Campaigns', href: `${prefix}/political-campaigns` },
+    { label: 'About', href: `${prefix}/about` },
+    { label: 'Blog', href: `${prefix}/blog` },
+  ]
 
   return (
     <AnimatePresence>
@@ -72,6 +82,32 @@ export function MobileMenu({ isOpen, onClose, company }: MobileMenuProps) {
                 </Link>
               </motion.div>
             ))}
+
+            {/* Language switcher in mobile menu */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: navLinks.length * 0.05 }}
+              className="flex items-center gap-1 px-4 pt-4 flex-wrap"
+            >
+              {LANGUAGES.map((lang, i) => (
+                <span key={lang.code} className="flex items-center">
+                  {i > 0 && <span className="text-[#F8FAFC]/20 mx-1 select-none">|</span>}
+                  <Link
+                    href={lang.code === 'en' ? '/' : `/${lang.code}`}
+                    onClick={onClose}
+                    className={cn(
+                      'px-2 py-1 text-lg font-heading transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4] rounded',
+                      locale === lang.code
+                        ? 'text-[#EC4899] font-bold'
+                        : 'text-[#F8FAFC]/50 hover:text-[#F8FAFC]'
+                    )}
+                  >
+                    {lang.label}
+                  </Link>
+                </span>
+              ))}
+            </motion.div>
           </nav>
 
           {/* CTA */}
@@ -82,7 +118,7 @@ export function MobileMenu({ isOpen, onClose, company }: MobileMenuProps) {
               transition={{ duration: 0.3, delay: 0.35 }}
             >
               <Link
-                href="/contact"
+                href={`${prefix}/contact`}
                 onClick={onClose}
                 className="block w-full text-center bg-[#06B6D4] text-white px-6 py-4 rounded-lg font-heading font-semibold text-lg hover:bg-[#06B6D4]/90 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
               >
