@@ -89,7 +89,7 @@ export default async function HomePage({ params: { locale } }: Props) {
     <>
       <SeoHead pagePath={pagePath} locale={locale} fallbackPath={fallbackPath} />
       <HeroSection graphic={getGraphic(graphics, 'hero', 'background')} />
-      <ClientLogos clients={displayClients} />
+      <ClientLogos />
       <StatsSection />
       <ServicesPreview services={displayServices} graphics={graphics} />
       <ProcessSection />
