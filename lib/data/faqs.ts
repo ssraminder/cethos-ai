@@ -9,7 +9,7 @@ export const faqs: Omit<FAQ, 'id'>[] = [
   },
   {
     question: 'Which markets do you serve?',
-    answer: 'We operate across three markets: India (with deep focus on Punjab and the North), UAE (particularly Dubai and Abu Dhabi), and Canada (Toronto, Vancouver, and major diaspora hubs). Each market has a dedicated team lead.',
+    answer: 'We work with businesses worldwide. Our team has experience across North America, the Middle East, South Asia, and beyond — and we run campaigns in English, Arabic, French, Hindi, and Punjabi. Wherever your customers are, we can reach them.',
     service_id: null,
     sort_order: 1,
   },
@@ -21,7 +21,7 @@ export const faqs: Omit<FAQ, 'id'>[] = [
   },
   {
     question: 'What is your minimum campaign budget?',
-    answer: 'Our minimum engagement starts at ₹2L/month for India campaigns and $3,000 CAD/month for Canada and UAE. Political campaign packages are quoted based on constituency size and campaign duration.',
+    answer: 'Our minimum engagement starts at $2,000 USD/month for standard campaigns. Political campaign packages are quoted based on constituency size and campaign duration. Contact us for a custom quote.',
     service_id: null,
     sort_order: 3,
   },

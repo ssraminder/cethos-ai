@@ -13,7 +13,7 @@ export const team: Omit<TeamMember, 'id'>[] = [
   {
     name: 'Priya Sidhu',
     role: 'Head of Performance Marketing',
-    bio: 'Google and Meta certified. Managed ₹50Cr+ in ad spend across India, UAE and Canada markets.',
+    bio: 'Google and Meta certified. Managed $50M+ in ad spend across global markets.',
     photo_url: null,
     linkedin_url: null,
     twitter_url: null,
@@ -30,8 +30,8 @@ export const team: Omit<TeamMember, 'id'>[] = [
   },
   {
     name: 'Sarah Mitchell',
-    role: 'Canada & UAE Market Lead',
-    bio: 'Based in Toronto. Specialist in diaspora community marketing and cross-border campaign execution.',
+    role: 'International Market Lead',
+    bio: 'Specialist in diaspora community marketing and cross-border campaign execution across multiple continents.',
     photo_url: null,
     linkedin_url: null,
     twitter_url: null,
