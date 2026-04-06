@@ -11,9 +11,11 @@ interface PageHeroProps {
   ctaLabel?: string
   ctaHref?: string
   className?: string
+  backgroundUrl?: string
+  backgroundAlt?: string
 }
 
-export function PageHero({ eyebrow, heading, subheading, ctaLabel, ctaHref, className }: PageHeroProps) {
+export function PageHero({ eyebrow, heading, subheading, ctaLabel, ctaHref, className, backgroundUrl }: PageHeroProps) {
   return (
     <section
       className={cn(
@@ -21,6 +23,13 @@ export function PageHero({ eyebrow, heading, subheading, ctaLabel, ctaHref, clas
         className
       )}
     >
+      {backgroundUrl && (
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          style={{ backgroundImage: `url('${backgroundUrl}')` }}
+          aria-hidden="true"
+        />
+      )}
       {/* Gradient decoration */}
       <div
         className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full opacity-10 pointer-events-none"

@@ -12,6 +12,7 @@ import { CtaBannerSimple } from '@/components/shared/CtaBannerSimple'
 import { StaggerCards } from '@/components/shared/StaggerCards'
 import { services as fallbackServices } from '@/lib/data/services'
 import type { Service } from '@/lib/types'
+import { getPageGraphics, getGraphic } from '@/lib/graphics'
 
 interface Props {
   params: { locale: string }
@@ -48,6 +49,9 @@ export default async function ServicesPage({ params: { locale } }: Props) {
 
   const prefix = locale === 'en' ? '' : `/${locale}`
 
+  const graphics = await getPageGraphics('/services', locale)
+  const heroBg = getGraphic(graphics, 'hero', 'background')
+
   return (
     <main className="pt-20 md:pt-24 bg-white min-h-screen">
       <SeoHead pagePath="/services" locale={locale} />
@@ -57,6 +61,7 @@ export default async function ServicesPage({ params: { locale } }: Props) {
         subheading="AI-powered, human-managed marketing across every channel — built for ambitious businesses worldwide."
         ctaLabel="Get a Free Strategy Audit"
         ctaHref={`${prefix}/contact`}
+        backgroundUrl={heroBg?.image_url ?? undefined}
       />
 
       <SectionWrapper className="bg-white">

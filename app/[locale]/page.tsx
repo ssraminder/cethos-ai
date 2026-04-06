@@ -14,6 +14,7 @@ import { SeoHead } from '@/components/SeoHead'
 import { generateSeoMetadata } from '@/lib/seo'
 import { services as fallbackServices } from '@/lib/data/services'
 import type { Service } from '@/lib/types'
+import { getPageGraphics, getGraphic } from '@/lib/graphics'
 
 interface Props {
   params: { locale: string }
@@ -52,10 +53,13 @@ export default async function HomePage({ params: { locale } }: Props) {
     ? serviceList
     : (fallbackServices as unknown as Service[])
 
+  const graphics = await getPageGraphics('/', locale)
+  const heroBg = getGraphic(graphics, 'hero', 'background')
+
   return (
     <>
       <SeoHead pagePath={pagePath} locale={locale} fallbackPath={fallbackPath} />
-      <HeroSection />
+      <HeroSection backgroundUrl={heroBg?.image_url ?? undefined} />
       <ClientLogos />
       <StatsSection />
       <ServicesPreview services={displayServices} />

@@ -12,14 +12,21 @@ const fadeUp = (delay: number) => ({
   transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay } as Transition,
 })
 
-export function HeroSection() {
+const DEFAULT_HERO_BG = 'https://scnmdbkpjlkitxdoeiaa.supabase.co/storage/v1/object/public/agp-public/graphics/hero-background.png'
+
+interface HeroSectionProps {
+  backgroundUrl?: string
+}
+
+export function HeroSection({ backgroundUrl }: HeroSectionProps) {
   const t = useTranslations('hero')
 
   const trustItems = [t('trust1'), t('trust2'), t('trust3')]
+  const bgUrl = backgroundUrl ?? DEFAULT_HERO_BG
 
   return (
     <section className="relative min-h-screen bg-[#0A0F1E] flex flex-col items-center justify-center text-center px-4 pt-24">
-      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25" style={{ backgroundImage: "url('https://scnmdbkpjlkitxdoeiaa.supabase.co/storage/v1/object/public/agp-public/graphics/hero-background.png')" }} />
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25" style={{ backgroundImage: `url('${bgUrl}')` }} />
       <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1E]/30 via-transparent to-[#0A0F1E]" />
 
       {/* Main content */}

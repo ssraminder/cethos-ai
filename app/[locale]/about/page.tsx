@@ -12,6 +12,7 @@ import { team as fallbackTeam } from '@/lib/data/team'
 import type { TeamMember } from '@/lib/types'
 import { ExternalLink, Target, Zap, Globe, Users } from 'lucide-react'
 import { StaggerCards } from '@/components/shared/StaggerCards'
+import { getPageGraphics, getGraphic } from '@/lib/graphics'
 
 interface Props {
   params: { locale: string }
@@ -48,6 +49,9 @@ export default async function AboutPage({ params: { locale } }: Props) {
 
   const prefix = locale === 'en' ? '' : `/${locale}`
 
+  const graphics = await getPageGraphics('/about', locale)
+  const heroBg = getGraphic(graphics, 'hero', 'background')
+
   const values = [
     {
       icon: Zap,
@@ -78,6 +82,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
         eyebrow="Our Story"
         heading="About Ascelo AI"
         subheading="We started because we were frustrated with agencies that overpromised and underdelivered. So we built something different — AI-powered, human-managed, and results-obsessed."
+        backgroundUrl={heroBg?.image_url ?? undefined}
       />
 
       {/* Mission */}

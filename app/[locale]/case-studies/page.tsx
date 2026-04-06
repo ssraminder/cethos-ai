@@ -12,6 +12,7 @@ import { CtaBannerSimple } from '@/components/shared/CtaBannerSimple'
 import { StaggerCards } from '@/components/shared/StaggerCards'
 import { caseStudies as fallbackCaseStudies } from '@/lib/data/case-studies'
 import type { CaseStudy } from '@/lib/types'
+import { getPageGraphics, getGraphic } from '@/lib/graphics'
 
 interface Props {
   params: { locale: string }
@@ -48,6 +49,9 @@ export default async function CaseStudiesPage({ params: { locale } }: Props) {
 
   const prefix = locale === 'en' ? '' : `/${locale}`
 
+  const graphics = await getPageGraphics('/case-studies', locale)
+  const heroBg = getGraphic(graphics, 'hero', 'background')
+
   return (
     <main className="pt-20 md:pt-24 bg-white min-h-screen">
       <SeoHead pagePath="/case-studies" locale={locale} />
@@ -57,6 +61,7 @@ export default async function CaseStudiesPage({ params: { locale } }: Props) {
         subheading="Numbers don't lie. Here's what we've delivered for our clients across multiple markets."
         ctaLabel="Start Your Success Story"
         ctaHref={`${prefix}/contact`}
+        backgroundUrl={heroBg?.image_url ?? undefined}
       />
 
       {/* Stats bar */}
