@@ -12,16 +12,16 @@ interface Props {
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   return generateSeoMetadata('/contact', locale, {
-    title: 'Contact Us | Cethos Media',
-    description: 'Ready to grow? Get a free strategy audit from Cethos Media. Serving businesses in India, UAE and Canada.',
+    title: 'Contact Us | Ascelo AI',
+    description: 'Ready to grow? Get a free AI audit from Ascelo AI. Serving ambitious businesses worldwide.',
   })
 }
 
 export default function ContactPage({ params: { locale } }: Props) {
   const contactInfo = [
-    { icon: Mail, label: 'Email Us', value: 'hello@cethosmedia.com', href: 'mailto:hello@cethosmedia.com' },
-    { icon: Phone, label: 'Call / WhatsApp', value: '+1 (437) 986-7355', href: 'tel:+14379867355' },
-    { icon: MapPin, label: 'Offices', value: 'Punjab · Dubai · Toronto', href: null },
+    { icon: Mail, label: 'Email Us', value: 'info@ascelo.ai', href: 'mailto:info@ascelo.ai' },
+    { icon: Phone, label: 'Call / WhatsApp', value: '+1 (587) 329-2590', href: 'tel:+15873292590' },
+    { icon: MapPin, label: 'Office', value: '421, 7th Ave SW, Floor 30, Calgary, AB T2P 4K9', href: null },
   ]
 
   return (

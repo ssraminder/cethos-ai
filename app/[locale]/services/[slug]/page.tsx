@@ -55,12 +55,12 @@ async function getService(slug: string): Promise<{ service: Service; deliverable
 
 export async function generateMetadata({ params: { slug, locale } }: Props): Promise<Metadata> {
   const result = await getService(slug)
-  if (!result) return { title: 'Service Not Found | Cethos Media' }
+  if (!result) return { title: 'Service Not Found | Ascelo AI' }
   return {
-    title: `${result.service.title} | Cethos Media`,
+    title: `${result.service.title} | Ascelo AI`,
     description: result.service.short_desc ?? undefined,
     openGraph: {
-      title: `${result.service.title} | Cethos Media`,
+      title: `${result.service.title} | Ascelo AI`,
       description: result.service.short_desc ?? undefined,
       locale,
     },

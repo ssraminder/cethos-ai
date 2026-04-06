@@ -70,7 +70,7 @@ export function ContactForm({ locale = 'en' }: ContactFormProps) {
       setStatus('success')
     } catch (err) {
       setStatus('error')
-      setErrorMsg('Something went wrong. Please email us directly at hello@cethosmedia.com')
+      setErrorMsg('Something went wrong. Please email us directly at info@ascelo.ai')
     }
   }
 

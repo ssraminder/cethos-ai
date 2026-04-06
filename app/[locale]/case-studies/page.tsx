@@ -18,8 +18,8 @@ interface Props {
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   return generateSeoMetadata('/case-studies', locale, {
-    title: 'Case Studies | Cethos Media',
-    description: 'Real results from real campaigns — see how Cethos Media drives growth for businesses in India, UAE and Canada.',
+    title: 'Case Studies | Ascelo AI',
+    description: 'Real results from real campaigns — see how Ascelo AI drives growth for ambitious businesses worldwide.',
   })
 }
 
@@ -53,7 +53,7 @@ export default async function CaseStudiesPage({ params: { locale } }: Props) {
       <PageHero
         eyebrow="Proven Results"
         heading="Case Studies"
-        subheading="Numbers don't lie. Here's what we've delivered for our clients across India, UAE and Canada."
+        subheading="Numbers don't lie. Here's what we've delivered for our clients across multiple markets."
         ctaLabel="Start Your Success Story"
         ctaHref={`${prefix}/contact`}
       />
@@ -64,7 +64,7 @@ export default async function CaseStudiesPage({ params: { locale } }: Props) {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
               { value: '50+', label: 'Campaigns Delivered' },
-              { value: '3', label: 'Markets Served' },
+              { value: '5', label: 'Languages Supported' },
               { value: '10×', label: 'Average ROI' },
               { value: '95%', label: 'Client Retention' },
             ].map((stat) => (

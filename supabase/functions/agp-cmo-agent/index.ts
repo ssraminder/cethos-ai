@@ -2,7 +2,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const LOCALES = [
-  { code: 'en', name: 'English', market: 'India, UAE, Canada', language: 'English' },
+  { code: 'en', name: 'English', market: 'Global', language: 'English' },
   { code: 'ar', name: 'Arabic', market: 'UAE and Arab diaspora', language: 'Arabic' },
   { code: 'fr', name: 'French Canada', market: 'Quebec and French-speaking Canada', language: 'French (Canadian)' },
   { code: 'hi', name: 'Hindi', market: 'India (Hindi-speaking belt: UP, MP, Rajasthan, Delhi)', language: 'Hindi' },
@@ -10,7 +10,7 @@ const LOCALES = [
 ]
 
 const AGENCY_CONTEXT = `
-You are the CMO of Cethos Media, a global digital marketing agency serving India, UAE and Canada.
+You are the CMO of Ascelo AI, a global digital marketing agency and AI solutions consultancy serving clients worldwide.
 Services: Performance Marketing (PPC), Social Media Management, SEO & Online Reputation, AI-Powered Content Production, WhatsApp & SMS Campaigns, Political Campaign Marketing, Offline Marketing, Brand Strategy, Multilingual Marketing.
 USP: AI-powered tools combined with human strategists. Cost-effective. Multilingual expertise.
 Competitors: Traditional agencies, freelancers, local digital shops.
@@ -35,7 +35,7 @@ The blog must be written in ${locale.language}.
 Generate ONE unique, highly relevant blog post idea that:
 1. Addresses a real pain point of the target market
 2. Incorporates local nuances, cultural context, and region-specific keywords
-3. Positions Cethos Media's services as the solution
+3. Positions Ascelo AI's services as the solution
 4. Has strong SEO potential in the target market
 5. Is NOT a generic digital marketing post — it must feel local and specific
 

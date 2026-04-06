@@ -15,7 +15,6 @@ const fadeUp = (delay: number) => ({
 export function HeroSection() {
   const t = useTranslations('hero')
 
-  const markets = [t('badge_india'), t('badge_uae'), t('badge_canada')]
   const trustItems = [t('trust1'), t('trust2'), t('trust3')]
 
   return (
@@ -23,16 +22,11 @@ export function HeroSection() {
 
       {/* Main content */}
       <div className="relative z-10 w-full max-w-4xl mx-auto">
-        {/* Market badges */}
-        <motion.div {...fadeUp(0.1)} className="flex gap-3 justify-center flex-wrap mb-8">
-          {markets.map((market) => (
-            <span
-              key={market}
-              className="text-xs font-heading uppercase tracking-widest text-[#F8FAFC]/50 border border-[#F8FAFC]/10 px-3 py-1 rounded-full"
-            >
-              {market}
-            </span>
-          ))}
+        {/* Eyebrow */}
+        <motion.div {...fadeUp(0.1)} className="mb-8">
+          <span className="text-xs font-heading uppercase tracking-widest text-[#06B6D4] border border-[#06B6D4]/20 px-4 py-1.5 rounded-full">
+            {t('eyebrow')}
+          </span>
         </motion.div>
 
         {/* Headline */}

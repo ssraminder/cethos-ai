@@ -21,10 +21,10 @@ export async function generateMetadata({ params: { slug, locale } }: Props): Pro
     .eq('published', true)
     .single()
 
-  if (!post) return { title: 'Post Not Found | Cethos Media' }
+  if (!post) return { title: 'Post Not Found | Ascelo AI' }
 
   return {
-    title: `${post.title} | Cethos Media`,
+    title: `${post.title} | Ascelo AI`,
     description: post.excerpt ?? undefined,
     openGraph: {
       title: post.title,
@@ -208,7 +208,7 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
             Ready to grow your business?
           </p>
           <p className="font-body text-white/60 text-sm mb-6">
-            Get a free strategy audit from the Cethos Media team.
+            Get a free strategy audit from the Ascelo AI team.
           </p>
           <Link
             href={locale === 'en' ? '/contact' : `/${locale}/contact`}

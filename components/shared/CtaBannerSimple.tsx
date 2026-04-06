@@ -10,7 +10,7 @@ interface CtaBannerSimpleProps {
 export function CtaBannerSimple({
   locale = 'en',
   heading = 'Ready to Grow Your Business?',
-  subtext = 'Get a free strategy audit from the Cethos Media team. No commitment, just clarity.',
+  subtext = 'Get a free strategy audit from the Ascelo AI team. No commitment, just clarity.',
   buttonLabel = 'Get a Free Audit',
 }: CtaBannerSimpleProps) {
   const prefix = locale === 'en' ? '' : `/${locale}`

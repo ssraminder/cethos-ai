@@ -2,7 +2,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const LOCALE_CONFIG: Record<string, { language: string; market: string; fontNote: string }> = {
-  en: { language: 'English', market: 'India, UAE, Canada', fontNote: '' },
+  en: { language: 'English', market: 'Global', fontNote: '' },
   ar: { language: 'Arabic (Modern Standard with Gulf dialect nuances)', market: 'UAE and Arab diaspora', fontNote: 'Write in right-to-left Arabic script.' },
   fr: { language: 'French (Canadian/Quebec)', market: 'Quebec and French Canada', fontNote: 'Use Canadian French spellings and idioms where appropriate.' },
   hi: { language: 'Hindi (Devanagari script)', market: 'Hindi-speaking India', fontNote: 'Write in Hindi Devanagari. Use common Hindi marketing terms.' },
@@ -10,10 +10,10 @@ const LOCALE_CONFIG: Record<string, { language: string; market: string; fontNote
 }
 
 const AGENCY_CONTEXT = `
-Agency: Cethos Media — global digital marketing agency serving India, UAE and Canada.
+Agency: Ascelo AI — global digital marketing agency and AI solutions consultancy serving clients worldwide.
 Services: Performance Marketing, Social Media, SEO, AI Content, WhatsApp/SMS, Political Marketing, Offline Marketing, Brand Strategy, Multilingual Marketing.
 USP: AI-powered + human-managed. Cost-effective. Multilingual expertise.
-Website: cethosmedia.com
+Website: ascelo.ai
 `
 
 const MIN_WORDS = 1800
@@ -31,7 +31,7 @@ async function writeWithClaude(
 ): Promise<string> {
   const writingPrompt = `${AGENCY_CONTEXT}
 
-You are a senior content strategist and copywriter for Cethos Media.
+You are a senior content strategist and copywriter for Ascelo AI.
 Write a comprehensive, SEO-optimised blog post for the following brief:
 
 Title: ${idea.title}
@@ -48,7 +48,7 @@ REQUIREMENTS — STRICT:
 - Structure: H1 title, introduction, 4-6 H2 sections each with 2-3 paragraphs, H3 subsections where needed, conclusion with CTA
 - Must feel LOCAL — local market context, local business examples, local pain points
 - Incorporate keywords naturally (not stuffed)
-- End with a strong CTA mentioning Cethos Media's free strategy audit
+- End with a strong CTA mentioning Ascelo AI's free strategy audit
 - Include a meta description (max 155 chars) at the very start as: META: [your meta description here]
 - Write the FULL post in ${config.language}
 
@@ -82,7 +82,7 @@ async function reviewWithClaude(
 ): Promise<{ approved: boolean; score: number; issues: string[]; revised_content: string | null }> {
   const wordCount = countWords(content)
 
-  const prompt = `You are a senior editorial director at Cethos Media, a B2B digital marketing agency.
+  const prompt = `You are a senior editorial director at Ascelo AI, a B2B digital marketing agency and AI solutions consultancy.
 Review the following blog post draft and return a JSON assessment.
 
 Blog Brief:
@@ -103,7 +103,7 @@ Review criteria:
 2. QUALITY: Genuinely useful, specific, non-generic?
 3. SEO: Keywords woven in naturally? Strong H2 structure?
 4. CULTURAL FIT: Feels local and relevant to ${config.market}?
-5. CTA: Clear, compelling call-to-action mentioning Cethos Media?
+5. CTA: Clear, compelling call-to-action mentioning Ascelo AI?
 6. READABILITY: B2B professional but engaging tone?
 
 Return ONLY valid JSON:
@@ -212,7 +212,7 @@ serve(async (req) => {
     const imageModel = Deno.env.get('OPENAI_IMAGE_MODEL') ?? 'gpt-image-1'
     const brevoKey = Deno.env.get('BREVO_API_KEY')!
     const ceoEmail = Deno.env.get('CEO_EMAIL')!
-    const siteUrl = Deno.env.get('SITE_URL') ?? 'https://cethosmedia.com'
+    const siteUrl = Deno.env.get('SITE_URL') ?? 'https://ascelo.ai'
 
     let resolvedIdeaId = idea_id
     if (!resolvedIdeaId && pick_pending) {
@@ -337,7 +337,7 @@ serve(async (req) => {
         locale: idea.locale,
         tags: idea.keywords ?? [],
         featured_image_url: imageUrl,
-        author_name: 'Cethos Media Research Team',
+        author_name: 'Ascelo AI Research Team',
         published: true,
         published_at: new Date().toISOString(),
       })
@@ -373,7 +373,7 @@ ${imageUrl ? `<p><strong>Featured Image:</strong><br/><img src="${imageUrl}" sty
       method: 'POST',
       headers: { 'api-key': brevoKey, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        sender: { name: 'Cethos Media AI', email: 'noreply@cethos.com' },
+        sender: { name: 'Ascelo AI', email: 'noreply@ascelo.ai' },
         to: [{ email: ceoEmail }],
         subject: `New Post — ${idea.locale.toUpperCase()}: ${idea.title} [Claude: ${review.approved ? '✓ Approved' : '↺ Revised'} · ${finalWordCount}w]`,
         htmlContent: emailHtml,

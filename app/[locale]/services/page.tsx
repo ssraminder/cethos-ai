@@ -18,8 +18,8 @@ interface Props {
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   return generateSeoMetadata('/services', locale, {
-    title: 'Services | Cethos Media',
-    description: 'AI-powered digital marketing services — Performance Marketing, Social Media, SEO, Political Campaigns, WhatsApp & more. Serving India, UAE and Canada.',
+    title: 'Services | Ascelo AI',
+    description: 'AI-powered digital marketing and automation services — Performance Marketing, Social Media, SEO, AI Content, WhatsApp & more. Serving businesses worldwide.',
   })
 }
 
@@ -53,7 +53,7 @@ export default async function ServicesPage({ params: { locale } }: Props) {
       <PageHero
         eyebrow="What We Do"
         heading="Our Services"
-        subheading="AI-powered, human-managed marketing across every channel — built for ambitious businesses in India, UAE, and Canada."
+        subheading="AI-powered, human-managed marketing across every channel — built for ambitious businesses worldwide."
         ctaLabel="Get a Free Strategy Audit"
         ctaHref={`${prefix}/contact`}
       />

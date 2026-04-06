@@ -86,11 +86,11 @@ export async function generateSeoMetadata(
   }
 
   if (!config) {
-    return overrides ?? { title: 'Cethos Media' }
+    return overrides ?? { title: 'Ascelo AI' }
   }
 
   return {
-    title: config.meta_title ?? (overrides?.title as string | undefined) ?? 'Cethos Media',
+    title: config.meta_title ?? (overrides?.title as string | undefined) ?? 'Ascelo AI',
     description: config.meta_description ?? undefined,
     robots: (config.robots ?? 'index, follow') as string,
     alternates: {

@@ -3,7 +3,7 @@ import type { ProcessStep } from '@/lib/types'
 export const processSteps: Omit<ProcessStep, 'id'>[] = [
   {
     title: 'Discovery & Strategy',
-    description: 'We audit your current presence, research competitors, and map a market-specific strategy across India, UAE or Canada.',
+    description: 'We audit your current presence, research competitors, and map a market-specific strategy in your target market.',
     icon_name: 'Compass',
     sort_order: 0,
   },
@@ -15,7 +15,7 @@ export const processSteps: Omit<ProcessStep, 'id'>[] = [
   },
   {
     title: 'Multi-Channel Execution',
-    description: 'We launch across Meta, Google, WhatsApp, SMS, and offline channels simultaneously — ensuring total market coverage.',
+    description: 'We launch across every channel that moves the needle for your business — ensuring total market coverage.',
     icon_name: 'Zap',
     sort_order: 2,
   },

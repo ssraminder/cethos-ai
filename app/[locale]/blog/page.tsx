@@ -15,8 +15,8 @@ export async function generateMetadata({
   params: { locale: string }
 }): Promise<Metadata> {
   return generateSeoMetadata('/blog', params.locale, {
-    title: 'Blog | Cethos Media',
-    description: 'Marketing insights, strategy, and AI-powered growth ideas from the Cethos Media team — for businesses in India, UAE, and Canada.',
+    title: 'Blog | Ascelo AI',
+    description: 'Marketing insights, strategy, and AI-powered growth ideas from the Ascelo AI team — for ambitious businesses worldwide.',
   })
 }
 
@@ -83,7 +83,7 @@ export default async function BlogPage({
         <SectionHeader
           eyebrow="Blog"
           heading="Insights & Ideas"
-          subheading="Strategy, research, and marketing intelligence from the Cethos Media team — for businesses in India, UAE, and Canada."
+          subheading="Strategy, research, and marketing intelligence from the Ascelo AI team — for ambitious businesses worldwide."
           centered
         />
         {posts.length === 0 ? (

@@ -18,8 +18,8 @@ interface Props {
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   return generateSeoMetadata('/about', locale, {
-    title: 'About Us | Cethos Media',
-    description: 'AI-Powered. Human-Managed. Cethos Media is a global digital marketing agency serving India, UAE and Canada with results-guaranteed campaigns.',
+    title: 'About Us | Ascelo AI',
+    description: 'AI-Powered. Human-Managed. Ascelo AI is a global digital marketing agency and AI solutions consultancy delivering results-guaranteed campaigns worldwide.',
   })
 }
 
@@ -75,7 +75,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
       <SeoHead pagePath="/about" locale={locale} />
       <PageHero
         eyebrow="Our Story"
-        heading="About Cethos Media"
+        heading="About Ascelo AI"
         subheading="We started because we were frustrated with agencies that overpromised and underdelivered. So we built something different — AI-powered, human-managed, and results-obsessed."
       />
 
@@ -94,15 +94,15 @@ export default async function AboutPage({ params: { locale } }: Props) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-[#0A0F1E] rounded-2xl p-8 text-white">
-              <h3 className="font-heading font-bold text-xl text-[#EC4899] mb-3">India First</h3>
+              <h3 className="font-heading font-bold text-xl text-[#EC4899] mb-3">AI-Native Approach</h3>
               <p className="font-body text-white/70 text-sm leading-relaxed">
-                Our roots are in India — specifically Punjab, where we built our reputation running political and brand campaigns. We understand the market, the culture, and what it takes to win here.
+                We don&apos;t bolt AI on as an afterthought. Our workflows are AI-first — from research to creative production to campaign optimisation — with human strategy guiding every decision.
               </p>
             </div>
             <div className="bg-[#FDF2F8] rounded-2xl p-8">
               <h3 className="font-heading font-bold text-xl text-[#0A0F1E] mb-3">Global Reach</h3>
               <p className="font-body text-[#0A0F1E]/70 text-sm leading-relaxed">
-                From our India base, we serve the UAE&apos;s ambitious business community and Canada&apos;s thriving diaspora markets. One agency, three continents, consistent results.
+                Based in Calgary, we serve ambitious businesses worldwide. One agency, multilingual capabilities, consistent results across every market.
               </p>
             </div>
           </div>

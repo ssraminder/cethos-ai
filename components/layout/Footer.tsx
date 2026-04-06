@@ -147,10 +147,10 @@ export function Footer() {
               {!company.email && (
                 <li>
                   <a
-                    href="mailto:hello@cethosmedia.com"
+                    href="mailto:info@ascelo.ai"
                     className="text-[#F8FAFC]/60 hover:text-[#EC4899] text-sm transition-colors duration-300 cursor-pointer"
                   >
-                    hello@cethosmedia.com
+                    info@ascelo.ai
                   </a>
                 </li>
               )}
@@ -164,8 +164,18 @@ export function Footer() {
                   </a>
                 </li>
               )}
+              {!company.phone && (
+                <li>
+                  <a
+                    href="tel:+15873292590"
+                    className="text-[#F8FAFC]/60 hover:text-[#EC4899] text-sm transition-colors duration-300 cursor-pointer"
+                  >
+                    +1 (587) 329-2590
+                  </a>
+                </li>
+              )}
               <li className="text-[#F8FAFC]/60 text-sm">
-                Punjab · Dubai · Toronto
+                Calgary, Canada · Serving clients globally
               </li>
             </ul>
           </div>

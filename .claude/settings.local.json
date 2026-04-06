@@ -26,7 +26,7 @@
       "Bash(curl -s \"https://scnmdbkpjlkitxdoeiaa.supabase.co/rest/v1/agp_blog_posts?select=locale,title,slug,featured_image_url&published=eq.true&order=published_at.desc&limit=5\" -H \"apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjbm1kYmtwamxraXR4ZG9laWFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwODAyMTgsImV4cCI6MjA4MjY1NjIxOH0.ok6SD93oKP8Kd7TtU1TPVV9tEX3QdWI3e37dXmi8HWs\" -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjbm1kYmtwamxraXR4ZG9laWFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjcwODAyMTgsImV4cCI6MjA4MjY1NjIxOH0.ok6SD93oKP8Kd7TtU1TPVV9tEX3QdWI3e37dXmi8HWs\")",
       "Bash(npx netlify:*)",
       "Bash(npx tsc:*)",
-      "WebFetch(domain:media.cethos.com)",
+      "WebFetch(domain:ascelo.ai)",
       "Bash(ls D:/cethos-app/cethos-ai/app/[locale]/ -la)",
       "Bash(echo \"EXIT CODE: $?\")",
       "Bash(echo \"EXIT: $?\")",
@@ -79,7 +79,12 @@
       "WebFetch(domain:www.searchenginejournal.com)",
       "Bash(xargs grep:*)",
       "Bash(ls -la /d/cethos-app/cethos-ai/app/[locale]/)",
-      "Bash(grep -E \"\\\\.\\(tsx|ts\\)$\")"
+      "Bash(grep -E \"\\\\.\\(tsx|ts\\)$\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:57188/en/services)",
+      "Bash(curl -sL -o /dev/null -w \"%{http_code}\" http://localhost:57188/en/services)",
+      "Bash(find /d/cethos-app/cethos-ai/public -type f -name *.png -o -name *.jpg -o -name *.jpeg -o -name *.svg -o -name *.gif)",
+      "Bash(find /d/cethos-app/cethos-ai -type f -name *.config.* -o -name .env*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:52101/)"
     ]
   }
 }
