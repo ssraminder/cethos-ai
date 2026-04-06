@@ -13,9 +13,8 @@ export default function AuditPage({ params: { locale } }: { params: { locale: st
   return (
     <main className="min-h-screen bg-white pt-20 md:pt-24">
       {/* Hero */}
-      <div className="relative bg-[#0A0F1E] py-16 md:py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20" style={{ backgroundImage: "url('https://scnmdbkpjlkitxdoeiaa.supabase.co/storage/v1/object/public/agp-public/graphics/hero-background.png')" }} />
-        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="bg-[#0A0F1E] py-16 md:py-24">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="inline-block bg-[#EC4899]/15 text-[#EC4899] text-xs font-heading font-semibold px-4 py-1.5 rounded-full uppercase tracking-widest mb-6">
             AI-Powered · Instant · No Login
           </span>
@@ -33,7 +32,6 @@ export default function AuditPage({ params: { locale } }: { params: { locale: st
             ))}
           </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1E]/0 via-[#0A0F1E]/40 to-[#0A0F1E] pointer-events-none" />
       </div>
 
       {/* Form */}

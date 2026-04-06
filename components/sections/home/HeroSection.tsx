@@ -18,7 +18,9 @@ export function HeroSection() {
   const trustItems = [t('trust1'), t('trust2'), t('trust3')]
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-[#0A0F1E] via-[#0d0d1a] to-[#0A0F1E] flex flex-col items-center justify-center text-center px-4 pt-24">
+    <section className="relative min-h-screen bg-[#0A0F1E] flex flex-col items-center justify-center text-center px-4 pt-24">
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25" style={{ backgroundImage: "url('https://scnmdbkpjlkitxdoeiaa.supabase.co/storage/v1/object/public/agp-public/graphics/hero-background.png')" }} />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1E]/30 via-transparent to-[#0A0F1E]" />
 
       {/* Main content */}
       <div className="relative z-10 w-full max-w-4xl mx-auto">
