@@ -113,23 +113,18 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
               </div>
 
               {/* Header */}
-              <div className="bg-[#0A0F1E] px-6 pt-5 pb-5">
-                <div className="flex items-start justify-between">
-                  <div>
-                    {/* Fix 4: darkened secondary text */}
-                    <p className="text-white/60 text-xs font-body mb-1">Free · 30 min · No obligation</p>
-                    <h2 className="font-heading font-bold text-white text-xl leading-tight">
-                      {step === 'form' ? 'Book a Strategy Call' : 'Pick a Time Slot'}
-                    </h2>
-                  </div>
-                  <button
-                    onClick={onClose}
-                    aria-label="Close"
-                    className="mt-0.5 text-white/60 hover:text-white transition-colors duration-150 cursor-pointer focus-visible:outline-none"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
+              <div className="relative bg-[#0A0F1E] px-6 pt-5 pb-5 text-center">
+                <p className="text-white/60 text-xs font-body mb-1">Free · 30 min · No obligation</p>
+                <h2 className="font-heading font-bold text-white text-xl leading-tight">
+                  {step === 'form' ? 'Book a Strategy Call' : 'Pick a Time Slot'}
+                </h2>
+                <button
+                  onClick={onClose}
+                  aria-label="Close"
+                  className="absolute top-4 right-5 text-white/60 hover:text-white transition-colors duration-150 cursor-pointer focus-visible:outline-none"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
 
               {/* Body */}
