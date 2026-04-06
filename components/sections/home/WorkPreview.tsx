@@ -8,14 +8,6 @@ import { SectionHeader } from '@/components/shared/SectionHeader'
 import { CaseStudyCard } from '@/components/shared/CaseStudyCard'
 import { caseStudies as fallbackCaseStudies } from '@/lib/data/case-studies'
 import type { CaseStudy } from '@/lib/types'
-import { getGraphic, type SiteGraphic } from '@/lib/graphics'
-
-// Maps case study slugs → graphic slot names in agp_graphics
-const SLUG_TO_SLOT: Record<string, string> = {
-  'dubai-real-estate-leads':           'dubai-real-estate',
-  'canada-immigration-cpl-reduction':  'canada-immigration',
-  'chandigarh-sme-organic-growth':     'chandigarh-sme',
-}
 
 const containerVariants = {
   hidden: {},
@@ -37,10 +29,9 @@ const itemVariants = {
 
 interface WorkPreviewProps {
   caseStudies?: CaseStudy[]
-  graphics?: SiteGraphic[]
 }
 
-export function WorkPreview({ caseStudies, graphics = [] }: WorkPreviewProps) {
+export function WorkPreview({ caseStudies }: WorkPreviewProps) {
   const t = useTranslations('sections')
   const all = caseStudies && caseStudies.length > 0
     ? caseStudies
@@ -48,13 +39,12 @@ export function WorkPreview({ caseStudies, graphics = [] }: WorkPreviewProps) {
   const preview = all.slice(0, 3)
 
   return (
-    <SectionWrapper dark>
+    <SectionWrapper className="bg-white">
       <SectionHeader
         eyebrow={t('work_eyebrow')}
         heading={t('work_heading')}
         subheading={t('work_sub')}
         centered
-        light
       />
 
       <motion.div
@@ -64,11 +54,11 @@ export function WorkPreview({ caseStudies, graphics = [] }: WorkPreviewProps) {
         viewport={{ once: true }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
-        {preview.map((cs) => (
+        {preview.map((cs, index) => (
           <motion.div key={cs.slug} variants={itemVariants}>
             <CaseStudyCard
               caseStudy={cs}
-              graphic={getGraphic(graphics, 'case-studies', SLUG_TO_SLOT[cs.slug] ?? cs.slug)}
+              index={index}
             />
           </motion.div>
         ))}

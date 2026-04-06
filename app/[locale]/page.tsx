@@ -93,7 +93,7 @@ export default async function HomePage({ params: { locale } }: Props) {
       <StatsSection />
       <ServicesPreview services={displayServices} graphics={graphics} />
       <ProcessSection />
-      <WorkPreview caseStudies={displayCaseStudies} graphics={graphics} />
+      <WorkPreview caseStudies={displayCaseStudies} />
       <TestimonialsSection testimonials={displayTestimonials} />
       <CtaBanner graphic={getGraphic(graphics, 'cta', 'background')} />
     </>

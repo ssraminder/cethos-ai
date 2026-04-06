@@ -1,20 +1,29 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import type { CaseStudy } from '@/lib/types'
 import type { SiteGraphic } from '@/lib/graphics'
+
+// One gradient per card position — cycles if more than 3
+const GRADIENTS = [
+  'from-[#EC4899] via-[#A855F7] to-[#06B6D4]',
+  'from-[#06B6D4] via-[#3B82F6] to-[#8B5CF6]',
+  'from-[#F97316] via-[#EC4899] to-[#A855F7]',
+]
 
 interface CaseStudyCardProps {
   caseStudy: CaseStudy | (Omit<CaseStudy, 'id'> & { metrics?: Array<{ label: string; value: string; prefix: string; suffix: string; sort_order: number }> })
   locale?: string
   graphic?: SiteGraphic | null
+  index?: number
 }
 
-export function CaseStudyCard({ caseStudy, locale = 'en', graphic }: CaseStudyCardProps) {
+export function CaseStudyCard({ caseStudy, locale = 'en', index = 0 }: CaseStudyCardProps) {
   const prefix = locale === 'en' ? '' : `/${locale}`
   const displayMetrics = caseStudy.metrics?.slice(0, 2) ?? []
+  const heroMetric = displayMetrics[0]
+  const gradient = GRADIENTS[index % GRADIENTS.length]
 
   return (
     <Link
@@ -25,29 +34,27 @@ export function CaseStudyCard({ caseStudy, locale = 'en', graphic }: CaseStudyCa
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]'
       )}
     >
-      {/* Image area */}
-      <div className="relative h-48 overflow-hidden">
-        {caseStudy.featured_image_url || graphic?.image_url ? (
-          <Image
-            src={caseStudy.featured_image_url ?? graphic!.image_url!}
-            alt={caseStudy.title}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0A0F1E] to-[#1a1f35] flex items-center justify-center">
-            <div className="w-20 h-20 rounded-full bg-[#EC4899]/10 flex items-center justify-center">
-              <div className="w-10 h-10 rounded-full bg-[#EC4899]/20" />
-            </div>
-          </div>
-        )}
+      {/* Gradient header with primary metric as hero */}
+      <div className={cn('relative h-44 bg-gradient-to-br flex flex-col items-center justify-center text-center px-6', gradient)}>
+        {/* Industry label */}
+        <p className="text-white/60 text-xs font-heading font-semibold uppercase tracking-widest mb-3">
+          {caseStudy.client_name}
+        </p>
 
-        {/* Overlay gradient + client name */}
-        <div className="absolute bottom-0 left-0 right-0 px-5 py-3 bg-gradient-to-t from-[#0A0F1E]/80 to-transparent">
-          <p className="text-white/60 text-xs font-heading font-medium uppercase tracking-wider">
-            {caseStudy.client_name}
+        {heroMetric ? (
+          <>
+            <p className="font-display text-6xl text-white leading-none">
+              {heroMetric.prefix}{heroMetric.value}{heroMetric.suffix}
+            </p>
+            <p className="text-white/80 text-sm font-heading mt-2">
+              {heroMetric.label}
+            </p>
+          </>
+        ) : (
+          <p className="font-display text-4xl text-white/90 leading-tight">
+            {caseStudy.title}
           </p>
-        </div>
+        )}
       </div>
 
       {/* Content */}
@@ -56,12 +63,12 @@ export function CaseStudyCard({ caseStudy, locale = 'en', graphic }: CaseStudyCa
           {caseStudy.title}
         </h3>
 
-        {/* Metrics pills */}
-        {displayMetrics.length > 0 && (
+        {/* Remaining metrics pills */}
+        {displayMetrics.length > 1 && (
           <div className="flex flex-wrap gap-2">
-            {displayMetrics.map((metric, index) => (
+            {displayMetrics.slice(1).map((metric, i) => (
               <span
-                key={index}
+                key={i}
                 className="inline-flex items-center gap-1 bg-[#FDF2F8] text-[#EC4899] text-xs font-heading font-semibold px-3 py-1.5 rounded-full"
               >
                 <span className="text-base font-bold">
