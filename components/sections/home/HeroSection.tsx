@@ -1,11 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import type { Transition } from 'framer-motion'
 import { CheckCircle2, ChevronDown } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import type { SiteGraphic } from '@/lib/graphics'
+import { BookingModal } from '@/components/shared/BookingModal'
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 16 },
@@ -21,6 +23,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ graphic }: HeroSectionProps) {
   const t = useTranslations('hero')
+  const [modalOpen, setModalOpen] = useState(false)
 
   const trustItems = [t('trust1'), t('trust2'), t('trust3')]
   const bgUrl = graphic?.image_url ?? DEFAULT_HERO_BG
@@ -72,12 +75,13 @@ export function HeroSection({ graphic }: HeroSectionProps) {
           {...fadeUp(0.5)}
           className="flex gap-4 justify-center flex-wrap mt-10"
         >
-          <Link
-            href="/contact"
+          <button
+            onClick={() => setModalOpen(true)}
             className="bg-[#06B6D4] hover:bg-[#06B6D4]/90 text-white font-heading font-semibold px-8 py-4 rounded-xl text-base md:text-lg transition-all duration-300 cursor-pointer shadow-lg shadow-[#06B6D4]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
           >
-            {t('cta_primary')}
-          </Link>
+            Book a Free Strategy Call
+          </button>
+          <BookingModal open={modalOpen} onClose={() => setModalOpen(false)} />
           <Link
             href="/case-studies"
             className="border border-white/20 hover:border-white/50 text-[#F8FAFC] font-heading font-semibold px-8 py-4 rounded-xl text-base md:text-lg transition-all duration-300 cursor-pointer hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
