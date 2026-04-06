@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ArrowRight, ArrowLeft, Clock, ShieldCheck, Zap } from 'lucide-react'
+import { X, ArrowRight, ArrowLeft, Clock, ShieldCheck, Zap, ChevronDown, Check } from 'lucide-react'
 
 interface BookingModalProps {
   open: boolean
@@ -56,9 +56,34 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
   const [email, setEmail] = useState('')
   const [company, setCompany] = useState('')
   const [industry, setIndustry] = useState('')
+  const [industrySearch, setIndustrySearch] = useState('')
+  const [industryOpen, setIndustryOpen] = useState(false)
   const [challenge, setChallenge] = useState('')
   const [errors, setErrors] = useState<{ name?: string; email?: string }>({})
   const firstInputRef = useRef<HTMLInputElement>(null)
+  const industryRef = useRef<HTMLDivElement>(null)
+
+  const filteredIndustries = INDUSTRIES.filter(i =>
+    i.toLowerCase().includes(industrySearch.toLowerCase())
+  )
+
+  const selectIndustry = useCallback((val: string) => {
+    setIndustry(val)
+    setIndustrySearch(val)
+    setIndustryOpen(false)
+  }, [])
+
+  // Close industry dropdown on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (industryRef.current && !industryRef.current.contains(e.target as Node)) {
+        setIndustryOpen(false)
+        if (!industry) setIndustrySearch('')
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [industry])
 
   useEffect(() => {
     if (open) {
@@ -204,18 +229,34 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
                       />
                     </div>
 
-                    <div>
+                    <div ref={industryRef} className="relative">
                       <label className={labelClass}>Industry</label>
-                      <select
-                        value={industry}
-                        onChange={e => setIndustry(e.target.value)}
-                        className={`${inputClass} cursor-pointer`}
-                      >
-                        <option value="">Select your industry...</option>
-                        {INDUSTRIES.map(i => (
-                          <option key={i} value={i}>{i}</option>
-                        ))}
-                      </select>
+                      <div className="relative">
+                        <input
+                          type="text"
+                          value={industrySearch}
+                          onChange={e => { setIndustrySearch(e.target.value); setIndustry(''); setIndustryOpen(true) }}
+                          onFocus={() => setIndustryOpen(true)}
+                          placeholder="Search industry..."
+                          className={`${inputClass} pr-8`}
+                          autoComplete="off"
+                        />
+                        <ChevronDown className={`absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none transition-transform duration-150 ${industryOpen ? 'rotate-180' : ''}`} />
+                      </div>
+                      {industryOpen && filteredIndustries.length > 0 && (
+                        <ul className="absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                          {filteredIndustries.map(i => (
+                            <li
+                              key={i}
+                              onMouseDown={() => selectIndustry(i)}
+                              className="flex items-center justify-between px-4 py-2 text-sm text-[#0A0F1E] hover:bg-[#FDF2F8] cursor-pointer"
+                            >
+                              {i}
+                              {industry === i && <Check className="w-3.5 h-3.5 text-[#EC4899]" />}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
 
                     <div>
