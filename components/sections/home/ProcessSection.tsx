@@ -1,18 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Compass, Sparkles, Zap, BarChart2, type LucideIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { processSteps } from '@/lib/data/process-steps'
-
-const iconMap: Record<string, LucideIcon> = {
-  Compass,
-  Sparkles,
-  Zap,
-  BarChart2,
-}
 
 const containerVariants = {
   hidden: {},
@@ -24,11 +16,11 @@ const containerVariants = {
 }
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] },
+    transition: { duration: 0.55, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] },
   },
 }
 
@@ -36,12 +28,13 @@ export function ProcessSection() {
   const t = useTranslations('sections')
 
   return (
-    <SectionWrapper>
+    <SectionWrapper className="bg-[#0A0F1E]">
       <SectionHeader
         eyebrow={t('process_eyebrow')}
         heading={t('process_heading')}
         subheading={t('process_sub')}
         centered
+        light
       />
 
       <motion.div
@@ -49,36 +42,35 @@ export function ProcessSection() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="grid grid-cols-1 md:grid-cols-4 gap-8"
+        className="relative grid grid-cols-1 md:grid-cols-4 gap-0 mt-16"
       >
-        {processSteps.map((step, index) => {
-          const IconComponent = iconMap[step.icon_name ?? ''] ?? null
-          return (
-            <motion.div key={step.title} variants={itemVariants} className="relative">
-              {/* Step number (decorative) */}
-              <div className="absolute -top-4 -left-2 font-display text-6xl text-[#EC4899]/20 select-none pointer-events-none leading-none">
-                {String(index + 1).padStart(2, '0')}
-              </div>
+        {/* Connector line — desktop only */}
+        <div className="hidden md:block absolute top-8 left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-transparent via-[#EC4899]/30 to-transparent" />
 
-              {/* Icon */}
-              {IconComponent && (
-                <div className="relative z-10 w-14 h-14 rounded-full bg-[#EC4899]/10 flex items-center justify-center">
-                  <IconComponent className="w-6 h-6 text-[#EC4899]" />
-                </div>
-              )}
+        {processSteps.map((step, index) => (
+          <motion.div
+            key={step.title}
+            variants={itemVariants}
+            className="flex flex-col items-center text-center px-6 pb-8 md:pb-0"
+          >
+            {/* Step number circle */}
+            <div className="relative z-10 w-16 h-16 rounded-full border-2 border-[#EC4899]/50 bg-[#0A0F1E] flex items-center justify-center mb-6">
+              <span className="font-display text-2xl text-[#EC4899] leading-none">
+                {index + 1}
+              </span>
+            </div>
 
-              {/* Title */}
-              <h3 className="font-heading font-bold text-lg text-[#0A0F1E] mt-4">
-                {step.title}
-              </h3>
+            {/* Title */}
+            <h3 className="font-heading font-bold text-base text-white mb-2">
+              {step.title}
+            </h3>
 
-              {/* Description */}
-              <p className="font-body text-sm text-[#831843]/70 mt-2 leading-relaxed">
-                {step.description}
-              </p>
-            </motion.div>
-          )
-        })}
+            {/* Description */}
+            <p className="font-body text-sm text-white/50 leading-relaxed">
+              {step.description}
+            </p>
+          </motion.div>
+        ))}
       </motion.div>
     </SectionWrapper>
   )
