@@ -44,14 +44,7 @@ export function LogoStrip({ clients }: LogoStripProps) {
               title={client.name}
             >
               <div className="h-10 w-32 flex items-center justify-center">
-                {client.logo_url.endsWith('.svg') || client.logo_url.startsWith('/') ? (
-                  // For local SVGs or relative paths, use next/image or fallback text
-                  <div className="flex items-center justify-center w-full h-full">
-                    <span className="font-heading font-semibold text-[#831843]/60 text-sm text-center leading-tight">
-                      {client.name}
-                    </span>
-                  </div>
-                ) : (
+                {client.logo_url && client.logo_url.startsWith('http') ? (
                   <Image
                     src={client.logo_url}
                     alt={client.name}
@@ -59,6 +52,10 @@ export function LogoStrip({ clients }: LogoStripProps) {
                     height={40}
                     className="h-10 w-auto object-contain max-w-[128px]"
                   />
+                ) : (
+                  <span className="font-heading font-semibold text-[#831843]/60 text-sm text-center leading-tight">
+                    {client.name}
+                  </span>
                 )}
               </div>
             </div>

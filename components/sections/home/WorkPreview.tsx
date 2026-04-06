@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { CaseStudyCard } from '@/components/shared/CaseStudyCard'
-import { caseStudies } from '@/lib/data/case-studies'
+import { caseStudies as fallbackCaseStudies } from '@/lib/data/case-studies'
 import type { CaseStudy } from '@/lib/types'
 
 const containerVariants = {
@@ -27,9 +27,16 @@ const itemVariants = {
   },
 }
 
-export function WorkPreview() {
+interface WorkPreviewProps {
+  caseStudies?: CaseStudy[]
+}
+
+export function WorkPreview({ caseStudies }: WorkPreviewProps) {
   const t = useTranslations('sections')
-  const preview = caseStudies.slice(0, 3) as unknown as CaseStudy[]
+  const all = caseStudies && caseStudies.length > 0
+    ? caseStudies
+    : (fallbackCaseStudies as unknown as CaseStudy[])
+  const preview = all.slice(0, 3)
 
   return (
     <SectionWrapper dark>

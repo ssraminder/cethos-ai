@@ -13,7 +13,10 @@ import { CtaBanner } from '@/components/sections/home/CtaBanner'
 import { SeoHead } from '@/components/SeoHead'
 import { generateSeoMetadata } from '@/lib/seo'
 import { services as fallbackServices } from '@/lib/data/services'
-import type { Service } from '@/lib/types'
+import { clients as fallbackClients } from '@/lib/data/clients'
+import { caseStudies as fallbackCaseStudies } from '@/lib/data/case-studies'
+import { testimonials as fallbackTestimonials } from '@/lib/data/testimonials'
+import type { Service, Client, CaseStudy, Testimonial } from '@/lib/types'
 import { getPageGraphics, getGraphic } from '@/lib/graphics'
 
 interface Props {
@@ -53,6 +56,33 @@ export default async function HomePage({ params: { locale } }: Props) {
     ? serviceList
     : (fallbackServices as unknown as Service[])
 
+  // Fetch clients, case studies, testimonials in parallel
+  let clientList: Client[] = []
+  let caseStudyList: CaseStudy[] = []
+  let testimonialList: Testimonial[] = []
+
+  try {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    if (url && key) {
+      const supabase = createClient(url, key)
+      const [clientsRes, casesRes, testimonialsRes] = await Promise.all([
+        supabase.from('agp_clients').select('*').order('sort_order', { ascending: true }),
+        supabase.from('agp_case_studies').select('*, metrics:agp_case_study_metrics(*)').eq('published', true).order('sort_order', { ascending: true }),
+        supabase.from('agp_testimonials').select('*').order('sort_order', { ascending: true }),
+      ])
+      clientList = (clientsRes.data as Client[]) ?? []
+      caseStudyList = (casesRes.data as CaseStudy[]) ?? []
+      testimonialList = (testimonialsRes.data as Testimonial[]) ?? []
+    }
+  } catch {
+    // fall through to fallbacks
+  }
+
+  const displayClients = clientList.length > 0 ? clientList : undefined
+  const displayCaseStudies = caseStudyList.length > 0 ? caseStudyList : undefined
+  const displayTestimonials = testimonialList.length > 0 ? testimonialList : undefined
+
   const graphics = await getPageGraphics('/', locale)
   const heroBg = getGraphic(graphics, 'hero', 'background')
 
@@ -60,12 +90,12 @@ export default async function HomePage({ params: { locale } }: Props) {
     <>
       <SeoHead pagePath={pagePath} locale={locale} fallbackPath={fallbackPath} />
       <HeroSection backgroundUrl={heroBg?.image_url ?? undefined} />
-      <ClientLogos />
+      <ClientLogos clients={displayClients} />
       <StatsSection />
       <ServicesPreview services={displayServices} />
       <ProcessSection />
-      <WorkPreview />
-      <TestimonialsSection />
+      <WorkPreview caseStudies={displayCaseStudies} />
+      <TestimonialsSection testimonials={displayTestimonials} />
       <CtaBanner />
     </>
   )

@@ -84,7 +84,12 @@
       "Bash(curl -sL -o /dev/null -w \"%{http_code}\" http://localhost:57188/en/services)",
       "Bash(find /d/cethos-app/cethos-ai/public -type f -name *.png -o -name *.jpg -o -name *.jpeg -o -name *.svg -o -name *.gif)",
       "Bash(find /d/cethos-app/cethos-ai -type f -name *.config.* -o -name .env*)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:52101/)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:52101/)",
+      "Bash(find /d/cethos-app/cethos-ai/app -type f \\\\\\(-name *.ts -o -name *.tsx -o -name *.js -o -name *.jsx \\\\\\))",
+      "Bash(find /d/cethos-app/cethos-ai/app/[locale] -type f -name \"page.tsx\")",
+      "Bash(grep -l \"framer-motion\" /d/cethos-app/cethos-ai/app/[locale]/**/*.tsx)",
+      "Bash(cat -n D:cethos-appcethos-aiapp[locale]aboutpage.tsx)",
+      "Bash(cat -n D:cethos-appcethos-aiapp[locale]case-studiespage.tsx)"
     ]
   }
 }

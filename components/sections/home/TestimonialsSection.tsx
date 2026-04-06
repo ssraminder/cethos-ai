@@ -7,7 +7,8 @@ import { useTranslations } from 'next-intl'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { TestimonialCard } from '@/components/shared/TestimonialCard'
-import { testimonials } from '@/lib/data/testimonials'
+import { testimonials as fallbackTestimonials } from '@/lib/data/testimonials'
+import type { Testimonial } from '@/lib/types'
 
 const containerVariants = {
   hidden: {},
@@ -27,12 +28,17 @@ const itemVariants = {
   },
 }
 
-export function TestimonialsSection() {
+interface TestimonialsSectionProps {
+  testimonials?: (Testimonial | Omit<Testimonial, 'id'>)[]
+}
+
+export function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
   const t = useTranslations('sections')
+  const items = testimonials && testimonials.length > 0 ? testimonials : fallbackTestimonials
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const prev = () => setActiveIndex((i) => (i - 1 + testimonials.length) % testimonials.length)
-  const next = () => setActiveIndex((i) => (i + 1) % testimonials.length)
+  const prev = () => setActiveIndex((i) => (i - 1 + items.length) % items.length)
+  const next = () => setActiveIndex((i) => (i + 1) % items.length)
 
   return (
     <SectionWrapper light>
@@ -51,7 +57,7 @@ export function TestimonialsSection() {
         viewport={{ once: true }}
         className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
-        {testimonials.map((t, i) => (
+        {items.map((t, i) => (
           <motion.div key={i} variants={itemVariants}>
             <div className="rounded-2xl bg-[#0A0F1E] overflow-hidden h-full">
               <TestimonialCard testimonial={t} />
@@ -70,7 +76,7 @@ export function TestimonialsSection() {
           transition={{ duration: 0.4, ease: 'easeOut' }}
           className="rounded-2xl bg-[#0A0F1E] overflow-hidden"
         >
-          <TestimonialCard testimonial={testimonials[activeIndex]} />
+          <TestimonialCard testimonial={items[activeIndex]} />
         </motion.div>
 
         {/* Prev/Next controls */}
@@ -84,7 +90,7 @@ export function TestimonialsSection() {
           </button>
 
           <div className="flex gap-2">
-            {testimonials.map((_, i) => (
+            {items.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setActiveIndex(i)}
