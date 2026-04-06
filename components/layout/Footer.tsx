@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Link2, Globe, AtSign, Share2 } from 'lucide-react'
 import { useCompanyInfo } from '@/lib/context/CompanyInfoContext'
 import { services } from '@/lib/data/services'
@@ -15,9 +16,19 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12">
           {/* Col 1: Brand */}
           <div className="lg:col-span-1">
-            <p className="font-heading font-bold text-white text-2xl mb-3">
-              {company.agency_name}
-            </p>
+            {company.logo_dark_url ? (
+              <Image
+                src={company.logo_dark_url}
+                alt={company.agency_name ?? 'Ascelo AI'}
+                width={140}
+                height={40}
+                className="mb-3 object-contain"
+              />
+            ) : (
+              <p className="font-heading font-bold text-white text-2xl mb-3">
+                {company.agency_name}
+              </p>
+            )}
             <p className="text-[#F8FAFC]/60 text-sm leading-relaxed mb-6">
               {company.tagline ?? 'AI-Powered. Human-Managed. Results Guaranteed.'}
             </p>
