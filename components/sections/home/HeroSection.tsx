@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import type { Transition } from 'framer-motion'
 import { CheckCircle2, ChevronDown } from 'lucide-react'
@@ -28,14 +27,14 @@ export function HeroSection({ graphic }: HeroSectionProps) {
 
   return (
     <section className="relative min-h-screen bg-[#0A0F1E] flex flex-col items-center justify-center text-center px-4 pt-24 overflow-hidden">
-      <Image
-        src={bgUrl}
-        alt={graphic?.alt_text ?? ''}
-        fill
-        className="absolute inset-0 object-cover opacity-[0.25] z-0"
-        priority
+      {/* Background image */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-25"
+        style={{ backgroundImage: `url('${bgUrl}')` }}
+        aria-hidden="true"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1E]/30 via-transparent to-[#0A0F1E]" />
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1E]/30 via-transparent to-[#0A0F1E] z-[1]" />
 
       {/* Main content */}
       <div className="relative z-10 w-full max-w-4xl mx-auto">
