@@ -9,6 +9,7 @@ import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { CaseStudyCard } from '@/components/shared/CaseStudyCard'
 import { CtaBannerSimple } from '@/components/shared/CtaBannerSimple'
+import { StaggerCards } from '@/components/shared/StaggerCards'
 import { caseStudies as fallbackCaseStudies } from '@/lib/data/case-studies'
 import type { CaseStudy } from '@/lib/types'
 
@@ -61,7 +62,7 @@ export default async function CaseStudiesPage({ params: { locale } }: Props) {
       {/* Stats bar */}
       <div className="bg-[#EC4899] py-8">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <StaggerCards className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
               { value: '50+', label: 'Campaigns Delivered' },
               { value: '5', label: 'Languages Supported' },
@@ -73,7 +74,7 @@ export default async function CaseStudiesPage({ params: { locale } }: Props) {
                 <p className="font-heading text-white/80 text-sm mt-1">{stat.label}</p>
               </div>
             ))}
-          </div>
+          </StaggerCards>
         </div>
       </div>
 
@@ -84,7 +85,7 @@ export default async function CaseStudiesPage({ params: { locale } }: Props) {
           subheading="Each case study represents a real challenge solved, a real business grown, and a real relationship built."
           centered
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+        <StaggerCards className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
           {displayCaseStudies.map((cs) => (
             <CaseStudyCard
               key={cs.id ?? cs.slug}
@@ -92,7 +93,7 @@ export default async function CaseStudiesPage({ params: { locale } }: Props) {
               locale={locale}
             />
           ))}
-        </div>
+        </StaggerCards>
       </SectionWrapper>
 
       <CtaBannerSimple locale={locale} />

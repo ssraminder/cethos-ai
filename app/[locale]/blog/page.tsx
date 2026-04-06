@@ -7,6 +7,7 @@ import { generateSeoMetadata } from '@/lib/seo'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { BlogCard } from '@/components/shared/BlogCard'
+import { StaggerCards } from '@/components/shared/StaggerCards'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -93,11 +94,11 @@ export default async function BlogPage({
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+          <StaggerCards className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
             {posts.map((post) => (
               <BlogCard key={post.id} post={post} locale={locale} />
             ))}
-          </div>
+          </StaggerCards>
         )}
       </SectionWrapper>
     </main>

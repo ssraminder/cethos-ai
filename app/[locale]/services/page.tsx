@@ -9,6 +9,7 @@ import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { ServiceCard } from '@/components/shared/ServiceCard'
 import { CtaBannerSimple } from '@/components/shared/CtaBannerSimple'
+import { StaggerCards } from '@/components/shared/StaggerCards'
 import { services as fallbackServices } from '@/lib/data/services'
 import type { Service } from '@/lib/types'
 
@@ -65,7 +66,7 @@ export default async function ServicesPage({ params: { locale } }: Props) {
           subheading="From political campaigns to performance marketing — we have the expertise, tools, and track record to deliver results."
           centered
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+        <StaggerCards className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
           {displayServices.map((service) => (
             <ServiceCard
               key={service.id ?? service.slug}
@@ -74,12 +75,12 @@ export default async function ServicesPage({ params: { locale } }: Props) {
               locale={locale}
             />
           ))}
-        </div>
+        </StaggerCards>
       </SectionWrapper>
 
       {/* Why Choose Us */}
       <SectionWrapper className="bg-[#FDF2F8]">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <StaggerCards className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             { title: 'AI-Powered Speed', desc: 'Our AI pipeline produces content, ads, and analysis at 5× traditional agency speed — without sacrificing quality.' },
             { title: 'Human-Managed Strategy', desc: 'Every campaign is overseen by an experienced strategist. AI handles scale, humans handle judgement.' },
@@ -90,7 +91,7 @@ export default async function ServicesPage({ params: { locale } }: Props) {
               <p className="font-body text-[#0A0F1E]/60 text-sm leading-relaxed">{item.desc}</p>
             </div>
           ))}
-        </div>
+        </StaggerCards>
       </SectionWrapper>
 
       <CtaBannerSimple locale={locale} />

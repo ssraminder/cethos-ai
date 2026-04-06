@@ -11,6 +11,7 @@ import { CtaBannerSimple } from '@/components/shared/CtaBannerSimple'
 import { team as fallbackTeam } from '@/lib/data/team'
 import type { TeamMember } from '@/lib/types'
 import { ExternalLink, Target, Zap, Globe, Users } from 'lucide-react'
+import { StaggerCards } from '@/components/shared/StaggerCards'
 
 interface Props {
   params: { locale: string }
@@ -92,7 +93,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <StaggerCards className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-[#0A0F1E] rounded-2xl p-8 text-white">
               <h3 className="font-heading font-bold text-xl text-[#EC4899] mb-3">AI-Native Approach</h3>
               <p className="font-body text-white/70 text-sm leading-relaxed">
@@ -105,7 +106,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
                 Based in Calgary, we serve ambitious businesses worldwide. One agency, multilingual capabilities, consistent results across every market.
               </p>
             </div>
-          </div>
+          </StaggerCards>
         </div>
       </SectionWrapper>
 
@@ -117,7 +118,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
           subheading="Four principles that guide every campaign, every decision, every client relationship."
           centered
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+        <StaggerCards className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
           {values.map((v) => (
             <div key={v.title} className="bg-white rounded-2xl p-8 border border-[#EC4899]/10">
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#FDF2F8] text-[#EC4899] mb-4">
@@ -127,7 +128,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
               <p className="font-body text-[#0A0F1E]/60 text-sm leading-relaxed">{v.desc}</p>
             </div>
           ))}
-        </div>
+        </StaggerCards>
       </SectionWrapper>
 
       {/* Team */}
@@ -138,7 +139,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
           subheading="Strategists, creatives, and technologists united by one goal — making your marketing work harder."
           centered
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+        <StaggerCards className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
           {displayTeam.map((member) => (
             <div
               key={member.id ?? member.name}
@@ -172,7 +173,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
               )}
             </div>
           ))}
-        </div>
+        </StaggerCards>
       </SectionWrapper>
 
       <CtaBannerSimple locale={locale} />
