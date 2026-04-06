@@ -16,9 +16,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12">
           {/* Col 1: Brand */}
           <div className="lg:col-span-1">
-            {company.logo_dark_url ? (
+            {company.logo_url ? (
               <Image
-                src={company.logo_dark_url}
+                src={company.logo_url}
                 alt={company.agency_name ?? 'Ascelo AI'}
                 width={140}
                 height={40}
