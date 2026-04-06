@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ArrowRight, ArrowLeft } from 'lucide-react'
+import { X, ArrowRight, ArrowLeft, Clock, ShieldCheck, Zap } from 'lucide-react'
 
 interface BookingModalProps {
   open: boolean
@@ -19,6 +19,12 @@ const CHALLENGES = [
 ]
 
 const CAL_LINK = 'cethos/ascelo-strategy-call'
+
+const TRUST = [
+  { icon: Clock,       text: 'No long-term contracts' },
+  { icon: ShieldCheck, text: 'Free — zero obligation' },
+  { icon: Zap,         text: 'AI + human strategy' },
+]
 
 export function BookingModal({ open, onClose }: BookingModalProps) {
   const [step, setStep] = useState<'form' | 'calendar'>('form')
@@ -69,6 +75,8 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
     'transition-all duration-150',
   ].join(' ')
 
+  const labelClass = 'block text-xs font-heading font-semibold text-[#0A0F1E] mb-1 text-left'
+
   return (
     <AnimatePresence>
       {open && (
@@ -98,28 +106,29 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
           >
             <div className="relative w-full max-w-md bg-white rounded-2xl shadow-xl pointer-events-auto overflow-hidden">
 
+              {/* Progress bar — very top of modal */}
+              <div className="flex h-1">
+                <div className={`transition-all duration-300 bg-[#EC4899] ${step === 'form' ? 'w-1/2' : 'w-full'}`} />
+                <div className="flex-1 bg-gray-100" />
+              </div>
+
               {/* Header */}
-              <div className="bg-[#0A0F1E] px-6 pt-6 pb-5">
-                <div className="flex items-start justify-between mb-4">
+              <div className="bg-[#0A0F1E] px-6 pt-5 pb-5">
+                <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-white/40 text-xs font-body mb-1">Free · 30 min · No obligation</p>
+                    {/* Fix 4: darkened secondary text */}
+                    <p className="text-white/60 text-xs font-body mb-1">Free · 30 min · No obligation</p>
                     <h2 className="font-heading font-bold text-white text-xl leading-tight">
-                      {step === 'form' ? "Book a Strategy Call" : "Pick a Time"}
+                      {step === 'form' ? 'Book a Strategy Call' : 'Pick a Time Slot'}
                     </h2>
                   </div>
                   <button
                     onClick={onClose}
                     aria-label="Close"
-                    className="mt-0.5 text-white/40 hover:text-white transition-colors duration-150 cursor-pointer focus-visible:outline-none"
+                    className="mt-0.5 text-white/60 hover:text-white transition-colors duration-150 cursor-pointer focus-visible:outline-none"
                   >
                     <X className="w-5 h-5" />
                   </button>
-                </div>
-
-                {/* Step dots */}
-                <div className="flex items-center gap-1.5">
-                  <div className={`h-0.5 flex-1 rounded-full transition-colors duration-300 ${step === 'form' ? 'bg-[#EC4899]' : 'bg-white/20'}`} />
-                  <div className={`h-0.5 flex-1 rounded-full transition-colors duration-300 ${step === 'calendar' ? 'bg-[#EC4899]' : 'bg-white/20'}`} />
                 </div>
               </div>
 
@@ -134,41 +143,36 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
                     transition={{ duration: 0.15 }}
                     className="px-6 py-5 space-y-4"
                   >
-                    {/* Name + Email */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <label className="block text-xs font-heading font-semibold text-[#0A0F1E] mb-1">
-                          Name <span className="text-[#EC4899]">*</span>
-                        </label>
-                        <input
-                          ref={firstInputRef}
-                          type="text"
-                          value={name}
-                          onChange={e => { setName(e.target.value); setErrors(p => ({ ...p, name: undefined })) }}
-                          placeholder="Jane Smith"
-                          className={inputClass}
-                        />
-                        {errors.name && <p className="text-[#EC4899] text-xs mt-1">{errors.name}</p>}
-                      </div>
-                      <div>
-                        <label className="block text-xs font-heading font-semibold text-[#0A0F1E] mb-1">
-                          Email <span className="text-[#EC4899]">*</span>
-                        </label>
-                        <input
-                          type="email"
-                          value={email}
-                          onChange={e => { setEmail(e.target.value); setErrors(p => ({ ...p, email: undefined })) }}
-                          placeholder="jane@co.com"
-                          className={inputClass}
-                        />
-                        {errors.email && <p className="text-[#EC4899] text-xs mt-1">{errors.email}</p>}
-                      </div>
+                    {/* Fix 5: stacked fields — no 2-column grid */}
+                    <div>
+                      {/* Fix 2: left-aligned labels */}
+                      <label className={labelClass}>Name <span className="text-[#EC4899]">*</span></label>
+                      <input
+                        ref={firstInputRef}
+                        type="text"
+                        value={name}
+                        onChange={e => { setName(e.target.value); setErrors(p => ({ ...p, name: undefined })) }}
+                        placeholder="Jane Smith"
+                        className={inputClass}
+                      />
+                      {errors.name && <p className="text-[#EC4899] text-xs mt-1">{errors.name}</p>}
                     </div>
 
-                    {/* Company */}
                     <div>
-                      <label className="block text-xs font-heading font-semibold text-[#0A0F1E] mb-1">
-                        Company <span className="text-gray-400 font-normal">— optional</span>
+                      <label className={labelClass}>Email <span className="text-[#EC4899]">*</span></label>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={e => { setEmail(e.target.value); setErrors(p => ({ ...p, email: undefined })) }}
+                        placeholder="jane@company.com"
+                        className={inputClass}
+                      />
+                      {errors.email && <p className="text-[#EC4899] text-xs mt-1">{errors.email}</p>}
+                    </div>
+
+                    <div>
+                      <label className={labelClass}>
+                        Company <span className="text-gray-400 font-normal normal-case">— optional</span>
                       </label>
                       <input
                         type="text"
@@ -179,11 +183,8 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
                       />
                     </div>
 
-                    {/* Challenge */}
                     <div>
-                      <label className="block text-xs font-heading font-semibold text-[#0A0F1E] mb-1">
-                        What&apos;s your biggest challenge?
-                      </label>
+                      <label className={labelClass}>What&apos;s your biggest challenge?</label>
                       <select
                         value={challenge}
                         onChange={e => setChallenge(e.target.value)}
@@ -196,17 +197,28 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
                       </select>
                     </div>
 
-                    {/* CTA */}
+                    {/* Fix 6: trust badges inside modal, above CTA */}
+                    <div className="flex items-center justify-between py-3 border-t border-b border-gray-100">
+                      {TRUST.map(({ icon: Icon, text }) => (
+                        <div key={text} className="flex items-center gap-1.5 text-[#374151] text-xs font-body">
+                          <Icon className="w-3.5 h-3.5 text-[#EC4899] flex-shrink-0" />
+                          {text}
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Fix 3: button text aligned with next step */}
                     <button
                       onClick={() => { if (validate()) setStep('calendar') }}
                       className="w-full bg-[#0A0F1E] hover:bg-[#0A0F1E]/80 text-white font-heading font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A0F1E]"
                     >
-                      Continue to booking
+                      Pick a Time Slot
                       <ArrowRight className="w-4 h-4" />
                     </button>
 
-                    <p className="text-center text-gray-400 text-xs">
-                      No spam. Your info is only used for your booking.
+                    {/* Fix 4: darkened disclaimer */}
+                    <p className="text-center text-[#6B7280] text-xs">
+                      Your info is only used to personalise your booking.
                     </p>
                   </motion.div>
                 ) : (
@@ -219,10 +231,10 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
                   >
                     <button
                       onClick={() => setStep('form')}
-                      className="flex items-center gap-1.5 text-gray-500 hover:text-[#0A0F1E] text-xs font-heading px-6 py-3 transition-colors duration-150 cursor-pointer focus-visible:outline-none"
+                      className="flex items-center gap-1.5 text-[#374151] hover:text-[#0A0F1E] text-xs font-heading px-6 py-3 transition-colors duration-150 cursor-pointer focus-visible:outline-none"
                     >
                       <ArrowLeft className="w-3.5 h-3.5" />
-                      Back
+                      Back to details
                     </button>
                     <iframe
                       src={calUrl.toString()}
