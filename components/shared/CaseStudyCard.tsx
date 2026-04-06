@@ -81,7 +81,7 @@ export function CaseStudyCard({ caseStudy, locale = 'en', index = 0 }: CaseStudy
         )}
 
         {/* View case study link */}
-        <div className="mt-4 flex items-center gap-1 text-[#EC4899] text-sm font-heading font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="mt-4 flex items-center gap-1 text-[#EC4899] text-sm font-heading font-medium group-hover:gap-2 transition-all duration-300">
           View case study
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
