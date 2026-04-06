@@ -1,12 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import type { Transition } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { AnimatedCounter } from '@/components/shared/AnimatedCounter'
 import { SectionHeader } from '@/components/shared/SectionHeader'
-import { stats } from '@/lib/data/stats'
+import { stats, getLiveValue } from '@/lib/data/stats'
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 24 },
@@ -32,23 +31,8 @@ const itemVariants = {
 export function StatsSection() {
   const t = useTranslations('sections')
 
-  // Live values — start at seed, tick up for stats with increment defined
-  const [liveValues, setLiveValues] = useState(stats.map((s) => s.numeric_value))
-
-  useEffect(() => {
-    const timers = stats.map((stat, index) => {
-      if (!stat.increment || !stat.interval_ms) return null
-      return setInterval(() => {
-        setLiveValues((prev) => {
-          const next = [...prev]
-          next[index] = next[index] + stat.increment!
-          return next
-        })
-      }, stat.interval_ms)
-    })
-
-    return () => timers.forEach((t) => t && clearInterval(t))
-  }, [])
+  // Values derived from elapsed time since base_date — grow naturally over months
+  const liveValues = stats.map(getLiveValue)
 
   return (
     <section className="relative bg-[#0A0F1E] w-full py-24 md:py-32 overflow-hidden">
