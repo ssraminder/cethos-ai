@@ -13,7 +13,7 @@ export function LogoStrip({ clients }: LogoStripProps) {
   return (
     <div className="w-full overflow-hidden">
       <p className="text-center text-[#831843]/50 font-heading font-medium text-sm uppercase tracking-widest mb-8">
-        Trusted by growing businesses worldwide
+        Brands that chose results over promises
       </p>
 
       <div className="relative">
