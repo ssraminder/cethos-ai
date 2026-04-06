@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import type { Metadata } from 'next'
 import { createClient } from '@supabase/supabase-js'
+import Image from 'next/image'
 import { SeoHead } from '@/components/SeoHead'
 import { generateSeoMetadata } from '@/lib/seo'
 import { PageHero } from '@/components/shared/PageHero'
@@ -51,6 +52,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
 
   const graphics = await getPageGraphics('/about', locale)
   const heroBg = getGraphic(graphics, 'hero', 'background')
+  const workspaceGraphic = getGraphic(graphics, 'about', 'workspace')
 
   const values = [
     {
@@ -114,6 +116,22 @@ export default async function AboutPage({ params: { locale } }: Props) {
           </StaggerCards>
         </div>
       </SectionWrapper>
+
+      {/* Workspace image */}
+      {workspaceGraphic?.image_url && (
+        <SectionWrapper className="bg-white py-0 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto">
+            <div className="relative w-full h-64 md:h-96 rounded-2xl overflow-hidden">
+              <Image
+                src={workspaceGraphic.image_url}
+                alt={workspaceGraphic.alt_text ?? 'Ascelo AI workspace'}
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </SectionWrapper>
+      )}
 
       {/* Values */}
       <SectionWrapper className="bg-[#FDF2F8]">

@@ -7,6 +7,7 @@ import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { ServiceCard } from '@/components/shared/ServiceCard'
 import type { Service } from '@/lib/types'
+import { getGraphic, type SiteGraphic } from '@/lib/graphics'
 
 const containerVariants = {
   hidden: {},
@@ -26,7 +27,7 @@ const itemVariants = {
   },
 }
 
-export function ServicesPreview({ services }: { services: Service[] }) {
+export function ServicesPreview({ services, graphics = [] }: { services: Service[], graphics?: SiteGraphic[] }) {
   const t = useTranslations('sections')
   const preview = services.slice(0, 6)
 
@@ -48,7 +49,11 @@ export function ServicesPreview({ services }: { services: Service[] }) {
       >
         {preview.map((service) => (
           <motion.div key={service.slug} variants={itemVariants}>
-            <ServiceCard service={service} variant="compact" />
+            <ServiceCard
+              service={service}
+              variant="compact"
+              graphic={getGraphic(graphics, 'service-card', service.slug)}
+            />
           </motion.div>
         ))}
       </motion.div>

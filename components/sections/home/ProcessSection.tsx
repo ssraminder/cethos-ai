@@ -1,11 +1,13 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Compass, Sparkles, Zap, BarChart2, type LucideIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { processSteps } from '@/lib/data/process-steps'
+import { getGraphic, type SiteGraphic } from '@/lib/graphics'
 
 const iconMap: Record<string, LucideIcon> = {
   Compass,
@@ -32,7 +34,13 @@ const itemVariants = {
   },
 }
 
-export function ProcessSection() {
+const STEP_SLOTS = ['step-1', 'step-2', 'step-3', 'step-4']
+
+interface ProcessSectionProps {
+  graphics?: SiteGraphic[]
+}
+
+export function ProcessSection({ graphics = [] }: ProcessSectionProps) {
   const t = useTranslations('sections')
 
   return (
@@ -53,6 +61,7 @@ export function ProcessSection() {
       >
         {processSteps.map((step, index) => {
           const IconComponent = iconMap[step.icon_name ?? ''] ?? null
+          const stepGraphic = getGraphic(graphics, 'process', STEP_SLOTS[index])
           return (
             <motion.div key={step.title} variants={itemVariants} className="relative">
               {/* Step number (decorative) */}
@@ -60,12 +69,22 @@ export function ProcessSection() {
                 {String(index + 1).padStart(2, '0')}
               </div>
 
-              {/* Icon circle */}
-              {IconComponent && (
+              {/* Icon: AI graphic or Lucide fallback */}
+              {stepGraphic?.image_url ? (
+                <div className="relative z-10 w-14 h-14 rounded-xl overflow-hidden">
+                  <Image
+                    src={stepGraphic.image_url}
+                    alt={stepGraphic.alt_text ?? step.title}
+                    width={56}
+                    height={56}
+                    className="object-cover"
+                  />
+                </div>
+              ) : IconComponent ? (
                 <div className="relative z-10 w-14 h-14 rounded-full bg-[#EC4899]/10 flex items-center justify-center">
                   <IconComponent className="w-6 h-6 text-[#EC4899]" />
                 </div>
-              )}
+              ) : null}
 
               {/* Title */}
               <h3 className="font-heading font-bold text-lg text-[#0A0F1E] mt-4">

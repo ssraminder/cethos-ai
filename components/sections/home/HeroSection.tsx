@@ -1,10 +1,12 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import type { Transition } from 'framer-motion'
 import { CheckCircle2, ChevronDown } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import type { SiteGraphic } from '@/lib/graphics'
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 16 },
@@ -15,18 +17,24 @@ const fadeUp = (delay: number) => ({
 const DEFAULT_HERO_BG = 'https://scnmdbkpjlkitxdoeiaa.supabase.co/storage/v1/object/public/agp-public/graphics/hero-background.png'
 
 interface HeroSectionProps {
-  backgroundUrl?: string
+  graphic?: SiteGraphic | null
 }
 
-export function HeroSection({ backgroundUrl }: HeroSectionProps) {
+export function HeroSection({ graphic }: HeroSectionProps) {
   const t = useTranslations('hero')
 
   const trustItems = [t('trust1'), t('trust2'), t('trust3')]
-  const bgUrl = backgroundUrl ?? DEFAULT_HERO_BG
+  const bgUrl = graphic?.image_url ?? DEFAULT_HERO_BG
 
   return (
-    <section className="relative min-h-screen bg-[#0A0F1E] flex flex-col items-center justify-center text-center px-4 pt-24">
-      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25" style={{ backgroundImage: `url('${bgUrl}')` }} />
+    <section className="relative min-h-screen bg-[#0A0F1E] flex flex-col items-center justify-center text-center px-4 pt-24 overflow-hidden">
+      <Image
+        src={bgUrl}
+        alt={graphic?.alt_text ?? ''}
+        fill
+        className="absolute inset-0 object-cover opacity-[0.25] z-0"
+        priority
+      />
       <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1E]/30 via-transparent to-[#0A0F1E]" />
 
       {/* Main content */}

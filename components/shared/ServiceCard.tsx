@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   Vote,
   Printer,
@@ -14,6 +15,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { Service } from '@/lib/types'
+import type { SiteGraphic } from '@/lib/graphics'
 
 const iconMap: Record<string, LucideIcon> = {
   Vote,
@@ -30,9 +32,10 @@ interface ServiceCardProps {
   service: Service | Omit<Service, 'id'>
   variant?: 'compact' | 'full'
   locale?: string
+  graphic?: SiteGraphic | null
 }
 
-export function ServiceCard({ service, variant = 'compact', locale = 'en' }: ServiceCardProps) {
+export function ServiceCard({ service, variant = 'compact', locale = 'en', graphic }: ServiceCardProps) {
   const IconComponent = service.icon_name ? iconMap[service.icon_name] : null
   const slug = 'slug' in service ? service.slug : (service as Service).slug
   const prefix = locale === 'en' ? '' : `/${locale}`
@@ -46,12 +49,22 @@ export function ServiceCard({ service, variant = 'compact', locale = 'en' }: Ser
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]'
       )}
     >
-      {/* Icon */}
-      {IconComponent && (
+      {/* Icon: AI graphic or Lucide fallback */}
+      {graphic?.image_url ? (
+        <div className="mb-4 w-12 h-12 rounded-xl overflow-hidden">
+          <Image
+            src={graphic.image_url}
+            alt={graphic.alt_text ?? service.title}
+            width={48}
+            height={48}
+            className="object-cover w-full h-full"
+          />
+        </div>
+      ) : IconComponent ? (
         <div className="mb-4 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#FDF2F8] text-[#EC4899] group-hover:bg-[#EC4899] group-hover:text-white transition-colors duration-300">
           <IconComponent className="w-6 h-6" />
         </div>
-      )}
+      ) : null}
 
       {/* Title */}
       <h3 className="font-heading font-semibold text-[#0A0F1E] text-lg mb-2 group-hover:text-[#EC4899] transition-colors duration-300">

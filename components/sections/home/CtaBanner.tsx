@@ -1,10 +1,12 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import type { Transition } from 'framer-motion'
 import { Zap } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import type { SiteGraphic } from '@/lib/graphics'
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 24 },
@@ -13,11 +15,25 @@ const fadeUp = (delay: number) => ({
   transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1], delay } as Transition,
 })
 
-export function CtaBanner() {
+interface CtaBannerProps {
+  graphic?: SiteGraphic | null
+}
+
+export function CtaBanner({ graphic }: CtaBannerProps) {
   const t = useTranslations('sections')
 
   return (
     <section className="relative w-full py-24 md:py-32 bg-gradient-to-br from-[#0A0F1E] via-[#1a0a2e] to-[#0A0F1E] overflow-hidden">
+      {/* AI background graphic */}
+      {graphic?.image_url && (
+        <Image
+          src={graphic.image_url}
+          alt=""
+          fill
+          className="absolute inset-0 object-cover opacity-[0.15] z-0"
+        />
+      )}
+
       {/* Pink glow overlay */}
       <div
         className="absolute inset-0 pointer-events-none"

@@ -84,19 +84,18 @@ export default async function HomePage({ params: { locale } }: Props) {
   const displayTestimonials = testimonialList.length > 0 ? testimonialList : undefined
 
   const graphics = await getPageGraphics('/', locale)
-  const heroBg = getGraphic(graphics, 'hero', 'background')
 
   return (
     <>
       <SeoHead pagePath={pagePath} locale={locale} fallbackPath={fallbackPath} />
-      <HeroSection backgroundUrl={heroBg?.image_url ?? undefined} />
+      <HeroSection graphic={getGraphic(graphics, 'hero', 'background')} />
       <ClientLogos clients={displayClients} />
       <StatsSection />
-      <ServicesPreview services={displayServices} />
-      <ProcessSection />
-      <WorkPreview caseStudies={displayCaseStudies} />
+      <ServicesPreview services={displayServices} graphics={graphics} />
+      <ProcessSection graphics={graphics} />
+      <WorkPreview caseStudies={displayCaseStudies} graphics={graphics} />
       <TestimonialsSection testimonials={displayTestimonials} />
-      <CtaBanner />
+      <CtaBanner graphic={getGraphic(graphics, 'cta', 'background')} />
     </>
   )
 }

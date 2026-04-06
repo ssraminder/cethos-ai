@@ -4,13 +4,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import type { CaseStudy } from '@/lib/types'
+import type { SiteGraphic } from '@/lib/graphics'
 
 interface CaseStudyCardProps {
   caseStudy: CaseStudy | (Omit<CaseStudy, 'id'> & { metrics?: Array<{ label: string; value: string; prefix: string; suffix: string; sort_order: number }> })
   locale?: string
+  graphic?: SiteGraphic | null
 }
 
-export function CaseStudyCard({ caseStudy, locale = 'en' }: CaseStudyCardProps) {
+export function CaseStudyCard({ caseStudy, locale = 'en', graphic }: CaseStudyCardProps) {
   const prefix = locale === 'en' ? '' : `/${locale}`
   const displayMetrics = caseStudy.metrics?.slice(0, 2) ?? []
 
@@ -24,27 +26,24 @@ export function CaseStudyCard({ caseStudy, locale = 'en' }: CaseStudyCardProps) 
       )}
     >
       {/* Image area */}
-      <div className="relative h-48 bg-gradient-to-br from-[#0A0F1E] to-[#1a1f35] overflow-hidden">
-        {caseStudy.featured_image_url ? (
-          <>
-            <Image
-              src={caseStudy.featured_image_url}
-              alt={caseStudy.title}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1E]/80 via-transparent to-transparent" />
-          </>
+      <div className="relative h-48 overflow-hidden">
+        {caseStudy.featured_image_url || graphic?.image_url ? (
+          <Image
+            src={caseStudy.featured_image_url ?? graphic!.image_url!}
+            alt={caseStudy.title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+          />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0A0F1E] to-[#1a1f35] flex items-center justify-center">
             <div className="w-20 h-20 rounded-full bg-[#EC4899]/10 flex items-center justify-center">
               <div className="w-10 h-10 rounded-full bg-[#EC4899]/20" />
             </div>
           </div>
         )}
 
-        {/* Client name overlay */}
-        <div className="absolute bottom-0 left-0 right-0 px-5 py-3">
+        {/* Overlay gradient + client name */}
+        <div className="absolute bottom-0 left-0 right-0 px-5 py-3 bg-gradient-to-t from-[#0A0F1E]/80 to-transparent">
           <p className="text-white/60 text-xs font-heading font-medium uppercase tracking-wider">
             {caseStudy.client_name}
           </p>

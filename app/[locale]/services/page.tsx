@@ -78,6 +78,7 @@ export default async function ServicesPage({ params: { locale } }: Props) {
               service={service}
               variant="full"
               locale={locale}
+              graphic={getGraphic(graphics, 'service-card', service.slug)}
             />
           ))}
         </StaggerCards>
