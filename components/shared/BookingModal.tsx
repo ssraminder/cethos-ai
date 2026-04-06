@@ -9,6 +9,30 @@ interface BookingModalProps {
   onClose: () => void
 }
 
+const INDUSTRIES = [
+  'Real Estate & Property',
+  'Legal & Law',
+  'Healthcare & Medical',
+  'Dental & Aesthetics',
+  'Finance & Insurance',
+  'Mortgage & Lending',
+  'Immigration & Visa Services',
+  'Accounting & Tax',
+  'SaaS & Technology',
+  'E-Commerce & Retail',
+  'Restaurants & Food & Beverage',
+  'Education & Coaching',
+  'Solar & Clean Energy',
+  'Construction & Contracting',
+  'Automotive',
+  'Fitness & Wellness',
+  'Travel & Hospitality',
+  'Recruitment & Staffing',
+  'Political Campaign',
+  'Non-Profit & Charity',
+  'Other',
+]
+
 const CHALLENGES = [
   'Not getting enough leads',
   'High cost per lead / poor ROAS',
@@ -31,6 +55,7 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [company, setCompany] = useState('')
+  const [industry, setIndustry] = useState('')
   const [challenge, setChallenge] = useState('')
   const [errors, setErrors] = useState<{ name?: string; email?: string }>({})
   const firstInputRef = useRef<HTMLInputElement>(null)
@@ -66,7 +91,8 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
   calUrl.searchParams.set('name', name)
   calUrl.searchParams.set('email', email)
   if (company) calUrl.searchParams.set('company', company)
-  if (challenge) calUrl.searchParams.set('notes', challenge)
+  const notes = [industry && `Industry: ${industry}`, challenge].filter(Boolean).join(' | ')
+  if (notes) calUrl.searchParams.set('notes', notes)
 
   const inputClass = [
     'w-full bg-[#F8F9FA] border border-gray-200 rounded-lg px-4 py-2.5',
@@ -176,6 +202,20 @@ export function BookingModal({ open, onClose }: BookingModalProps) {
                         placeholder="Acme Inc."
                         className={inputClass}
                       />
+                    </div>
+
+                    <div>
+                      <label className={labelClass}>Industry</label>
+                      <select
+                        value={industry}
+                        onChange={e => setIndustry(e.target.value)}
+                        className={`${inputClass} cursor-pointer`}
+                      >
+                        <option value="">Select your industry...</option>
+                        {INDUSTRIES.map(i => (
+                          <option key={i} value={i}>{i}</option>
+                        ))}
+                      </select>
                     </div>
 
                     <div>
