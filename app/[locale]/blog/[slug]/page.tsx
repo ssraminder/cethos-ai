@@ -40,7 +40,6 @@ function estimateReadTime(content: string): number {
   return Math.max(1, Math.round(words / 200))
 }
 
-// Render plain markdown-like content as readable HTML paragraphs
 function renderContent(content: string) {
   const lines = content.split('\n')
   const elements: React.ReactNode[] = []
@@ -52,37 +51,37 @@ function renderContent(content: string) {
 
     if (trimmed.startsWith('### ')) {
       elements.push(
-        <h3 key={key++} className="font-heading font-bold text-[#0A0F1E] text-xl mt-8 mb-3">
+        <h3 key={key++} className="font-headline font-bold text-white text-xl mt-8 mb-3">
           {trimmed.slice(4)}
         </h3>
       )
     } else if (trimmed.startsWith('## ')) {
       elements.push(
-        <h2 key={key++} className="font-heading font-bold text-[#0A0F1E] text-2xl mt-10 mb-4 pb-2 border-b border-[#EC4899]/20">
+        <h2 key={key++} className="font-headline font-bold text-white text-2xl mt-10 mb-4 pb-2 border-b border-primary/20">
           {trimmed.slice(3)}
         </h2>
       )
     } else if (trimmed.startsWith('# ')) {
       elements.push(
-        <h1 key={key++} className="font-display text-[#0A0F1E] text-4xl mt-6 mb-6">
+        <h1 key={key++} className="font-headline font-extrabold text-white text-4xl mt-6 mb-6">
           {trimmed.slice(2)}
         </h1>
       )
     } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
       elements.push(
-        <li key={key++} className="font-body text-[#0A0F1E]/80 leading-relaxed ml-4 list-disc mb-1">
+        <li key={key++} className="font-body text-on-surface-variant leading-relaxed ml-4 list-disc mb-1">
           {trimmed.slice(2)}
         </li>
       )
     } else if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
       elements.push(
-        <p key={key++} className="font-body font-semibold text-[#0A0F1E] leading-relaxed mb-4">
+        <p key={key++} className="font-body font-semibold text-on-surface leading-relaxed mb-4">
           {trimmed.slice(2, -2)}
         </p>
       )
     } else {
       elements.push(
-        <p key={key++} className="font-body text-[#0A0F1E]/80 leading-relaxed mb-4 text-base">
+        <p key={key++} className="font-body text-on-surface-variant leading-relaxed mb-4 text-base">
           {trimmed}
         </p>
       )
@@ -112,16 +111,17 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
   const readTime = post.content ? estimateReadTime(post.content) : null
 
   return (
-    <main className="pt-20 md:pt-24 bg-white min-h-screen">
+    <div className="bg-background min-h-screen">
 
       {/* Hero */}
-      <div className="bg-[#0A0F1E]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <div className="relative bg-background overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-10 bg-[radial-gradient(circle_at_30%_50%,_#4cd7f6,_transparent_60%)]" />
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
 
           {/* Back link */}
           <Link
             href={backHref}
-            className="inline-flex items-center gap-2 text-white/50 hover:text-white text-sm font-heading font-medium transition-colors duration-200 mb-8 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4] rounded"
+            className="inline-flex items-center gap-2 text-on-surface-variant hover:text-primary text-sm font-headline font-medium transition-colors duration-200 mb-8 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Blog
@@ -133,7 +133,7 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
               {post.tags.slice(0, 4).map((tag) => (
                 <span
                   key={tag}
-                  className="inline-block bg-[#EC4899]/15 text-[#EC4899] text-xs font-heading font-semibold px-3 py-1 rounded-full"
+                  className="inline-block bg-primary/15 text-primary text-xs font-headline font-semibold px-3 py-1 rounded-full"
                 >
                   {tag}
                 </span>
@@ -142,12 +142,12 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
           )}
 
           {/* Title */}
-          <h1 className="font-heading font-bold text-white text-2xl sm:text-3xl md:text-4xl leading-tight mb-6">
+          <h1 className="font-headline font-bold text-white text-2xl sm:text-3xl md:text-4xl leading-tight mb-6">
             {post.title}
           </h1>
 
           {/* Meta row */}
-          <div className="flex flex-wrap items-center gap-4 text-white/50 text-sm font-heading">
+          <div className="flex flex-wrap items-center gap-4 text-on-surface-variant text-sm font-headline">
             {post.author_name && (
               <span className="flex items-center gap-1.5">
                 <User className="w-4 h-4" />
@@ -172,7 +172,7 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
 
       {/* Featured image */}
       {post.featured_image_url && (
-        <div className="relative w-full h-64 sm:h-80 md:h-96 bg-[#0A0F1E]">
+        <div className="relative w-full h-64 sm:h-80 md:h-96 bg-surface-container-low">
           <Image
             src={post.featured_image_url}
             alt={post.title}
@@ -180,7 +180,7 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1E]/30 via-transparent to-white/20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/20" />
         </div>
       )}
 
@@ -189,7 +189,7 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
 
         {/* Excerpt lead */}
         {post.excerpt && (
-          <p className="font-body text-[#0A0F1E]/70 text-lg leading-relaxed mb-8 border-l-4 border-[#EC4899] pl-5 italic">
+          <p className="font-body text-on-surface-variant text-lg leading-relaxed mb-8 border-l-4 border-primary pl-5 italic">
             {post.excerpt}
           </p>
         )}
@@ -198,31 +198,31 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
         <div className="prose-container">
           {post.content
             ? renderContent(post.content)
-            : <p className="font-body text-[#0A0F1E]/50 italic">Content coming soon.</p>
+            : <p className="font-body text-on-surface-variant/50 italic">Content coming soon.</p>
           }
         </div>
 
         {/* CTA Banner */}
-        <div className="mt-16 bg-gradient-to-r from-[#0A0F1E] to-[#1a1f35] rounded-2xl p-8 text-center">
-          <p className="font-heading font-bold text-white text-xl mb-2">
+        <div className="mt-16 bg-surface-container-high rounded-2xl p-8 text-center border border-outline-variant/10">
+          <p className="font-headline font-bold text-white text-xl mb-2">
             Ready to grow your business?
           </p>
-          <p className="font-body text-white/60 text-sm mb-6">
+          <p className="font-body text-on-surface-variant text-sm mb-6">
             Get a free strategy audit from the Ascelo AI team.
           </p>
           <Link
             href={locale === 'en' ? '/contact' : `/${locale}/contact`}
-            className="inline-flex bg-[#06B6D4] text-white px-8 py-3 rounded-lg font-heading font-semibold text-sm hover:bg-[#06B6D4]/90 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
+            className="inline-flex bg-gradient-to-r from-primary to-primary-container text-on-primary px-8 py-3 rounded-lg font-headline font-semibold text-sm hover:opacity-90 transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             Get a Free Audit
           </Link>
         </div>
 
         {/* Back to blog */}
-        <div className="mt-10 pt-8 border-t border-[#EC4899]/10">
+        <div className="mt-10 pt-8 border-t border-outline-variant/15">
           <Link
             href={backHref}
-            className="inline-flex items-center gap-2 text-[#EC4899] text-sm font-heading font-medium hover:gap-3 transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4] rounded"
+            className="inline-flex items-center gap-2 text-primary text-sm font-headline font-medium hover:gap-3 transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Blog
@@ -230,6 +230,6 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
         </div>
       </article>
 
-    </main>
+    </div>
   )
 }

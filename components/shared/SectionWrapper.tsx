@@ -21,9 +21,9 @@ export function SectionWrapper({ children, className, dark, light, id }: Section
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={cn(
         'w-full',
-        dark && 'bg-[#0A0F1E] text-[#F8FAFC]',
-        light && 'bg-[#FDF2F8]',
-        !dark && !light && 'bg-white',
+        dark && 'bg-surface-container-lowest text-on-surface',
+        light && 'bg-surface-container-low',
+        !dark && !light && 'bg-background',
         className
       )}
     >
