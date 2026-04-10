@@ -20,7 +20,7 @@ export function SectionHeader({ eyebrow, heading, subheading, centered, light }:
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
-          className="text-[#EC4899] font-heading font-semibold text-sm uppercase tracking-widest mb-3"
+          className="text-primary font-headline font-semibold text-sm uppercase tracking-widest mb-3"
         >
           {eyebrow}
         </motion.p>
@@ -30,10 +30,7 @@ export function SectionHeader({ eyebrow, heading, subheading, centered, light }:
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className={cn(
-          'font-heading font-bold text-3xl md:text-4xl lg:text-5xl leading-tight',
-          light ? 'text-[#F8FAFC]' : 'text-[#0A0F1E]'
-        )}
+        className="font-headline font-bold text-3xl md:text-4xl lg:text-5xl leading-tight text-white"
       >
         {heading}
       </motion.h2>
@@ -44,9 +41,8 @@ export function SectionHeader({ eyebrow, heading, subheading, centered, light }:
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className={cn(
-            'mt-4 text-base md:text-lg max-w-2xl leading-relaxed',
-            centered && 'mx-auto',
-            light ? 'text-[#F8FAFC]/70' : 'text-[#831843]/70'
+            'mt-4 text-base md:text-lg max-w-2xl leading-relaxed text-on-surface-variant',
+            centered && 'mx-auto'
           )}
         >
           {subheading}

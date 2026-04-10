@@ -50,39 +50,34 @@ export function ServiceCard({ service, variant = 'compact', locale = 'en' }: Ser
     <Link
       href={`${prefix}/services/${slug}`}
       className={cn(
-        'group block rounded-2xl border border-[#EC4899]/10 bg-white p-6 transition-all duration-300 cursor-pointer',
-        'hover:-translate-y-1 hover:border-[#EC4899]/40 hover:shadow-[0_8px_30px_rgba(236,72,153,0.15)]',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]'
+        'group block rounded-2xl border border-outline-variant/10 bg-surface-container-low p-6 transition-all duration-300 cursor-pointer',
+        'hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_8px_30px_rgba(76,215,246,0.15)]',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary'
       )}
     >
-      {/* Icon */}
       {IconComponent && (
-        <div className="mb-4 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#FDF2F8] text-[#EC4899] group-hover:bg-[#EC4899] group-hover:text-white transition-colors duration-300">
+        <div className="mb-4 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors duration-300">
           <IconComponent className="w-6 h-6" />
         </div>
       )}
 
-      {/* Title */}
-      <h3 className="font-heading font-semibold text-[#0A0F1E] text-lg mb-2 group-hover:text-[#EC4899] transition-colors duration-300">
+      <h3 className="font-headline font-semibold text-on-surface text-lg mb-2 group-hover:text-primary transition-colors duration-300">
         {service.title}
       </h3>
 
-      {/* Short desc */}
       {service.short_desc && (
-        <p className="text-[#831843]/70 text-sm leading-relaxed">
+        <p className="text-on-surface-variant text-sm leading-relaxed">
           {service.short_desc}
         </p>
       )}
 
-      {/* Full variant: long desc preview */}
       {variant === 'full' && service.long_desc && (
-        <p className="mt-3 text-[#831843]/60 text-sm leading-relaxed line-clamp-3">
+        <p className="mt-3 text-on-surface-variant/60 text-sm leading-relaxed line-clamp-3">
           {service.long_desc}
         </p>
       )}
 
-      {/* Arrow indicator */}
-      <div className="mt-4 flex items-center gap-1 text-[#EC4899] text-sm font-heading font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="mt-4 flex items-center gap-1 text-primary text-sm font-headline font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         Learn more
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />

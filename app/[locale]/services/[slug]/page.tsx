@@ -11,7 +11,7 @@ import { services as fallbackServices } from '@/lib/data/services'
 import { faqs as fallbackFaqs } from '@/lib/data/faqs'
 import { caseStudies as fallbackCaseStudies } from '@/lib/data/case-studies'
 import { CaseStudyCard } from '@/components/shared/CaseStudyCard'
-import type { Service, ServiceDeliverable, FAQ, CaseStudy } from '@/lib/types'
+import type { Service, ServiceDeliverable, CaseStudy } from '@/lib/types'
 import { CheckCircle, ChevronDown } from 'lucide-react'
 import Link from 'next/link'
 
@@ -33,7 +33,6 @@ async function getService(slug: string): Promise<{ service: Service; deliverable
       .single()
 
     if (!service) {
-      // Fallback to static data
       const found = fallbackServices.find(s => s.slug === slug)
       if (!found) return null
       return { service: { ...found, id: slug } as Service, deliverables: [] }
@@ -74,13 +73,9 @@ export default async function ServiceDetailPage({ params: { locale, slug } }: Pr
   const { service, deliverables } = result
   const prefix = locale === 'en' ? '' : `/${locale}`
 
-  // Get related case studies (first 2)
   const displayCaseStudies = (fallbackCaseStudies as unknown as CaseStudy[]).slice(0, 2)
-
-  // Get FAQs relevant to this service or global
   const displayFaqs = fallbackFaqs.slice(0, 4)
 
-  // Generic process steps for any service
   const processSteps = [
     { num: '01', title: 'Discovery & Strategy', desc: 'We audit your current position, research your market, and build a tailored strategy with clear KPIs.' },
     { num: '02', title: 'Creative Production', desc: 'Our AI-powered pipeline produces assets at scale — reviewed and refined by senior human strategists.' },
@@ -89,7 +84,7 @@ export default async function ServiceDetailPage({ params: { locale, slug } }: Pr
   ]
 
   return (
-    <main className="pt-20 md:pt-24 bg-white min-h-screen">
+    <div className="bg-background min-h-screen">
       <PageHero
         eyebrow="Our Services"
         heading={service.title}
@@ -100,16 +95,16 @@ export default async function ServiceDetailPage({ params: { locale, slug } }: Pr
 
       {/* Long description */}
       {service.long_desc && (
-        <SectionWrapper className="bg-white">
+        <SectionWrapper>
           <div className="max-w-3xl">
-            <p className="font-heading text-[#EC4899] font-semibold text-sm uppercase tracking-widest mb-4">What We Do</p>
-            <p className="font-body text-[#0A0F1E]/70 text-lg leading-relaxed">{service.long_desc}</p>
+            <p className="font-headline text-primary font-semibold text-sm uppercase tracking-widest mb-4">What We Do</p>
+            <p className="font-body text-on-surface-variant text-lg leading-relaxed">{service.long_desc}</p>
           </div>
         </SectionWrapper>
       )}
 
       {/* Deliverables */}
-      <SectionWrapper className="bg-[#FDF2F8]">
+      <SectionWrapper light>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <div>
             <SectionHeader
@@ -127,16 +122,16 @@ export default async function ServiceDetailPage({ params: { locale, slug } }: Pr
                 'Multilingual creative assets',
               ]).map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-[#06B6D4] flex-shrink-0 mt-0.5" />
-                  <span className="font-body text-[#0A0F1E]/80 text-sm leading-relaxed">{item}</span>
+                  <CheckCircle className="w-5 h-5 text-tertiary flex-shrink-0 mt-0.5" />
+                  <span className="font-body text-on-surface-variant text-sm leading-relaxed">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Results snapshot */}
-          <div className="bg-[#0A0F1E] rounded-2xl p-8">
-            <p className="font-heading font-bold text-white text-lg mb-6">Typical Results</p>
+          <div className="bg-surface-container-high rounded-2xl p-8 border border-outline-variant/10">
+            <p className="font-headline font-bold text-white text-lg mb-6">Typical Results</p>
             <div className="grid grid-cols-2 gap-6">
               {[
                 { value: '3–6×', label: 'Average ROI' },
@@ -145,15 +140,15 @@ export default async function ServiceDetailPage({ params: { locale, slug } }: Pr
                 { value: '24h', label: 'Response time' },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <p className="font-display text-3xl text-[#EC4899] tracking-wide">{stat.value}</p>
-                  <p className="font-heading text-white/50 text-xs mt-1">{stat.label}</p>
+                  <p className="font-headline font-extrabold text-3xl text-primary">{stat.value}</p>
+                  <p className="font-headline text-on-surface-variant text-xs mt-1">{stat.label}</p>
                 </div>
               ))}
             </div>
-            <div className="mt-8 pt-6 border-t border-white/10">
+            <div className="mt-8 pt-6 border-t border-outline-variant/15">
               <Link
                 href={`${prefix}/contact`}
-                className="block w-full text-center bg-[#06B6D4] text-white px-6 py-3 rounded-lg font-heading font-semibold text-sm hover:bg-[#06B6D4]/90 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
+                className="block w-full text-center bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-3 rounded-lg font-headline font-semibold text-sm hover:opacity-90 transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 Start This Service
               </Link>
@@ -163,7 +158,7 @@ export default async function ServiceDetailPage({ params: { locale, slug } }: Pr
       </SectionWrapper>
 
       {/* Process */}
-      <SectionWrapper className="bg-white">
+      <SectionWrapper>
         <SectionHeader
           eyebrow="How We Work"
           heading="Our Process"
@@ -172,17 +167,17 @@ export default async function ServiceDetailPage({ params: { locale, slug } }: Pr
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
           {processSteps.map((step) => (
-            <div key={step.num} className="relative p-6 bg-[#FDF2F8] rounded-2xl border border-[#EC4899]/10">
-              <span className="font-display text-5xl text-[#EC4899]/20 leading-none">{step.num}</span>
-              <h3 className="font-heading font-bold text-[#0A0F1E] text-base mt-2 mb-2">{step.title}</h3>
-              <p className="font-body text-[#0A0F1E]/60 text-sm leading-relaxed">{step.desc}</p>
+            <div key={step.num} className="relative p-6 bg-surface-container-low rounded-2xl border border-outline-variant/10">
+              <span className="font-headline font-extrabold text-5xl text-primary/20 leading-none">{step.num}</span>
+              <h3 className="font-headline font-bold text-white text-base mt-2 mb-2">{step.title}</h3>
+              <p className="font-body text-on-surface-variant text-sm leading-relaxed">{step.desc}</p>
             </div>
           ))}
         </div>
       </SectionWrapper>
 
       {/* Related case studies */}
-      <SectionWrapper className="bg-[#FDF2F8]">
+      <SectionWrapper light>
         <SectionHeader
           eyebrow="Proof of Work"
           heading="Related Results"
@@ -190,14 +185,14 @@ export default async function ServiceDetailPage({ params: { locale, slug } }: Pr
           centered
         />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-          {displayCaseStudies.map((cs) => (
-            <CaseStudyCard key={cs.slug} caseStudy={cs} locale={locale} />
+          {displayCaseStudies.map((cs, i) => (
+            <CaseStudyCard key={cs.slug} caseStudy={cs} locale={locale} index={i} />
           ))}
         </div>
         <div className="text-center mt-8">
           <Link
             href={`${prefix}/case-studies`}
-            className="inline-flex items-center gap-2 text-[#EC4899] font-heading font-semibold text-sm hover:gap-3 transition-all duration-200 cursor-pointer"
+            className="inline-flex items-center gap-2 text-primary font-headline font-semibold text-sm hover:gap-3 transition-all duration-200 cursor-pointer"
           >
             View all case studies
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -208,7 +203,7 @@ export default async function ServiceDetailPage({ params: { locale, slug } }: Pr
       </SectionWrapper>
 
       {/* FAQs */}
-      <SectionWrapper className="bg-white">
+      <SectionWrapper>
         <SectionHeader
           eyebrow="Common Questions"
           heading="FAQs"
@@ -219,14 +214,14 @@ export default async function ServiceDetailPage({ params: { locale, slug } }: Pr
           {displayFaqs.map((faq, i) => (
             <details
               key={i}
-              className="group bg-[#FDF2F8] rounded-xl border border-[#EC4899]/10 overflow-hidden"
+              className="group bg-surface-container-low rounded-xl border border-outline-variant/10 overflow-hidden"
             >
-              <summary className="flex items-center justify-between px-6 py-4 cursor-pointer font-heading font-semibold text-[#0A0F1E] text-sm list-none">
+              <summary className="flex items-center justify-between px-6 py-4 cursor-pointer font-headline font-semibold text-on-surface text-sm list-none">
                 {faq.question}
-                <ChevronDown className="w-4 h-4 text-[#EC4899] group-open:rotate-180 transition-transform duration-200 flex-shrink-0 ml-4" />
+                <ChevronDown className="w-4 h-4 text-primary group-open:rotate-180 transition-transform duration-200 flex-shrink-0 ml-4" />
               </summary>
               <div className="px-6 pb-5">
-                <p className="font-body text-[#0A0F1E]/60 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="font-body text-on-surface-variant text-sm leading-relaxed">{faq.answer}</p>
               </div>
             </details>
           ))}
@@ -234,6 +229,6 @@ export default async function ServiceDetailPage({ params: { locale, slug } }: Pr
       </SectionWrapper>
 
       <CtaBannerSimple locale={locale} />
-    </main>
+    </div>
   )
 }
