@@ -1,19 +1,7 @@
-export const dynamic = 'force-dynamic'
-
 import type { Metadata } from 'next'
-import { createClient } from '@supabase/supabase-js'
-import Image from 'next/image'
-import { SeoHead } from '@/components/SeoHead'
 import { generateSeoMetadata } from '@/lib/seo'
-import { PageHero } from '@/components/shared/PageHero'
-import { SectionWrapper } from '@/components/shared/SectionWrapper'
-import { SectionHeader } from '@/components/shared/SectionHeader'
-import { CtaBannerSimple } from '@/components/shared/CtaBannerSimple'
-import { team as fallbackTeam } from '@/lib/data/team'
-import type { TeamMember } from '@/lib/types'
-import { ExternalLink, Target, Zap, Globe, Users } from 'lucide-react'
-import { StaggerCards } from '@/components/shared/StaggerCards'
-import { getPageGraphics, getGraphic } from '@/lib/graphics'
+import { SeoHead } from '@/components/SeoHead'
+import { AboutPageClient } from '@/components/sections/about/AboutPageClient'
 
 interface Props {
   params: { locale: string }
@@ -21,185 +9,17 @@ interface Props {
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   return generateSeoMetadata('/about', locale, {
-    title: 'About Us | Ascelo AI',
-    description: 'AI-Powered. Human-Managed. Ascelo AI is a global digital marketing agency and AI solutions consultancy delivering results-guaranteed campaigns worldwide.',
+    title: 'About',
+    description:
+      'We started because we were frustrated with agencies that overpromised and underdelivered. So we built something different.',
   })
 }
 
-export default async function AboutPage({ params: { locale } }: Props) {
-  let teamList: TeamMember[] = []
-  try {
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    if (url && key) {
-      const supabase = createClient(url, key)
-      const { data } = await supabase
-        .from('agp_team_members')
-        .select('*')
-        .eq('active', true)
-        .order('sort_order', { ascending: true })
-      teamList = (data as TeamMember[]) ?? []
-    }
-  } catch {
-    teamList = []
-  }
-
-  const displayTeam = teamList.length > 0
-    ? teamList
-    : (fallbackTeam as unknown as TeamMember[])
-
-  const prefix = locale === 'en' ? '' : `/${locale}`
-
-  const graphics = await getPageGraphics('/about', locale)
-  const heroBg = getGraphic(graphics, 'hero', 'background')
-  const workspaceGraphic = getGraphic(graphics, 'about', 'workspace')
-
-  const values = [
-    {
-      icon: Zap,
-      title: 'AI-Powered Speed',
-      desc: 'We use AI to generate, test, and iterate faster than any traditional agency. But AI only handles the grunt work — strategy and judgment remain human.',
-    },
-    {
-      icon: Target,
-      title: 'Results Guaranteed',
-      desc: 'We set clear, measurable KPIs before every engagement. If we don\'t hit them, we work for free until we do.',
-    },
-    {
-      icon: Globe,
-      title: 'Multilingual by Nature',
-      desc: 'Not translated — created natively. Our team produces campaigns in English, Arabic, French, Hindi and Punjabi with authentic local voice.',
-    },
-    {
-      icon: Users,
-      title: 'Long-Term Partnerships',
-      desc: 'We don\'t do one-time projects. We build long-term growth relationships — with transparent reporting and regular strategy reviews.',
-    },
-  ]
-
+export default function AboutPage({ params: { locale } }: Props) {
   return (
-    <main className="pt-20 md:pt-24 bg-white min-h-screen">
+    <>
       <SeoHead pagePath="/about" locale={locale} />
-      <PageHero
-        eyebrow="Our Story"
-        heading="About Ascelo AI"
-        subheading="We started because we were frustrated with agencies that overpromised and underdelivered. So we built something different — AI-powered, human-managed, and results-obsessed."
-        backgroundUrl={heroBg?.image_url ?? undefined}
-      />
-
-      {/* Mission */}
-      <SectionWrapper className="bg-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="font-heading text-[#EC4899] font-semibold text-sm uppercase tracking-widest mb-4">Our Mission</p>
-            <h2 className="font-display text-4xl md:text-6xl text-[#0A0F1E] leading-none tracking-wide uppercase">
-              Make World-Class Marketing Accessible
-            </h2>
-            <p className="font-body text-[#0A0F1E]/60 text-lg leading-relaxed mt-6 max-w-2xl mx-auto">
-              Great marketing shouldn&apos;t require a Fortune 500 budget. We use AI to give SMEs, political candidates, and growing businesses the same firepower as enterprise agencies — at a fraction of the cost.
-            </p>
-          </div>
-
-          <StaggerCards className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-[#0A0F1E] rounded-2xl p-8 text-white">
-              <h3 className="font-heading font-bold text-xl text-[#EC4899] mb-3">AI-Native Approach</h3>
-              <p className="font-body text-white/70 text-sm leading-relaxed">
-                We don&apos;t bolt AI on as an afterthought. Our workflows are AI-first — from research to creative production to campaign optimisation — with human strategy guiding every decision.
-              </p>
-            </div>
-            <div className="bg-[#FDF2F8] rounded-2xl p-8">
-              <h3 className="font-heading font-bold text-xl text-[#0A0F1E] mb-3">Global Reach</h3>
-              <p className="font-body text-[#0A0F1E]/70 text-sm leading-relaxed">
-                Based in Calgary, we serve ambitious businesses worldwide. One agency, multilingual capabilities, consistent results across every market.
-              </p>
-            </div>
-          </StaggerCards>
-        </div>
-      </SectionWrapper>
-
-      {/* Workspace image */}
-      {workspaceGraphic?.image_url && (
-        <SectionWrapper className="bg-white py-0 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-5xl mx-auto">
-            <div className="relative w-full h-64 md:h-96 rounded-2xl overflow-hidden">
-              <Image
-                src={workspaceGraphic.image_url}
-                alt={workspaceGraphic.alt_text ?? 'Ascelo AI workspace'}
-                fill
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </SectionWrapper>
-      )}
-
-      {/* Values */}
-      <SectionWrapper className="bg-[#FDF2F8]">
-        <SectionHeader
-          eyebrow="Our Values"
-          heading="How We Work"
-          subheading="Four principles that guide every campaign, every decision, every client relationship."
-          centered
-        />
-        <StaggerCards className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
-          {values.map((v) => (
-            <div key={v.title} className="bg-white rounded-2xl p-8 border border-[#EC4899]/10">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#FDF2F8] text-[#EC4899] mb-4">
-                <v.icon className="w-6 h-6" />
-              </div>
-              <h3 className="font-heading font-bold text-[#0A0F1E] text-lg mb-2">{v.title}</h3>
-              <p className="font-body text-[#0A0F1E]/60 text-sm leading-relaxed">{v.desc}</p>
-            </div>
-          ))}
-        </StaggerCards>
-      </SectionWrapper>
-
-      {/* Team */}
-      <SectionWrapper className="bg-white">
-        <SectionHeader
-          eyebrow="The Team"
-          heading="People Behind the Results"
-          subheading="Strategists, creatives, and technologists united by one goal — making your marketing work harder."
-          centered
-        />
-        <StaggerCards className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
-          {displayTeam.map((member) => (
-            <div
-              key={member.id ?? member.name}
-              className="group bg-white rounded-2xl border border-[#EC4899]/10 p-6 text-center hover:border-[#EC4899]/40 hover:shadow-[0_8px_30px_rgba(236,72,153,0.12)] transition-all duration-300"
-            >
-              {/* Avatar placeholder */}
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#EC4899]/20 to-[#06B6D4]/20 mx-auto mb-4 flex items-center justify-center">
-                <span className="font-display text-2xl text-[#EC4899]">
-                  {member.name.charAt(0)}
-                </span>
-              </div>
-              <h3 className="font-heading font-bold text-[#0A0F1E] text-base mb-1">{member.name}</h3>
-              <p className="font-heading text-[#EC4899] text-xs font-semibold mb-3">{member.role}</p>
-              {member.bio && (
-                <p className="font-body text-[#0A0F1E]/60 text-xs leading-relaxed mb-4">{member.bio}</p>
-              )}
-              {(member.linkedin_url || member.twitter_url) && (
-                <div className="flex items-center justify-center gap-3">
-                  {(member.linkedin_url || member.twitter_url) && (
-                    <a
-                      href={member.linkedin_url ?? member.twitter_url ?? '#'}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${member.name} profile`}
-                      className="text-[#0A0F1E]/40 hover:text-[#EC4899] transition-colors duration-200"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  )}
-                </div>
-              )}
-            </div>
-          ))}
-        </StaggerCards>
-      </SectionWrapper>
-
-      <CtaBannerSimple locale={locale} />
-    </main>
+      <AboutPageClient />
+    </>
   )
 }

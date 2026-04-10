@@ -44,7 +44,6 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
     { label: 'Contact', href: `${prefix}/contact` },
   ]
 
-  // Strip current locale prefix from pathname to get the bare path
   const switchLocalePath = (newLocale: string) => {
     let pathWithoutLocale = pathname
     for (const loc of NON_DEFAULT_LOCALES) {
@@ -57,17 +56,13 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
     return `/${newLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`
   }
 
-  // Switch locale: for English, clear saved preference cookie.
-  // For other locales, set a session-only cookie and show a "save preference?" banner.
   const switchLocale = (newLocale: string) => {
     setLangOpen(false)
     if (newLocale === 'en') {
-      // Clear any saved locale preference → system detection takes over
       document.cookie = 'NEXT_LOCALE=; path=/; max-age=0; SameSite=Lax'
       setPendingLocale(null)
       router.push(switchLocalePath(newLocale))
     } else {
-      // Session-only cookie (no max-age) — clears when browser closes
       document.cookie = `NEXT_LOCALE=${newLocale}; path=/; SameSite=Lax`
       setPendingLocale(newLocale)
       router.push(switchLocalePath(newLocale))
@@ -76,7 +71,6 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
 
   const saveLocalePreference = () => {
     if (!pendingLocale) return
-    // Upgrade to persistent 1-year cookie
     document.cookie = `NEXT_LOCALE=${pendingLocale}; path=/; max-age=31536000; SameSite=Lax`
     setPendingLocale(null)
   }
@@ -85,7 +79,6 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
     setPendingLocale(null)
   }
 
-  // Close dropdown on outside click
   useEffect(() => {
     function handleOutside(e: MouseEvent) {
       if (langRef.current && !langRef.current.contains(e.target as Node)) {
@@ -98,16 +91,18 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
 
   const currentLang = LANGUAGES.find(l => l.code === locale) ?? LANGUAGES[0]
 
+  const isActive = (href: string) =>
+    pathname === href || (href.endsWith('/') && pathname === href.slice(0, -1))
+
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#0A0F1E] backdrop-blur-md shadow-lg">
+      <header className="fixed top-0 w-full z-50 bg-[#0e1322]/80 backdrop-blur-xl shadow-[0_8px_30px_rgb(76,215,246,0.05)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
-
+          <div className="flex items-center justify-between h-16 md:h-[72px]">
             {/* Logo */}
             <Link
               href={`${prefix}/`}
-              className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4] rounded"
+              className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
             >
               {company.logo_url ? (
                 <Image
@@ -118,23 +113,23 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
                   className="h-10 w-auto object-contain"
                 />
               ) : (
-                <span className="font-heading font-bold text-white text-xl">
-                  {company.agency_name}
+                <span className="text-2xl font-bold tracking-tighter text-primary font-headline">
+                  Ascelo.ai
                 </span>
               )}
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-1">
+            <nav className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    'px-4 py-2 rounded-lg text-sm font-heading font-medium transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]',
-                    pathname === link.href || (link.href.endsWith('/') && pathname === link.href.slice(0, -1))
-                      ? 'text-[#EC4899]'
-                      : 'text-white/80 hover:text-white'
+                    'font-headline font-semibold tracking-tight text-sm transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded',
+                    isActive(link.href)
+                      ? 'text-primary border-b-2 border-primary pb-1'
+                      : 'text-on-surface-variant hover:text-white'
                   )}
                 >
                   {link.label}
@@ -142,39 +137,31 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
               ))}
             </nav>
 
-            {/* Language Dropdown + CTA + Hamburger */}
-            <div className="flex items-center gap-3">
-
+            {/* Right side: language + CTA + hamburger */}
+            <div className="flex items-center gap-4">
               {/* Language dropdown — desktop */}
               <div ref={langRef} className="relative hidden md:block">
                 <button
                   onClick={() => setLangOpen(prev => !prev)}
                   aria-label="Select language"
                   aria-expanded={langOpen}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-heading font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
+                  className="flex items-center gap-1.5 text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
                 >
-                  <Globe className="w-4 h-4 text-[#06B6D4]" />
-                  <span className="text-white font-semibold">{currentLang.short}</span>
-                  <ChevronDown
-                    className={cn(
-                      'w-3.5 h-3.5 transition-transform duration-200',
-                      langOpen ? 'rotate-180' : 'rotate-0'
-                    )}
-                  />
+                  <Globe className="w-4 h-4 text-primary" />
+                  <span className="text-sm font-medium uppercase">{currentLang.short}</span>
                 </button>
 
-                {/* Dropdown panel */}
                 {langOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-44 bg-[#111827] border border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
+                  <div className="absolute right-0 top-full mt-2 w-44 bg-surface-container border border-outline-variant/15 rounded-xl shadow-xl overflow-hidden z-50">
                     {LANGUAGES.map((lang) => (
                       <button
                         key={lang.code}
                         onClick={() => switchLocale(lang.code)}
                         className={cn(
-                          'w-full flex items-center justify-between px-4 py-2.5 text-sm font-heading transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#06B6D4]',
+                          'w-full flex items-center justify-between px-4 py-2.5 text-sm font-headline transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary',
                           locale === lang.code
-                            ? 'bg-[#EC4899]/10 text-[#EC4899] font-semibold'
-                            : 'text-white/70 hover:bg-white/5 hover:text-white'
+                            ? 'bg-primary/10 text-primary font-semibold'
+                            : 'text-on-surface-variant hover:bg-white/5 hover:text-white'
                         )}
                       >
                         <span>{lang.label}</span>
@@ -187,21 +174,20 @@ export function Navbar({ locale = 'en' }: NavbarProps) {
 
               <Link
                 href={`${prefix}/contact`}
-                className="hidden md:inline-flex bg-[#06B6D4] text-white px-5 py-2 rounded-lg font-heading font-semibold text-sm hover:bg-[#06B6D4]/90 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4] items-center"
+                className="hidden md:inline-flex bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-2.5 rounded-lg font-headline font-semibold text-sm hover:opacity-90 transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary items-center scale-95 active:scale-90"
               >
-                {company.hero_cta_primary ?? 'Get a Free Audit'}
+                Get a Free Strategy Audit
               </Link>
 
               {/* Mobile hamburger */}
               <button
                 onClick={() => setMobileOpen(true)}
                 aria-label="Open menu"
-                className="md:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
+                className="md:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <Menu className="w-6 h-6" />
               </button>
             </div>
-
           </div>
         </div>
       </header>

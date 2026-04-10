@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Gurmukhi:wght@400;500;600;700&display=swap');
 
 @tailwind base;
@@ -7,37 +7,27 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 322 81% 60%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 327 87% 71%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 322 81% 60%;
+    --background: 229 35% 9%;
+    --foreground: 234 68% 92%;
+    --card: 229 27% 14%;
+    --card-foreground: 234 68% 92%;
+    --popover: 229 35% 9%;
+    --popover-foreground: 234 68% 92%;
+    --primary: 190 90% 63%;
+    --primary-foreground: 193 100% 13%;
+    --secondary: 334 100% 85%;
+    --secondary-foreground: 327 100% 22%;
+    --muted: 229 23% 18%;
+    --muted-foreground: 195 17% 77%;
+    --accent: 162 100% 44%;
+    --accent-foreground: 163 100% 14%;
+    --destructive: 7 100% 84%;
+    --destructive-foreground: 0 100% 29%;
+    --border: 195 12% 27%;
+    --input: 195 12% 27%;
+    --ring: 190 90% 63%;
     --radius: 0.5rem;
   }
-}
-
-:root {
-  --color-primary: #EC4899;
-  --color-secondary: #F472B6;
-  --color-cta: #06B6D4;
-  --color-bg-dark: #0A0F1E;
-  --color-bg-light: #FDF2F8;
-  --color-text-dark: #831843;
-  --color-text-light: #F8FAFC;
 }
 
 html {
@@ -45,23 +35,27 @@ html {
 }
 
 body {
-  font-family: 'Source Sans 3', sans-serif;
-  color: var(--color-text-dark);
-  background: #ffffff;
+  font-family: 'Inter', sans-serif;
+  color: #dee1f7;
+  background: #0e1322;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Arabic locale — Cairo font */
+h1, h2, h3, h4, .headline {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Arabic locale */
 [lang="ar"] {
   font-family: 'Cairo', sans-serif;
 }
 
-/* Hindi locale — Noto Sans Devanagari */
+/* Hindi locale */
 [lang="hi"] {
   font-family: 'Noto Sans Devanagari', sans-serif;
 }
 
-/* Punjabi locale — Noto Sans Gurmukhi */
+/* Punjabi locale */
 [lang="pa"] {
   font-family: 'Noto Sans Gurmukhi', sans-serif;
 }
@@ -80,7 +74,22 @@ body {
 }
 
 @layer utilities {
-  .font-display { font-family: 'Bebas Neue', sans-serif; }
-  .font-heading { font-family: 'Plus Jakarta Sans', sans-serif; }
-  .font-body    { font-family: 'Source Sans 3', sans-serif; }
+  .font-headline { font-family: 'Plus Jakarta Sans', sans-serif; }
+  .font-body    { font-family: 'Inter', sans-serif; }
+  .gradient-text {
+    background: linear-gradient(135deg, #4cd7f6 0%, #00e1ab 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .glass-panel {
+    background: rgba(22, 27, 43, 0.7);
+    backdrop-filter: blur(12px);
+  }
+  .neural-gradient {
+    background: linear-gradient(135deg, #4cd7f6 0%, #06b6d4 100%);
+  }
+}
+
+::selection {
+  background: rgba(76, 215, 246, 0.3);
 }
