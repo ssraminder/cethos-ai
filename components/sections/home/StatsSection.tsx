@@ -5,7 +5,7 @@ import type { Transition } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { AnimatedCounter } from '@/components/shared/AnimatedCounter'
 import { SectionHeader } from '@/components/shared/SectionHeader'
-import { stats, getLiveValue } from '@/lib/data/stats'
+import { stats } from '@/lib/data/stats'
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 24 },
@@ -31,8 +31,7 @@ const itemVariants = {
 export function StatsSection() {
   const t = useTranslations('sections')
 
-  // Values derived from elapsed time since base_date — grow naturally over months
-  const liveValues = stats.map(getLiveValue)
+  const liveValues = stats.map(s => s.numeric_value)
 
   return (
     <section className="relative bg-[#0A0F1E] w-full py-24 md:py-32 overflow-hidden">

@@ -52,10 +52,8 @@ export function MobileMenu({ isOpen, onClose, company, locale = 'en' }: MobileMe
 
   const switchLocale = (newLocale: string) => {
     if (newLocale === 'en') {
-      // Clear saved preference so system language detection takes over
       document.cookie = 'NEXT_LOCALE=; path=/; max-age=0; SameSite=Lax'
     } else {
-      // Session-only cookie — no max-age, clears when browser closes
       document.cookie = `NEXT_LOCALE=${newLocale}; path=/; SameSite=Lax`
     }
     onClose()
@@ -70,17 +68,17 @@ export function MobileMenu({ isOpen, onClose, company, locale = 'en' }: MobileMe
           animate={{ x: 0 }}
           exit={{ x: '100%' }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
-          className="fixed inset-0 z-50 bg-[#0A0F1E] flex flex-col overflow-y-auto"
+          className="fixed inset-0 z-50 bg-background flex flex-col overflow-y-auto"
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
-            <span className="font-heading font-bold text-white text-xl">
-              {company.agency_name}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant/15">
+            <span className="font-headline font-bold text-primary text-xl tracking-tighter">
+              Ascelo.ai
             </span>
             <button
               onClick={onClose}
               aria-label="Close menu"
-              className="text-white p-2 rounded-lg hover:bg-white/10 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
+              className="text-white p-2 rounded-lg hover:bg-white/10 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <X className="w-6 h-6" />
             </button>
@@ -99,10 +97,10 @@ export function MobileMenu({ isOpen, onClose, company, locale = 'en' }: MobileMe
                   href={link.href}
                   onClick={onClose}
                   className={cn(
-                    'block text-2xl font-heading font-semibold py-3 px-4 rounded-lg transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]',
+                    'block text-2xl font-headline font-semibold py-3 px-4 rounded-lg transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
                     pathname === link.href
-                      ? 'text-[#EC4899] bg-white/5'
-                      : 'text-white hover:text-[#EC4899] hover:bg-white/5'
+                      ? 'text-primary bg-white/5'
+                      : 'text-white hover:text-primary hover:bg-white/5'
                   )}
                 >
                   {link.label}
@@ -119,28 +117,28 @@ export function MobileMenu({ isOpen, onClose, company, locale = 'en' }: MobileMe
             className="px-6 pt-6 pb-4"
           >
             <div className="flex items-center gap-2 mb-3">
-              <Globe className="w-4 h-4 text-[#06B6D4]" />
-              <span className="text-xs font-heading font-semibold text-white/40 uppercase tracking-widest">
+              <Globe className="w-4 h-4 text-primary" />
+              <span className="text-xs font-headline font-semibold text-white/40 uppercase tracking-widest">
                 Language
               </span>
             </div>
-            <div className="grid grid-cols-1 gap-1 bg-[#111827] rounded-xl border border-white/10 overflow-hidden">
+            <div className="grid grid-cols-1 gap-1 bg-surface-container rounded-xl border border-outline-variant/15 overflow-hidden">
               {LANGUAGES.map((lang) => (
                 <button
                   key={lang.code}
                   onClick={() => switchLocale(lang.code)}
                   className={cn(
-                    'w-full flex items-center justify-between px-4 py-3 text-sm font-heading transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#06B6D4]',
+                    'w-full flex items-center justify-between px-4 py-3 text-sm font-headline transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary',
                     locale === lang.code
-                      ? 'bg-[#EC4899]/10 text-[#EC4899] font-semibold'
-                      : 'text-white/70 hover:bg-white/5 hover:text-white'
+                      ? 'bg-primary/10 text-primary font-semibold'
+                      : 'text-on-surface-variant hover:bg-white/5 hover:text-white'
                   )}
                 >
                   <span>{lang.label}</span>
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-white/30">{lang.short}</span>
                     {locale === lang.code && (
-                      <Check className="w-3.5 h-3.5 text-[#EC4899]" />
+                      <Check className="w-3.5 h-3.5 text-primary" />
                     )}
                   </div>
                 </button>
@@ -158,9 +156,9 @@ export function MobileMenu({ isOpen, onClose, company, locale = 'en' }: MobileMe
               <Link
                 href={`${prefix}/contact`}
                 onClick={onClose}
-                className="block w-full text-center bg-[#06B6D4] text-white px-6 py-4 rounded-lg font-heading font-semibold text-lg hover:bg-[#06B6D4]/90 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06B6D4]"
+                className="block w-full text-center bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-4 rounded-lg font-headline font-semibold text-lg hover:opacity-90 transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
-                {company.hero_cta_primary ?? 'Get a Free Audit'}
+                Get a Free Strategy Audit
               </Link>
             </motion.div>
           </div>

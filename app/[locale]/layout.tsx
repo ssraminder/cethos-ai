@@ -16,23 +16,23 @@ const FALLBACK_COMPANY: CompanyInfo = {
   logo_dark_url: null,
   favicon_url: null,
   og_image_url: null,
-  tagline: 'We Market Your Business and Automate Your Operations — Powered by AI',
+  tagline: 'AI-Powered Marketing & Automation for Growing Businesses',
   phone: '+1 (587) 329-2590',
   email: 'info@ascelo.ai',
-  address_line1: null,
+  address_line1: '421, 7th Ave SW, Floor 30',
   address_line2: null,
-  city: null,
-  state: null,
-  postal_code: null,
+  city: 'Calgary',
+  state: 'AB',
+  postal_code: 'T2P 4K9',
   country: 'Canada',
   linkedin_url: null,
   twitter_url: null,
   instagram_url: null,
   facebook_url: null,
-  hero_cta_primary: 'Get a Free AI Audit',
+  hero_cta_primary: 'Get a Free Strategy Audit',
   hero_cta_secondary: 'See Our Work',
-  footer_cta_heading: 'Ready to dominate your market?',
-  footer_cta_subtext: 'Talk to our team today — free strategy audit included.',
+  footer_cta_heading: 'Ready to Grow Your Business?',
+  footer_cta_subtext: 'Get a data-backed roadmap for global domination. No fluff, no commitments, just growth strategy.',
 }
 
 async function getCompanyInfo(): Promise<CompanyInfo> {
@@ -53,7 +53,7 @@ export async function generateMetadata({ params: { locale } }: { params: { local
   const company = await getCompanyInfo()
   return {
     title: { default: company.agency_name, template: `%s | ${company.agency_name}` },
-    description: company.tagline ?? 'AI-Powered. Human-Managed. Results Guaranteed.',
+    description: company.tagline ?? 'AI-Powered Marketing & Automation for Growing Businesses',
     icons: company.favicon_url ? [{ rel: 'icon', url: company.favicon_url }] : undefined,
     openGraph: {
       siteName: company.agency_name,
@@ -79,12 +79,12 @@ export default async function LocaleLayout({
   const company = await getCompanyInfo()
 
   return (
-    <html lang={locale} dir={isRtl ? 'rtl' : 'ltr'}>
-      <body className="font-body antialiased">
+    <html lang={locale} dir={isRtl ? 'rtl' : 'ltr'} className="dark">
+      <body className="font-body antialiased bg-background text-on-surface selection:bg-primary/30">
         <NextIntlClientProvider messages={messages}>
           <CompanyInfoProvider value={company}>
             <Navbar locale={locale} />
-            <main>{children}</main>
+            <main className="pt-[72px]">{children}</main>
             <Footer />
           </CompanyInfoProvider>
         </NextIntlClientProvider>
